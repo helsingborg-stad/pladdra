@@ -23,3 +23,8 @@ Open up **`Unity Preferences`** > **`External Tools`** then browse for the Visua
 
 After cloning the repository, you can add it to Unity by clicking the `Add` button in Unity Hub.
 
+## Installing dotnet and mono
+
+In order to run the extensions for VSCode, you need to install dotnet from [here](https://dotnet.microsoft.com/download), and, once installed, run `ln -s /usr/local/share/dotnet/dotnet /usr/local/bin/`
+
+You will also need to install [mono](https://www.mono-project.com/download/stable/#download-mac), and set your vscode settings to use a global mono installation
