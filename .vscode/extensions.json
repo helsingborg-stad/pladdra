@@ -1,6 +1,7 @@
 {
 	"recommendations": [
 		"ms-dotnettools.csharp",
-		"eamodio.gitlens"
+		"eamodio.gitlens",
+		"Unity.unity-debug"
 	]
 }
