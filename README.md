@@ -32,3 +32,9 @@ After cloning the repository, you can add it to Unity by clicking the `Add` butt
 In order to run the extensions for VSCode, you need to install dotnet from [here](https://dotnet.microsoft.com/download), and, once installed, run `ln -s /usr/local/share/dotnet/dotnet /usr/local/bin/`
 
 You will also need to install [mono](https://www.mono-project.com/download/stable/#download-mac), and set your vscode settings to use a global mono installation
+
+## Debugging Unity in VSCode
+
+Using the [`Debugger for unity`](https://marketplace.visualstudio.com/items?itemName=Unity.unity-debug) extension, you can launch the debugger from the debug menu.
+
+In order for the debugger to attach, you have to start the project in Unity as well.
