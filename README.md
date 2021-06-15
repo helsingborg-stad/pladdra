@@ -1,5 +1,9 @@
 # Pladdra
 
+## Before starting
+
+Before starting, please note that this repository uses [Gitmoji](https://gitmoji.dev/) for commit messages
+
 ## Downloading Unity
 
 Unity can be downloaded [here](https://store.unity.com/download)
