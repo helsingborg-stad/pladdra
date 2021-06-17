@@ -9,6 +9,11 @@
       "UnauthRoleName": "amplify-adminui-dev-175617-unauthRole",
       "StackName": "amplify-adminui-dev-175617",
       "StackId": "arn:aws:cloudformation:eu-north-1:575497296317:stack/amplify-adminui-dev-175617/8d626280-cf84-11eb-9158-0e1d785921f6"
+    },
+    "categories": {
+      "auth": {
+        "adminui983435b1": {}
+      }
     }
   }
 }
