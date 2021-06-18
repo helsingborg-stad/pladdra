@@ -9,7 +9,7 @@ export const TodoList = (props: any): React.ReactElement => {
 				<TextField source="id" />
 				<TextField source="name" />
 				<TextField source="description" />
-				<EditButton basePath="/todo" />
+				<EditButton basePath="/todos" />
 			</Datagrid>
 		</List>
 	)
