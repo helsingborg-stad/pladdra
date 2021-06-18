@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import Amplify, { API, graphqlOperation } from 'aws-amplify'
+import React from 'react'
+import Amplify from 'aws-amplify'
 import * as mutations from './graphql/mutations'
 import * as queries from './graphql/queries'
 
@@ -7,9 +7,10 @@ import { Resource } from "react-admin"
 import { AmplifyAdmin } from "react-admin-amplify"
 
 import awsExports from "./aws-exports.js"
-import { Todo } from './API'
 import { withAuthenticator } from '@aws-amplify/ui-react'
 import { TodoList } from './components/todo/List'
+import { CreateTodo } from './components/todo/Create'
+import { EditTodo } from './components/todo/Edit'
 
 Amplify.configure(awsExports)
 
@@ -20,11 +21,11 @@ const App = (): React.ReactElement => {
 			operations={{ queries, mutations }}
 			options={{ authGroups: ["admin"] }}
 		>
-			<Resource name="todos" list={TodoList} />
+			<Resource name="todos" list={TodoList} create={CreateTodo} edit={EditTodo} />
 		</AmplifyAdmin>
 	)
 }
 
 
 
-export default App
+export default withAuthenticator(App)
