@@ -1,5 +1,27 @@
+type S3Object {
+  bucket: String!
+  key: String!
+  region: String!
+}
+
+input S3ObjectInput {
+  bucket: String!
+  key: String!
+  region: String!
+  localUri: String
+  mimeType: String
+}
+
 type Todo @model @auth(rules: [{ allow: owner }]) {
   id: ID!
   name: String!
   description: String
+  image: S3Object
+}
+
+input CreateTodoInput {
+  id: ID
+  name: String!
+  description: String
+  image: S3ObjectInput 
 }
