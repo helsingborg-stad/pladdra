@@ -18,8 +18,11 @@ Amplify.configure(awsExports)
 const App = (): React.ReactElement => {
 	return (
 		<AmplifyAdmin
-			operations={{ queries, mutations }}
-			options={{ authGroups: ["admin"] }}
+      operations={{ queries, mutations }}
+			options={{ authGroups: ["admin"],
+				storageBucket: awsExports.aws_user_files_s3_bucket,
+				storageRegion: awsExports.aws_user_files_s3_bucket_region, 
+			}}
 		>
 			<Resource name="todos" list={TodoList} create={CreateTodo} edit={EditTodo} />
 		</AmplifyAdmin>
