@@ -27,10 +27,12 @@ export const EditTodo = (props: any): React.ReactElement => {
 				<TextInput source={'description'} />
 				<AmplifyImageInput
 					source={'file'}
-					accept="image/*"
-					onDropAcceptedCallback={(files: any, event: any) => {
-						console.log(files)
-						console.log(event)
+					accept="image/png"
+					options={{
+						onDropAccepted: (files: any, event: any) => {
+							console.log(files)
+							console.log(event)
+						},
 					}}
 				/>
 			</SimpleForm>
