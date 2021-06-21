@@ -62,5 +62,27 @@
         }
       ]
     }
+  },
+  "storage": {
+    "s3pladdra": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "pladdraf1727651f1727651",
+          "attributes": [
+            "UserPoolId"
+          ]
+        },
+        {
+          "category": "auth",
+          "resourceName": "userPoolGroups",
+          "attributes": [
+            "superadminGroupRole"
+          ]
+        }
+      ]
+    }
   }
 }
