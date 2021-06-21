@@ -25,7 +25,7 @@ export const EditTodo = (props: any): React.ReactElement => {
 				<TextInput source={'id'} disabled />
 				<TextInput source={'name'} />
 				<TextInput source={'description'} />
-				<AmplifyImageInput
+				{/* <AmplifyImageInput
 					source={'file'}
 					accept="image/png"
 					options={{
@@ -34,7 +34,7 @@ export const EditTodo = (props: any): React.ReactElement => {
 							console.log(event)
 						},
 					}}
-				/>
+				/> */}
 			</SimpleForm>
 		</Edit>
 	)

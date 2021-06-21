@@ -14,7 +14,7 @@ export const TodoList = (props: any): React.ReactElement => {
 				<TextField source="id" />
 				<TextField source="name" />
 				<TextField source="description" />
-				<AmplifyImageField source={'file'} title="Avatar" addLabel={true} />
+				{/* <AmplifyImageField source={'file'} title="Avatar" addLabel={true} /> */}
 				<EditButton basePath="/todos" />
 			</Datagrid>
 		</List>
