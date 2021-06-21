@@ -8,6 +8,11 @@ export const getTodo = /* GraphQL */ `
       id
       name
       description
+      file {
+        bucket
+        key
+        region
+      }
       createdAt
       updatedAt
       owner
@@ -25,6 +30,11 @@ export const listTodos = /* GraphQL */ `
         id
         name
         description
+        file {
+          bucket
+          key
+          region
+        }
         createdAt
         updatedAt
         owner
