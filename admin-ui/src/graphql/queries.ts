@@ -8,6 +8,11 @@ export const getTodo = /* GraphQL */ `
       id
       name
       description
+      image {
+        bucket
+        key
+        region
+      }
       createdAt
       updatedAt
       owner

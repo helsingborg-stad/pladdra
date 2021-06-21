@@ -6,6 +6,15 @@ export type CreateTodoInput = {
   id?: string | null,
   name: string,
   description?: string | null,
+  image?: S3ObjectInput | null,
+};
+
+export type S3ObjectInput = {
+  bucket: string,
+  key: string,
+  region: string,
+  localUri?: string | null,
+  mimeType?: string | null,
 };
 
 export type ModelTodoConditionInput = {
@@ -61,15 +70,24 @@ export type Todo = {
   id: string,
   name: string,
   description?: string | null,
+  image?: S3Object | null,
   createdAt: string,
   updatedAt: string,
   owner?: string | null,
+};
+
+export type S3Object = {
+  __typename: "S3Object",
+  bucket: string,
+  key: string,
+  region: string,
 };
 
 export type UpdateTodoInput = {
   id: string,
   name?: string | null,
   description?: string | null,
+  image?: S3ObjectInput | null,
 };
 
 export type DeleteTodoInput = {
@@ -118,6 +136,12 @@ export type CreateTodoMutation = {
     id: string,
     name: string,
     description?: string | null,
+    image?:  {
+      __typename: "S3Object",
+      bucket: string,
+      key: string,
+      region: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
     owner?: string | null,
@@ -135,6 +159,12 @@ export type UpdateTodoMutation = {
     id: string,
     name: string,
     description?: string | null,
+    image?:  {
+      __typename: "S3Object",
+      bucket: string,
+      key: string,
+      region: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
     owner?: string | null,
@@ -152,6 +182,12 @@ export type DeleteTodoMutation = {
     id: string,
     name: string,
     description?: string | null,
+    image?:  {
+      __typename: "S3Object",
+      bucket: string,
+      key: string,
+      region: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
     owner?: string | null,
@@ -168,6 +204,12 @@ export type GetTodoQuery = {
     id: string,
     name: string,
     description?: string | null,
+    image?:  {
+      __typename: "S3Object",
+      bucket: string,
+      key: string,
+      region: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
     owner?: string | null,
@@ -206,6 +248,12 @@ export type OnCreateTodoSubscription = {
     id: string,
     name: string,
     description?: string | null,
+    image?:  {
+      __typename: "S3Object",
+      bucket: string,
+      key: string,
+      region: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
     owner?: string | null,
@@ -222,6 +270,12 @@ export type OnUpdateTodoSubscription = {
     id: string,
     name: string,
     description?: string | null,
+    image?:  {
+      __typename: "S3Object",
+      bucket: string,
+      key: string,
+      region: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
     owner?: string | null,
@@ -238,6 +292,12 @@ export type OnDeleteTodoSubscription = {
     id: string,
     name: string,
     description?: string | null,
+    image?:  {
+      __typename: "S3Object",
+      bucket: string,
+      key: string,
+      region: string,
+    } | null,
     createdAt: string,
     updatedAt: string,
     owner?: string | null,

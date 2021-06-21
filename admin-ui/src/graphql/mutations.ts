@@ -11,6 +11,11 @@ export const createTodo = /* GraphQL */ `
       id
       name
       description
+      image {
+        bucket
+        key
+        region
+      }
       createdAt
       updatedAt
       owner
@@ -26,6 +31,11 @@ export const updateTodo = /* GraphQL */ `
       id
       name
       description
+      image {
+        bucket
+        key
+        region
+      }
       createdAt
       updatedAt
       owner
@@ -41,6 +51,11 @@ export const deleteTodo = /* GraphQL */ `
       id
       name
       description
+      image {
+        bucket
+        key
+        region
+      }
       createdAt
       updatedAt
       owner
