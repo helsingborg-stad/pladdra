@@ -19,7 +19,7 @@ const App = (): React.ReactElement => {
 		<AmplifyAdmin
 			operations={{ queries, mutations }}
 			options={{
-				authGroups: ["admin"],
+				authGroups: ["superadmin","admin"],
 				storageBucket: awsExports.aws_user_files_s3_bucket,
 				storageRegion: awsExports.aws_user_files_s3_bucket_region,
 			}}
