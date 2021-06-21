@@ -16,7 +16,7 @@ export const CreateTodo = (props: any): React.ReactElement => {
 			<SimpleForm>
 				<TextInput source={'name'} />
 				<TextInput source={'description'} />
-				{/* <AmplifyImageInput source={'file'} accept="image/*" storageOptions={{ level: "private" }} /> */}
+				<AmplifyImageInput source={'file'} accept="image/*" storageOptions={{ level: "private" }} />
 			</SimpleForm>
 		</Create>
 	)
