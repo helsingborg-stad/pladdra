@@ -14,6 +14,35 @@ input S3ObjectInput {
   _url: String
 }
 
+enum AssetType {
+  MESH
+}
+
+enum AssetFormat {
+  GLTF
+  GLB
+  OBJ
+  FBX
+}
+
+type Asset @model @auth(rules: [{ allow: private }]) {
+  id: ID!
+  title: String!
+  type: AssetType!
+  format: AssetFormat!
+  source: S3Object!
+  description: String
+}
+
+input CreateAssetInput {
+  id: ID!
+  title: String!
+  type: AssetType!
+  format: AssetFormat!
+  source: S3ObjectInput!
+  description: String
+}
+
 type Todo @model @auth(rules: [{ allow: owner }]) {
   id: ID!
   name: String!
