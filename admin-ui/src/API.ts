@@ -15,6 +15,8 @@ export type S3ObjectInput = {
   region: string,
   localUri?: string | null,
   mimeType?: string | null,
+  url?: string | null,
+  _url?: string | null,
 };
 
 export type ModelTodoConditionInput = {
