@@ -1,5 +1,5 @@
 import React from "react"
-import { Edit, SimpleForm, TextInput } from "react-admin"
+import { Edit, SimpleForm, TextInput, useResourceContext } from "react-admin"
 import {
 	AmplifyFileField,
 	AmplifyFileInput,
@@ -13,9 +13,19 @@ export const EditTodo = (props: any): React.ReactElement => {
 		<Edit
 			{...props}
 			transform={(data) => {
-				console.log("🚀 ~ file: Edit.tsx ~ line 15 ~ data", data)
-				const { owner, ...rest } = data
-				return rest
+				const { owner, image, ...rest } = data 
+				
+				if (image) {
+					const keysToIgnore = ['_url']
+					return {
+						...rest,
+						image: {
+							...Object.entries(image).reduce((acc, [ key, value ]) => (!keysToIgnore.includes(key) ? {[key]:value, ...acc} : acc), {}),
+						},
+					}
+				}
+
+				return { ...rest }
 			}}
 			onFailure={(e) => {
 				console.log(e)
@@ -23,17 +33,12 @@ export const EditTodo = (props: any): React.ReactElement => {
 		>
 			<SimpleForm>
 				<TextInput source={'id'} disabled />
-				<TextInput source={'name'} />
 				<TextInput source={'description'} />
+				<TextInput source={'name'} />
 				<AmplifyImageInput
-					source={'file'}
+					source={'image'}
 					accept="image/png"
-					options={{
-						onDropAccepted: (files: any, event: any) => {
-							console.log(files)
-							console.log(event)
-						},
-					}}
+					storageOptions={{ level: 'protected' }}
 				/>
 			</SimpleForm>
 		</Edit>

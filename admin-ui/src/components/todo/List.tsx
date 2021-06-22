@@ -1,5 +1,6 @@
 import React from "react"
-import { List, Datagrid, TextField, EditButton } from "react-admin"
+import { List, Datagrid, TextField, EditButton, FunctionField, useRecordContext } from "react-admin"
+
 import {
 	AmplifyFileField,
 	AmplifyFileInput,
@@ -14,7 +15,7 @@ export const TodoList = (props: any): React.ReactElement => {
 				<TextField source="id" />
 				<TextField source="name" />
 				<TextField source="description" />
-				<AmplifyImageField source={'file'} title="Avatar" addLabel={true} />
+				<AmplifyImageField source={'image'} storageOptions={{ level: 'protected' }} addLabel={true} />
 				<EditButton basePath="/todos" />
 			</Datagrid>
 		</List>
