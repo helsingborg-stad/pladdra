@@ -10,6 +10,8 @@ input S3ObjectInput {
   region: String!
   localUri: String
   mimeType: String
+  url: String
+  _url: String
 }
 
 type Todo @model @auth(rules: [{ allow: owner }]) {
@@ -20,6 +22,12 @@ type Todo @model @auth(rules: [{ allow: owner }]) {
 }
 
 input CreateTodoInput {
+  id: ID
+  name: String!
+  description: String
+  image: S3ObjectInput 
+}
+input ListTodoQuery {
   id: ID
   name: String!
   description: String
