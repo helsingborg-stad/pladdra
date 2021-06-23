@@ -11,12 +11,14 @@ import { withAuthenticator } from "@aws-amplify/ui-react"
 
 import { AssetList } from "./components/asset/List"
 import { CreateAsset } from "./components/asset/Create"
+// import Dashboard from './components/Dashboard/Dashboard'
 
 Amplify.configure(awsExports)
 
 const App = (): React.ReactElement => {
 	return (
 		<AmplifyAdmin
+			// dashboard={Dashboard}
 			operations={{ queries, mutations }}
 			options={{
 				authGroups: [ "superadmin", "admin" ],
