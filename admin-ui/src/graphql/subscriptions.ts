@@ -8,8 +8,10 @@ export const onCreateAsset = /* GraphQL */ `
       id
       title
       type
-      format
-      source {
+      fileFormat
+      fileName
+      fileSize
+      file {
         bucket
         key
         region
@@ -26,8 +28,10 @@ export const onUpdateAsset = /* GraphQL */ `
       id
       title
       type
-      format
-      source {
+      fileFormat
+      fileName
+      fileSize
+      file {
         bucket
         key
         region
@@ -44,8 +48,10 @@ export const onDeleteAsset = /* GraphQL */ `
       id
       title
       type
-      format
-      source {
+      fileFormat
+      fileName
+      fileSize
+      file {
         bucket
         key
         region

@@ -8,8 +8,10 @@ export const getAsset = /* GraphQL */ `
       id
       title
       type
-      format
-      source {
+      fileFormat
+      fileName
+      fileSize
+      file {
         bucket
         key
         region
@@ -31,7 +33,9 @@ export const listAssets = /* GraphQL */ `
         id
         title
         type
-        format
+        fileFormat
+        fileName
+        fileSize
         description
         createdAt
         updatedAt

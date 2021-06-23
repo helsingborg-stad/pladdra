@@ -11,8 +11,10 @@ export const createAsset = /* GraphQL */ `
       id
       title
       type
-      format
-      source {
+      fileFormat
+      fileName
+      fileSize
+      file {
         bucket
         key
         region
@@ -32,8 +34,10 @@ export const updateAsset = /* GraphQL */ `
       id
       title
       type
-      format
-      source {
+      fileFormat
+      fileName
+      fileSize
+      file {
         bucket
         key
         region
@@ -53,8 +57,10 @@ export const deleteAsset = /* GraphQL */ `
       id
       title
       type
-      format
-      source {
+      fileFormat
+      fileName
+      fileSize
+      file {
         bucket
         key
         region
