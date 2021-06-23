@@ -39,9 +39,11 @@ type Asset @model @auth(rules: [{ allow: private }]) {
 input CreateAssetInput {
   id: ID!
   title: String!
-  type: AssetType!
-  format: AssetFormat!
-  source: S3ObjectInput!
+  type: AssetFileFormat!
+  fileFormat: String!
+  fileName: String!
+  fileSize: String!
+  file: S3ObjectInput!
   description: String
 }
 
