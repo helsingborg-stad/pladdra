@@ -7,6 +7,16 @@ import {
 	AmplifyImageField,
 	AmplifyImageInput,
 } from "react-admin-amplify"
+import { bytesToHumanReadable } from "../../utils/File"
+
+const FileSizeField = ({source, ...rest}: any): React.ReactElement => <FunctionField 
+	label={source}
+	render={(record: any) => record[source] && Number.isInteger(record[source]) 
+		? bytesToHumanReadable(record[source], {}) 
+		: null
+	}
+	{...rest}
+/>
 
 export const AssetList = (props: any): React.ReactElement => {
 	return (
@@ -16,10 +26,9 @@ export const AssetList = (props: any): React.ReactElement => {
 				<TextField source="name" />
 				<TextField source="type" />
 				<TextField source="fileName" />
-				<TextField source="fileSize" />
+				<FileSizeField source="fileSize" />
 				<TextField source="fileFormat" />
-				{/* <AmplifyImageField source={'source'} storageOptions={{ level: 'private' }} addLabel={true} /> */}
-				{/* <EditButton basePath="/assets" /> */}
+				<EditButton basePath="/assets" />
 			</Datagrid>
 		</List>
 	)
