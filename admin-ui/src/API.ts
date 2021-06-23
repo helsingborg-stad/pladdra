@@ -4,20 +4,26 @@
 
 export type CreateAssetInput = {
   id?: string | null,
-  title: string,
-  type: AssetFileFormat,
-  fileFormat: string,
+  name: string,
+  type: AssetType,
+  fileFormat: AssetFileFormat,
   fileName: string,
-  fileSize: string,
+  fileSize: number,
   file: S3ObjectInput,
   description?: string | null,
 };
+
+export enum AssetType {
+  MESH = "MESH",
+}
+
 
 export enum AssetFileFormat {
   GLTF = "GLTF",
   GLB = "GLB",
   OBJ = "OBJ",
   FBX = "FBX",
+  DWG = "DWG",
 }
 
 
@@ -32,11 +38,11 @@ export type S3ObjectInput = {
 };
 
 export type ModelAssetConditionInput = {
-  title?: ModelStringInput | null,
-  type?: ModelAssetFileFormatInput | null,
-  fileFormat?: ModelStringInput | null,
+  name?: ModelStringInput | null,
+  type?: ModelAssetTypeInput | null,
+  fileFormat?: ModelAssetFileFormatInput | null,
   fileName?: ModelStringInput | null,
-  fileSize?: ModelStringInput | null,
+  fileSize?: ModelIntInput | null,
   description?: ModelStringInput | null,
   and?: Array< ModelAssetConditionInput | null > | null,
   or?: Array< ModelAssetConditionInput | null > | null,
@@ -83,19 +89,36 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
+export type ModelAssetTypeInput = {
+  eq?: AssetType | null,
+  ne?: AssetType | null,
+};
+
 export type ModelAssetFileFormatInput = {
   eq?: AssetFileFormat | null,
   ne?: AssetFileFormat | null,
 };
 
+export type ModelIntInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
 export type Asset = {
   __typename: "Asset",
   id: string,
-  title: string,
-  type: AssetFileFormat,
-  fileFormat: string,
+  name: string,
+  type: AssetType,
+  fileFormat: AssetFileFormat,
   fileName: string,
-  fileSize: string,
+  fileSize: number,
   file: S3Object,
   description?: string | null,
   createdAt: string,
@@ -111,11 +134,11 @@ export type S3Object = {
 
 export type UpdateAssetInput = {
   id: string,
-  title?: string | null,
-  type?: AssetFileFormat | null,
-  fileFormat?: string | null,
+  name?: string | null,
+  type?: AssetType | null,
+  fileFormat?: AssetFileFormat | null,
   fileName?: string | null,
-  fileSize?: string | null,
+  fileSize?: number | null,
   file?: S3ObjectInput | null,
   description?: string | null,
 };
@@ -163,11 +186,11 @@ export type DeleteTodoInput = {
 
 export type ModelAssetFilterInput = {
   id?: ModelIDInput | null,
-  title?: ModelStringInput | null,
-  type?: ModelAssetFileFormatInput | null,
-  fileFormat?: ModelStringInput | null,
+  name?: ModelStringInput | null,
+  type?: ModelAssetTypeInput | null,
+  fileFormat?: ModelAssetFileFormatInput | null,
   fileName?: ModelStringInput | null,
-  fileSize?: ModelStringInput | null,
+  fileSize?: ModelIntInput | null,
   description?: ModelStringInput | null,
   and?: Array< ModelAssetFilterInput | null > | null,
   or?: Array< ModelAssetFilterInput | null > | null,
@@ -220,11 +243,11 @@ export type CreateAssetMutation = {
   createAsset?:  {
     __typename: "Asset",
     id: string,
-    title: string,
-    type: AssetFileFormat,
-    fileFormat: string,
+    name: string,
+    type: AssetType,
+    fileFormat: AssetFileFormat,
     fileName: string,
-    fileSize: string,
+    fileSize: number,
     file:  {
       __typename: "S3Object",
       bucket: string,
@@ -246,11 +269,11 @@ export type UpdateAssetMutation = {
   updateAsset?:  {
     __typename: "Asset",
     id: string,
-    title: string,
-    type: AssetFileFormat,
-    fileFormat: string,
+    name: string,
+    type: AssetType,
+    fileFormat: AssetFileFormat,
     fileName: string,
-    fileSize: string,
+    fileSize: number,
     file:  {
       __typename: "S3Object",
       bucket: string,
@@ -272,11 +295,11 @@ export type DeleteAssetMutation = {
   deleteAsset?:  {
     __typename: "Asset",
     id: string,
-    title: string,
-    type: AssetFileFormat,
-    fileFormat: string,
+    name: string,
+    type: AssetType,
+    fileFormat: AssetFileFormat,
     fileName: string,
-    fileSize: string,
+    fileSize: number,
     file:  {
       __typename: "S3Object",
       bucket: string,
@@ -366,11 +389,11 @@ export type GetAssetQuery = {
   getAsset?:  {
     __typename: "Asset",
     id: string,
-    title: string,
-    type: AssetFileFormat,
-    fileFormat: string,
+    name: string,
+    type: AssetType,
+    fileFormat: AssetFileFormat,
     fileName: string,
-    fileSize: string,
+    fileSize: number,
     file:  {
       __typename: "S3Object",
       bucket: string,
@@ -395,11 +418,11 @@ export type ListAssetsQuery = {
     items?:  Array< {
       __typename: "Asset",
       id: string,
-      title: string,
-      type: AssetFileFormat,
-      fileFormat: string,
+      name: string,
+      type: AssetType,
+      fileFormat: AssetFileFormat,
       fileName: string,
-      fileSize: string,
+      fileSize: number,
       description?: string | null,
       createdAt: string,
       updatedAt: string,
@@ -456,11 +479,11 @@ export type OnCreateAssetSubscription = {
   onCreateAsset?:  {
     __typename: "Asset",
     id: string,
-    title: string,
-    type: AssetFileFormat,
-    fileFormat: string,
+    name: string,
+    type: AssetType,
+    fileFormat: AssetFileFormat,
     fileName: string,
-    fileSize: string,
+    fileSize: number,
     file:  {
       __typename: "S3Object",
       bucket: string,
@@ -477,11 +500,11 @@ export type OnUpdateAssetSubscription = {
   onUpdateAsset?:  {
     __typename: "Asset",
     id: string,
-    title: string,
-    type: AssetFileFormat,
-    fileFormat: string,
+    name: string,
+    type: AssetType,
+    fileFormat: AssetFileFormat,
     fileName: string,
-    fileSize: string,
+    fileSize: number,
     file:  {
       __typename: "S3Object",
       bucket: string,
@@ -498,11 +521,11 @@ export type OnDeleteAssetSubscription = {
   onDeleteAsset?:  {
     __typename: "Asset",
     id: string,
-    title: string,
-    type: AssetFileFormat,
-    fileFormat: string,
+    name: string,
+    type: AssetType,
+    fileFormat: AssetFileFormat,
     fileName: string,
-    fileSize: string,
+    fileSize: number,
     file:  {
       __typename: "S3Object",
       bucket: string,

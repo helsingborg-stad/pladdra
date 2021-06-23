@@ -6,7 +6,7 @@ export const getAsset = /* GraphQL */ `
   query GetAsset($id: ID!) {
     getAsset(id: $id) {
       id
-      title
+      name
       type
       fileFormat
       fileName
@@ -31,7 +31,7 @@ export const listAssets = /* GraphQL */ `
     listAssets(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        title
+        name
         type
         fileFormat
         fileName

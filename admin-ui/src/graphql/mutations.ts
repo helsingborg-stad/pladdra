@@ -9,7 +9,7 @@ export const createAsset = /* GraphQL */ `
   ) {
     createAsset(input: $input, condition: $condition) {
       id
-      title
+      name
       type
       fileFormat
       fileName
@@ -32,7 +32,7 @@ export const updateAsset = /* GraphQL */ `
   ) {
     updateAsset(input: $input, condition: $condition) {
       id
-      title
+      name
       type
       fileFormat
       fileName
@@ -55,7 +55,7 @@ export const deleteAsset = /* GraphQL */ `
   ) {
     deleteAsset(input: $input, condition: $condition) {
       id
-      title
+      name
       type
       fileFormat
       fileName

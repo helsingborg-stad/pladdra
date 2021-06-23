@@ -6,7 +6,7 @@ export const onCreateAsset = /* GraphQL */ `
   subscription OnCreateAsset {
     onCreateAsset {
       id
-      title
+      name
       type
       fileFormat
       fileName
@@ -26,7 +26,7 @@ export const onUpdateAsset = /* GraphQL */ `
   subscription OnUpdateAsset {
     onUpdateAsset {
       id
-      title
+      name
       type
       fileFormat
       fileName
@@ -46,7 +46,7 @@ export const onDeleteAsset = /* GraphQL */ `
   subscription OnDeleteAsset {
     onDeleteAsset {
       id
-      title
+      name
       type
       fileFormat
       fileName
