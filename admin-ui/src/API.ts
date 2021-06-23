@@ -2,12 +2,27 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateTodoInput = {
-  id?: string | null,
-  name: string,
+export type CreateAssetInput = {
+  id: string,
+  title: string,
+  type: AssetType,
+  format: AssetFormat,
+  source: S3ObjectInput,
   description?: string | null,
-  image?: S3ObjectInput | null,
 };
+
+export enum AssetType {
+  MESH = "MESH",
+}
+
+
+export enum AssetFormat {
+  GLTF = "GLTF",
+  GLB = "GLB",
+  OBJ = "OBJ",
+  FBX = "FBX",
+}
+
 
 export type S3ObjectInput = {
   bucket: string,
@@ -19,12 +34,14 @@ export type S3ObjectInput = {
   _url?: string | null,
 };
 
-export type ModelTodoConditionInput = {
-  name?: ModelStringInput | null,
+export type ModelAssetConditionInput = {
+  title?: ModelStringInput | null,
+  type?: ModelAssetTypeInput | null,
+  format?: ModelAssetFormatInput | null,
   description?: ModelStringInput | null,
-  and?: Array< ModelTodoConditionInput | null > | null,
-  or?: Array< ModelTodoConditionInput | null > | null,
-  not?: ModelTodoConditionInput | null,
+  and?: Array< ModelAssetConditionInput | null > | null,
+  or?: Array< ModelAssetConditionInput | null > | null,
+  not?: ModelAssetConditionInput | null,
 };
 
 export type ModelStringInput = {
@@ -67,6 +84,63 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
+export type ModelAssetTypeInput = {
+  eq?: AssetType | null,
+  ne?: AssetType | null,
+};
+
+export type ModelAssetFormatInput = {
+  eq?: AssetFormat | null,
+  ne?: AssetFormat | null,
+};
+
+export type Asset = {
+  __typename: "Asset",
+  id: string,
+  title: string,
+  type: AssetType,
+  format: AssetFormat,
+  source: S3Object,
+  description?: string | null,
+  createdAt: string,
+  updatedAt: string,
+};
+
+export type S3Object = {
+  __typename: "S3Object",
+  bucket: string,
+  key: string,
+  region: string,
+};
+
+export type UpdateAssetInput = {
+  id: string,
+  title?: string | null,
+  type?: AssetType | null,
+  format?: AssetFormat | null,
+  source?: S3ObjectInput | null,
+  description?: string | null,
+};
+
+export type DeleteAssetInput = {
+  id: string,
+};
+
+export type CreateTodoInput = {
+  id?: string | null,
+  name: string,
+  description?: string | null,
+  image?: S3ObjectInput | null,
+};
+
+export type ModelTodoConditionInput = {
+  name?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  and?: Array< ModelTodoConditionInput | null > | null,
+  or?: Array< ModelTodoConditionInput | null > | null,
+  not?: ModelTodoConditionInput | null,
+};
+
 export type Todo = {
   __typename: "Todo",
   id: string,
@@ -76,13 +150,6 @@ export type Todo = {
   createdAt: string,
   updatedAt: string,
   owner?: string | null,
-};
-
-export type S3Object = {
-  __typename: "S3Object",
-  bucket: string,
-  key: string,
-  region: string,
 };
 
 export type UpdateTodoInput = {
@@ -96,13 +163,15 @@ export type DeleteTodoInput = {
   id: string,
 };
 
-export type ModelTodoFilterInput = {
+export type ModelAssetFilterInput = {
   id?: ModelIDInput | null,
-  name?: ModelStringInput | null,
+  title?: ModelStringInput | null,
+  type?: ModelAssetTypeInput | null,
+  format?: ModelAssetFormatInput | null,
   description?: ModelStringInput | null,
-  and?: Array< ModelTodoFilterInput | null > | null,
-  or?: Array< ModelTodoFilterInput | null > | null,
-  not?: ModelTodoFilterInput | null,
+  and?: Array< ModelAssetFilterInput | null > | null,
+  or?: Array< ModelAssetFilterInput | null > | null,
+  not?: ModelAssetFilterInput | null,
 };
 
 export type ModelIDInput = {
@@ -121,10 +190,97 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
+export type ModelAssetConnection = {
+  __typename: "ModelAssetConnection",
+  items?:  Array<Asset | null > | null,
+  nextToken?: string | null,
+};
+
+export type ModelTodoFilterInput = {
+  id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  and?: Array< ModelTodoFilterInput | null > | null,
+  or?: Array< ModelTodoFilterInput | null > | null,
+  not?: ModelTodoFilterInput | null,
+};
+
 export type ModelTodoConnection = {
   __typename: "ModelTodoConnection",
   items?:  Array<Todo | null > | null,
   nextToken?: string | null,
+};
+
+export type CreateAssetMutationVariables = {
+  input: CreateAssetInput,
+  condition?: ModelAssetConditionInput | null,
+};
+
+export type CreateAssetMutation = {
+  createAsset?:  {
+    __typename: "Asset",
+    id: string,
+    title: string,
+    type: AssetType,
+    format: AssetFormat,
+    source:  {
+      __typename: "S3Object",
+      bucket: string,
+      key: string,
+      region: string,
+    },
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateAssetMutationVariables = {
+  input: UpdateAssetInput,
+  condition?: ModelAssetConditionInput | null,
+};
+
+export type UpdateAssetMutation = {
+  updateAsset?:  {
+    __typename: "Asset",
+    id: string,
+    title: string,
+    type: AssetType,
+    format: AssetFormat,
+    source:  {
+      __typename: "S3Object",
+      bucket: string,
+      key: string,
+      region: string,
+    },
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteAssetMutationVariables = {
+  input: DeleteAssetInput,
+  condition?: ModelAssetConditionInput | null,
+};
+
+export type DeleteAssetMutation = {
+  deleteAsset?:  {
+    __typename: "Asset",
+    id: string,
+    title: string,
+    type: AssetType,
+    format: AssetFormat,
+    source:  {
+      __typename: "S3Object",
+      bucket: string,
+      key: string,
+      region: string,
+    },
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
 };
 
 export type CreateTodoMutationVariables = {
@@ -196,6 +352,52 @@ export type DeleteTodoMutation = {
   } | null,
 };
 
+export type GetAssetQueryVariables = {
+  id: string,
+};
+
+export type GetAssetQuery = {
+  getAsset?:  {
+    __typename: "Asset",
+    id: string,
+    title: string,
+    type: AssetType,
+    format: AssetFormat,
+    source:  {
+      __typename: "S3Object",
+      bucket: string,
+      key: string,
+      region: string,
+    },
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListAssetsQueryVariables = {
+  filter?: ModelAssetFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListAssetsQuery = {
+  listAssets?:  {
+    __typename: "ModelAssetConnection",
+    items?:  Array< {
+      __typename: "Asset",
+      id: string,
+      title: string,
+      type: AssetType,
+      format: AssetFormat,
+      description?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type GetTodoQueryVariables = {
   id: string,
 };
@@ -237,6 +439,63 @@ export type ListTodosQuery = {
       owner?: string | null,
     } | null > | null,
     nextToken?: string | null,
+  } | null,
+};
+
+export type OnCreateAssetSubscription = {
+  onCreateAsset?:  {
+    __typename: "Asset",
+    id: string,
+    title: string,
+    type: AssetType,
+    format: AssetFormat,
+    source:  {
+      __typename: "S3Object",
+      bucket: string,
+      key: string,
+      region: string,
+    },
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateAssetSubscription = {
+  onUpdateAsset?:  {
+    __typename: "Asset",
+    id: string,
+    title: string,
+    type: AssetType,
+    format: AssetFormat,
+    source:  {
+      __typename: "S3Object",
+      bucket: string,
+      key: string,
+      region: string,
+    },
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteAssetSubscription = {
+  onDeleteAsset?:  {
+    __typename: "Asset",
+    id: string,
+    title: string,
+    type: AssetType,
+    format: AssetFormat,
+    source:  {
+      __typename: "S3Object",
+      bucket: string,
+      key: string,
+      region: string,
+    },
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
