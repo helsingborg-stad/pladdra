@@ -37,7 +37,7 @@ type Asset @model @auth(rules: [{ allow: private }]) {
 }
 
 input CreateAssetInput {
-  id: ID!
+  id: ID
   title: String!
   type: AssetFileFormat!
   fileFormat: String!
