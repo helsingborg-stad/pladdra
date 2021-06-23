@@ -23,26 +23,27 @@ enum AssetFileFormat {
   GLB
   OBJ
   FBX
+  DWG
 }
 
 type Asset @model @auth(rules: [{ allow: private }]) {
   id: ID!
-  title: String!
-  type: AssetFileFormat!
-  fileFormat: String!
+  name: String!
+  type: AssetType!
+  fileFormat: AssetFileFormat!
   fileName: String!
-  fileSize: String!
+  fileSize: Int!
   file: S3Object!
   description: String
 }
 
 input CreateAssetInput {
   id: ID
-  title: String!
-  type: AssetFileFormat!
-  fileFormat: String!
+  name: String!
+  type: AssetType!
+  fileFormat: AssetFileFormat!
   fileName: String!
-  fileSize: String!
+  fileSize: Int!
   file: S3ObjectInput!
   description: String
 }
