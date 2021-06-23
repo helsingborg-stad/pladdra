@@ -12,6 +12,9 @@ import { TodoList } from "./components/todo/List"
 import { CreateTodo } from "./components/todo/Create"
 import { EditTodo } from "./components/todo/Edit"
 
+import { AssetList } from "./components/asset/List"
+import { CreateAsset } from "./components/asset/Create"
+
 Amplify.configure(awsExports)
 
 const App = (): React.ReactElement => {
@@ -29,6 +32,12 @@ const App = (): React.ReactElement => {
 				list={TodoList}
 				create={CreateTodo}
 				edit={EditTodo}
+			/>
+			<Resource
+				name="assets"
+				list={AssetList}
+				create={CreateAsset}
+				// edit={EditAsset}
 			/>
 		</AmplifyAdmin>
 	)
