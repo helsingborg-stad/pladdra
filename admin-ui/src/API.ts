@@ -3,7 +3,7 @@
 //  This file was automatically generated and should not be edited.
 
 export type CreateAssetInput = {
-  id: string,
+  id?: string | null,
   title: string,
   type: AssetFileFormat,
   fileFormat: string,
