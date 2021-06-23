@@ -8,9 +8,6 @@ import { AmplifyAdmin } from "react-admin-amplify"
 
 import awsExports from "./aws-exports.js"
 import { withAuthenticator } from "@aws-amplify/ui-react"
-import { TodoList } from "./components/todo/List"
-import { CreateTodo } from "./components/todo/Create"
-import { EditTodo } from "./components/todo/Edit"
 
 import { AssetList } from "./components/asset/List"
 import { CreateAsset } from "./components/asset/Create"
@@ -27,12 +24,6 @@ const App = (): React.ReactElement => {
 				storageRegion: awsExports.aws_user_files_s3_bucket_region,
 			}}
 		>
-			<Resource
-				name="todos"
-				list={TodoList}
-				create={CreateTodo}
-				edit={EditTodo}
-			/>
 			<Resource
 				name="assets"
 				list={AssetList}
