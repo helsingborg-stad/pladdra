@@ -18,7 +18,7 @@ enum AssetType {
   MESH
 }
 
-enum AssetFormat {
+enum AssetFileFormat {
   GLTF
   GLB
   OBJ
@@ -28,9 +28,11 @@ enum AssetFormat {
 type Asset @model @auth(rules: [{ allow: private }]) {
   id: ID!
   title: String!
-  type: AssetType!
-  format: AssetFormat!
-  source: S3Object!
+  type: AssetFileFormat!
+  fileFormat: String!
+  fileName: String!
+  fileSize: String!
+  file: S3Object!
   description: String
 }
 
