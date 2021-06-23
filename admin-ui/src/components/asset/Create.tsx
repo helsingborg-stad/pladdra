@@ -1,18 +1,30 @@
 import React, { useEffect, useState } from "react"
 import { Create, TextInput, SimpleForm, FormDataConsumer } from "react-admin"
 import {
-
 	AmplifyFileField,
 	AmplifyFileInput,
 	AmplifyImageField,
 	AmplifyImageInput,
 } from "react-admin-amplify"
 
-
-import { Storage } from "@aws-amplify/storage"
 import { AssetFileFormat, AssetType } from "../../API"
+import { parseExtension, humanReadableToBytes, bytesToHumanReadable } from "../../utils/File"
+import { capitalize } from '../../utils/String'
 
-const capitalize = (s: string) => (s && s[0].toUpperCase() + s.slice(1)) || ''
+const validateAssetCreation = (values: Record<string, any>) => {
+	const errors : Record<string, any> = {}
+	const { file } = values
+
+	if (file) {
+		const {bucket, region, key} = file
+
+		if (!bucket || !region || !key) {
+			errors.file = 'Wait for file upload to finish!'
+		}
+	}
+
+	return errors
+}
 
 export const CreateAsset = (props: any): React.ReactElement => {
 	const [ initialName, setInitialName ] = useState<string | null>(null)
@@ -21,61 +33,78 @@ export const CreateAsset = (props: any): React.ReactElement => {
 	const [ assetType, setAssetType ] = useState<AssetType | null>(AssetType.MESH)
 	const [ fileFormat, setFileFormat ] = useState<AssetFileFormat | null>(null)
 
-	const handleDropFile = ([file]: [any]) => {
+	const handleDropFile = ([file]: [ any ], e: any) => {
+		console.log('DROP IT LIKE ITS HOOOT', e)
 		const { path, name, size } = file
-
-		const formatRegArr = (/[.]/.exec(path)) ? /[^.]+$/.exec(path) ?? [] : []
-		const fileExstension = formatRegArr[0] ?? null
-
-		setInitialName(capitalize(name.replace(`.${fileExstension}`, '')))
+		const fileExstension = parseExtension(path) ?? ""
+		setInitialName(capitalize(name.replace(`.${fileExstension}`, "")))
 		setFileName(name)
 		setFileSize(size)
-		setFileFormat(AssetFileFormat[fileExstension.toUpperCase() as keyof typeof AssetFileFormat])
+		setFileFormat(
+			AssetFileFormat[fileExstension.toUpperCase() as keyof typeof AssetFileFormat],
+		)
 	}
 
 	return (
 		<Create {...props}>
-			<SimpleForm>
+			<SimpleForm validate={validateAssetCreation}>
 				<FormDataConsumer>
 					{({ formData, ...rest }) => (
 						<>
-							{formData.file && (
+							{console.log(formData)}
+							{formData.file && fileSize && (
 								<>
-									<TextInput source="type" fullWidth initialValue={assetType} disabled />
-									<TextInput source="name" initialValue={initialName ?? ''} fullWidth />
+									<TextInput
+										source="type"
+										fullWidth
+										initialValue={assetType}
+										disabled
+									/>
+									<TextInput
+										source="name"
+										initialValue={initialName ?? ""}
+										fullWidth
+									/>
 
-									{fileName && (
-										<TextInput source="fileName" initialValue={fileName} disabled fullWidth />
-									)}
-																		
-									{fileFormat && (
-										<TextInput source="fileFormat" initialValue={fileFormat} disabled fullWidth />
-									)}
-									
-									{fileSize && (
-										<TextInput source="fileSize" initialValue={fileSize} disabled fullWidth />
-									)}
+									<TextInput
+										source="fileName"
+										initialValue={fileName}
+										disabled
+										fullWidth
+									/>
 
+									<TextInput
+										source="fileFormat"
+										initialValue={fileFormat}
+										disabled
+										fullWidth
+									/>
+
+									<TextInput
+										source="fileSize"
+										initialValue={fileSize}
+										parse={humanReadableToBytes}
+										format={bytesToHumanReadable}
+										disabled
+										fullWidth
+									/>
 								</>
 							)}
-							
-							{
-								!formData.file && (
-									<AmplifyFileInput
-										source={'file'}
-										options={{
-											onDrop: handleDropFile,
-										}}
-										accept=".glb, .gltf, .fbx, .obj, .dwg"
-										storageOptions={{
-											level: 'private',
-										}}
-									/>
-								)
-							}
 
-							
-
+							<AmplifyFileInput
+								source={"file"}
+								onDropAccepted={handleDropFile}
+								options={{
+									onDrop: handleDropFile,
+									onDropAccepted: (e: any) => console.log('LOLOLOLOL', e),
+								}}
+								accept=".glb, .gltf, .fbx, .obj, .dwg"
+								storageOptions={{
+									onDropAccepted: handleDropFile,
+									level: "private",
+								}}
+								// validate={() => {}}
+							/>
 						</>
 					)}
 				</FormDataConsumer>
