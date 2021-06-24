@@ -96,12 +96,12 @@ export const CreateAsset = (props: any): React.ReactElement => {
 								onDropAccepted={handleDropFile}
 								options={{
 									onDrop: handleDropFile,
-									onDropAccepted: (e: any) => console.log('LOLOLOLOL', e),
 								}}
 								accept=".glb, .gltf, .fbx, .obj, .dwg"
 								storageOptions={{
+									download: true,
 									onDropAccepted: handleDropFile,
-									level: "private",
+									level: "public",
 								}}
 								// validate={() => {}}
 							/>
