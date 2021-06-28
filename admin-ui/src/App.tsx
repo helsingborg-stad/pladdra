@@ -3,14 +3,14 @@ import Amplify from "aws-amplify";
 import { Resource } from "react-admin";
 import { AmplifyAdmin } from "react-admin-amplify";
 import { withAuthenticator } from "@aws-amplify/ui-react";
-import * as mutations from "./graphql/mutations";
-import * as queries from "./graphql/queries";
+import { AssetList } from "components/asset/List";
+import { EditAsset } from "components/asset/Edit";
+import { CreateAsset } from "components/asset/Create";
+import * as mutations from "graphql/mutations";
+import * as queries from "graphql/queries";
 
-import awsExports from "./aws-exports";
+import awsExports from "aws-exports";
 
-import { AssetList } from "./components/asset/List";
-import { EditAsset } from "./components/asset/Edit";
-import { CreateAsset } from "./components/asset/Create";
 // import Dashboard from './components/Dashboard/Dashboard'
 
 Amplify.configure(awsExports);
