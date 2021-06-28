@@ -3,9 +3,9 @@ import Amplify from "aws-amplify";
 import { Resource } from "react-admin";
 import { AmplifyAdmin } from "react-admin-amplify";
 import { withAuthenticator } from "@aws-amplify/ui-react";
-import { AssetList } from "components/asset/List";
-import { EditAsset } from "components/asset/Edit";
-import { CreateAsset } from "components/asset/Create";
+import { AssetList } from "components/Asset/List";
+import { EditAsset } from "components/Asset/Edit";
+import { CreateAsset } from "components/Asset/Create";
 import * as mutations from "graphql/mutations";
 import * as queries from "graphql/queries";
 
