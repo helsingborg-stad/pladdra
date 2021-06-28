@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useEffect, useState } from "react";
-import { Create, TextInput, SimpleForm, FormDataConsumer } from "react-admin";
+import { Edit, TextInput, SimpleForm, FormDataConsumer } from "react-admin";
 import {
   AmplifyFileField,
   AmplifyFileInput,
@@ -31,7 +31,7 @@ const validateAssetCreation = (values: Record<string, any>) => {
   return errors;
 };
 
-export const CreateAsset = (props: any): React.ReactElement => {
+export const EditAsset = (props: any): React.ReactElement => {
   const [initialName, setInitialName] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
   const [fileSize, setFileSize] = useState<number | null>(null);
@@ -53,48 +53,28 @@ export const CreateAsset = (props: any): React.ReactElement => {
   };
 
   return (
-    <Create {...props}>
+    <Edit {...props}>
       <SimpleForm validate={validateAssetCreation}>
         <FormDataConsumer>
           {({ formData, ...rest }) => (
             <>
-              {console.log(formData)}
-              {formData.file && fileSize && (
+              {true && (
                 <>
-                  <TextInput
-                    source="type"
-                    fullWidth
-                    initialValue={assetType}
-                    disabled
-                  />
-                  <TextInput
-                    source="name"
-                    initialValue={initialName ?? ""}
-                    fullWidth
-                  />
+                  <TextInput source="id" fullWidth disabled />
+                  <TextInput source="type" fullWidth disabled />
+                  <TextInput source="name" fullWidth />
 
-                  <TextInput
-                    source="fileName"
-                    initialValue={fileName}
-                    disabled
-                    fullWidth
-                  />
+                  <TextInput source="fileName" disabled fullWidth />
 
-                  <TextInput
-                    source="fileFormat"
-                    initialValue={fileFormat}
-                    disabled
-                    fullWidth
-                  />
+                  <TextInput source="fileFormat" disabled fullWidth />
 
-                  <TextInput
-                    source="fileSize"
-                    initialValue={fileSize}
-                    parse={humanReadableToBytes}
-                    format={bytesToHumanReadable}
-                    disabled
-                    fullWidth
-                  />
+                  {/* <TextInput
+										source="fileSize"
+										// parse={humanReadableToBytes}
+										format={bytesToHumanReadable}
+										disabled
+										fullWidth
+									/> */}
                 </>
               )}
 
@@ -116,8 +96,8 @@ export const CreateAsset = (props: any): React.ReactElement => {
           )}
         </FormDataConsumer>
       </SimpleForm>
-    </Create>
+    </Edit>
   );
 };
 
-export default { CreateAsset };
+export default { EditAsset };

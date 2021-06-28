@@ -1,12 +1,5 @@
-import React from 'react'
+import React from "react";
 
+const Dashboard = (props: any): React.ReactElement => <div>Dashboard</div>;
 
-const Dashboard = (props: any) : React.ReactElement => {
-	return (
-		<div>
-			Dashboard
-		</div>
-	)
-}
-
-export default Dashboard
+export default Dashboard;
