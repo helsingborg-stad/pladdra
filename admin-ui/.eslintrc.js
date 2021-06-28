@@ -9,6 +9,7 @@ const config = {
       impliedStrict: true,
       jsx: true,
     },
+    project: "./tsconfig.json",
   },
   plugins: ["jest"],
   env: {
