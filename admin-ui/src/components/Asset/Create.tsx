@@ -1,12 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Create, TextInput, SimpleForm, FormDataConsumer } from "react-admin";
-import {
-  AmplifyFileField,
-  AmplifyFileInput,
-  AmplifyImageField,
-  AmplifyImageInput,
-} from "react-admin-amplify";
+import { AmplifyFileInput } from "react-admin-amplify";
 
 import { capitalize } from "utils/string";
 import {
@@ -31,15 +26,14 @@ const validateAssetCreation = (values: Record<string, any>) => {
   return errors;
 };
 
-export const CreateAsset = (props: any): React.ReactElement => {
+export const CreateAsset = (props: Record<string, any>): React.ReactElement => {
   const [initialName, setInitialName] = useState<string | null>(null);
   const [fileName, setFileName] = useState<string | null>(null);
   const [fileSize, setFileSize] = useState<number | null>(null);
-  const [assetType, setAssetType] = useState<AssetType | null>(AssetType.MESH);
+  const [assetType] = useState<AssetType | null>(AssetType.MESH);
   const [fileFormat, setFileFormat] = useState<AssetFileFormat | null>(null);
 
-  const handleDropFile = ([file]: [any], e: any) => {
-    console.log("DROP IT LIKE ITS HOOOT", e);
+  const handleDropFile = ([file]: [any]) => {
     const { path, name, size } = file;
     const fileExstension = parseExtension(path) ?? "";
     setInitialName(capitalize(name.replace(`.${fileExstension}`, "")));
@@ -56,9 +50,8 @@ export const CreateAsset = (props: any): React.ReactElement => {
     <Create {...props}>
       <SimpleForm validate={validateAssetCreation}>
         <FormDataConsumer>
-          {({ formData, ...rest }) => (
+          {({ formData }) => (
             <>
-              {console.log(formData)}
               {formData.file && fileSize && (
                 <>
                   <TextInput
