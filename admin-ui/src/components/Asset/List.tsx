@@ -15,7 +15,7 @@ import {
   AmplifyImageField,
   AmplifyImageInput,
 } from "react-admin-amplify";
-import { bytesToHumanReadable } from "../../utils/File";
+import { bytesToHumanReadable } from "utils/file";
 
 const FileSizeField = ({ source, ...rest }: any): React.ReactElement => (
   <FunctionField

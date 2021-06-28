@@ -8,13 +8,9 @@ import {
   AmplifyImageInput,
 } from "react-admin-amplify";
 
-import { AssetFileFormat, AssetType } from "../../API";
-import {
-  parseExtension,
-  humanReadableToBytes,
-  bytesToHumanReadable,
-} from "../../utils/File";
-import { capitalize } from "../../utils/String";
+import { AssetFileFormat, AssetType } from "API";
+import { parseExtension } from "utils/file";
+import { capitalize } from "utils/string";
 
 const validateAssetCreation = (values: Record<string, any>) => {
   const errors: Record<string, any> = {};
