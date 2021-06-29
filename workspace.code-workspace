@@ -1,7 +1,16 @@
 {
 	"folders": [
 		{
-			"path": "."
+			"path": "./admin-ui"
+		},
+		{
+			"path": "./amplify"
+		},
+		{
+			"path": "./Unity"
+		},
+		{
+			"path": "./"
 		}
 	],
 	"settings": {}
