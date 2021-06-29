@@ -1,0 +1,69 @@
+type S3Object {
+  bucket: String!
+  key: String!
+  region: String!
+}
+
+input S3ObjectInput {
+  bucket: String!
+  key: String!
+  region: String!
+  localUri: String
+  mimeType: String
+  url: String
+  _url: String
+}
+
+enum AssetType {
+  MESH
+}
+
+enum AssetFileFormat {
+  GLTF
+  GLB
+  OBJ
+  FBX
+  DWG
+}
+
+type Asset @model @auth(rules: [{ allow: private }]) {
+  id: ID!
+  name: String!
+  type: AssetType!
+  fileFormat: AssetFileFormat!
+  fileName: String!
+  fileSize: Int!
+  file: S3Object!
+  description: String
+}
+
+input CreateAssetInput {
+  id: ID
+  name: String!
+  type: AssetType!
+  fileFormat: AssetFileFormat!
+  fileName: String!
+  fileSize: Int!
+  file: S3ObjectInput!
+  description: String
+}
+
+type Todo @model @auth(rules: [{ allow: owner }]) {
+  id: ID!
+  name: String!
+  description: String
+  image: S3Object
+}
+
+input CreateTodoInput {
+  id: ID
+  name: String!
+  description: String
+  image: S3ObjectInput 
+}
+input ListTodoQuery {
+  id: ID
+  name: String!
+  description: String
+  image: S3ObjectInput 
+}

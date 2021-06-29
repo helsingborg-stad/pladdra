@@ -1,0 +1,18 @@
+projects:
+  pladdra:
+    schemaPath: admin-ui/src/graphql/schema.json
+    includes:
+      - admin-ui/src/graphql/**/*.ts
+    excludes:
+      - ./amplify/**
+    extensions:
+      amplify:
+        codeGenTarget: typescript
+        generatedFileName: admin-ui/src/API.ts
+        docsFilePath: admin-ui/src/graphql
+        region: eu-north-1
+        apiId: null
+        maxDepth: 2
+extensions:
+  amplify:
+    version: 3

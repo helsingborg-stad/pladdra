@@ -1,0 +1,17 @@
+{
+  "projectName": "pladdra",
+  "version": "3.1",
+  "frontend": "javascript",
+  "javascript": {
+    "framework": "react",
+    "config": {
+      "SourceDir": "admin-ui/src",
+      "DistributionDir": "admin-ui/public",
+      "BuildCommand": "yarn build",
+      "StartCommand": "yarn start"
+    }
+  },
+  "providers": [
+    "awscloudformation"
+  ]
+}
