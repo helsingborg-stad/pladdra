@@ -62,3 +62,6 @@ ios
 com.kyrylokuzyk.arfoundationremote
 ARFoundationRemoteInstaller
 ARFoundationRemoteCompanionApp
+Assets/Packages
+Assets/Packages.meta
+.env
