@@ -73,7 +73,15 @@
               "userPoolId": "authpladdraf1727651f1727651"
             }
           },
-          "additionalAuthenticationProviders": []
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "API_KEY",
+              "apiKeyConfig": {
+                "apiKeyExpirationDays": 365,
+                "description": "pladdra-client-api-key"
+              }
+            }
+          ]
         }
       }
     }
