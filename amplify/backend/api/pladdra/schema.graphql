@@ -26,7 +26,19 @@ enum AssetFileFormat {
   DWG
 }
 
-type Asset @model @auth(rules: [{ allow: private }]) {
+type Asset
+  @model
+  @auth(
+    rules: [
+      { allow: private }
+      { allow: public, provider: apiKey, operations: [read] }
+    ]
+  )
+  @key(
+    name: "byFileFormat"
+    fields: ["fileFormat", "createdAt", "updatedAt"]
+    queryField: "assetsByFileFormat"
+  ) {
   id: ID!
   name: String!
   type: AssetType!
@@ -35,6 +47,8 @@ type Asset @model @auth(rules: [{ allow: private }]) {
   fileSize: Int!
   file: S3Object!
   description: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
 }
 
 input CreateAssetInput {
@@ -59,11 +73,11 @@ input CreateTodoInput {
   id: ID
   name: String!
   description: String
-  image: S3ObjectInput 
+  image: S3ObjectInput
 }
 input ListTodoQuery {
   id: ID
   name: String!
   description: String
-  image: S3ObjectInput 
+  image: S3ObjectInput
 }

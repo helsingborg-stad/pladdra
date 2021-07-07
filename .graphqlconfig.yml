@@ -10,7 +10,7 @@ projects:
         codeGenTarget: typescript
         generatedFileName: admin-ui/src/API.ts
         docsFilePath: admin-ui/src/graphql
-        region: eu-north-1
+        region: eu-central-1
         apiId: null
         maxDepth: 2
 extensions:

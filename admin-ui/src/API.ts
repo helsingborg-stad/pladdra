@@ -44,6 +44,8 @@ export type ModelAssetConditionInput = {
   fileName?: ModelStringInput | null,
   fileSize?: ModelIntInput | null,
   description?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
   and?: Array< ModelAssetConditionInput | null > | null,
   or?: Array< ModelAssetConditionInput | null > | null,
   not?: ModelAssetConditionInput | null,
@@ -141,6 +143,8 @@ export type UpdateAssetInput = {
   fileSize?: number | null,
   file?: S3ObjectInput | null,
   description?: string | null,
+  createdAt?: string | null,
+  updatedAt?: string | null,
 };
 
 export type DeleteAssetInput = {
@@ -184,17 +188,13 @@ export type DeleteTodoInput = {
   id: string,
 };
 
-export type ModelAssetFilterInput = {
+export type ModelTodoFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
-  type?: ModelAssetTypeInput | null,
-  fileFormat?: ModelAssetFileFormatInput | null,
-  fileName?: ModelStringInput | null,
-  fileSize?: ModelIntInput | null,
   description?: ModelStringInput | null,
-  and?: Array< ModelAssetFilterInput | null > | null,
-  or?: Array< ModelAssetFilterInput | null > | null,
-  not?: ModelAssetFilterInput | null,
+  and?: Array< ModelTodoFilterInput | null > | null,
+  or?: Array< ModelTodoFilterInput | null > | null,
+  not?: ModelTodoFilterInput | null,
 };
 
 export type ModelIDInput = {
@@ -213,26 +213,53 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
+export type ModelTodoConnection = {
+  __typename: "ModelTodoConnection",
+  items?:  Array<Todo | null > | null,
+  nextToken?: string | null,
+};
+
+export type ModelAssetFilterInput = {
+  id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  type?: ModelAssetTypeInput | null,
+  fileFormat?: ModelAssetFileFormatInput | null,
+  fileName?: ModelStringInput | null,
+  fileSize?: ModelIntInput | null,
+  description?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  and?: Array< ModelAssetFilterInput | null > | null,
+  or?: Array< ModelAssetFilterInput | null > | null,
+  not?: ModelAssetFilterInput | null,
+};
+
 export type ModelAssetConnection = {
   __typename: "ModelAssetConnection",
   items?:  Array<Asset | null > | null,
   nextToken?: string | null,
 };
 
-export type ModelTodoFilterInput = {
-  id?: ModelIDInput | null,
-  name?: ModelStringInput | null,
-  description?: ModelStringInput | null,
-  and?: Array< ModelTodoFilterInput | null > | null,
-  or?: Array< ModelTodoFilterInput | null > | null,
-  not?: ModelTodoFilterInput | null,
+export type ModelAssetByFileFormatCompositeKeyConditionInput = {
+  eq?: ModelAssetByFileFormatCompositeKeyInput | null,
+  le?: ModelAssetByFileFormatCompositeKeyInput | null,
+  lt?: ModelAssetByFileFormatCompositeKeyInput | null,
+  ge?: ModelAssetByFileFormatCompositeKeyInput | null,
+  gt?: ModelAssetByFileFormatCompositeKeyInput | null,
+  between?: Array< ModelAssetByFileFormatCompositeKeyInput | null > | null,
+  beginsWith?: ModelAssetByFileFormatCompositeKeyInput | null,
 };
 
-export type ModelTodoConnection = {
-  __typename: "ModelTodoConnection",
-  items?:  Array<Todo | null > | null,
-  nextToken?: string | null,
+export type ModelAssetByFileFormatCompositeKeyInput = {
+  createdAt?: string | null,
+  updatedAt?: string | null,
 };
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
 
 export type CreateAssetMutationVariables = {
   input: CreateAssetInput,
@@ -381,6 +408,50 @@ export type DeleteTodoMutation = {
   } | null,
 };
 
+export type GetTodoQueryVariables = {
+  id: string,
+};
+
+export type GetTodoQuery = {
+  getTodo?:  {
+    __typename: "Todo",
+    id: string,
+    name: string,
+    description?: string | null,
+    image?:  {
+      __typename: "S3Object",
+      bucket: string,
+      key: string,
+      region: string,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type ListTodosQueryVariables = {
+  filter?: ModelTodoFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListTodosQuery = {
+  listTodos?:  {
+    __typename: "ModelTodoConnection",
+    items?:  Array< {
+      __typename: "Todo",
+      id: string,
+      name: string,
+      description?: string | null,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type GetAssetQueryVariables = {
   id: string,
 };
@@ -431,110 +502,31 @@ export type ListAssetsQuery = {
   } | null,
 };
 
-export type GetTodoQueryVariables = {
-  id: string,
-};
-
-export type GetTodoQuery = {
-  getTodo?:  {
-    __typename: "Todo",
-    id: string,
-    name: string,
-    description?: string | null,
-    image?:  {
-      __typename: "S3Object",
-      bucket: string,
-      key: string,
-      region: string,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-    owner?: string | null,
-  } | null,
-};
-
-export type ListTodosQueryVariables = {
-  filter?: ModelTodoFilterInput | null,
+export type AssetsByFileFormatQueryVariables = {
+  fileFormat?: AssetFileFormat | null,
+  createdAtUpdatedAt?: ModelAssetByFileFormatCompositeKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelAssetFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type ListTodosQuery = {
-  listTodos?:  {
-    __typename: "ModelTodoConnection",
+export type AssetsByFileFormatQuery = {
+  assetsByFileFormat?:  {
+    __typename: "ModelAssetConnection",
     items?:  Array< {
-      __typename: "Todo",
+      __typename: "Asset",
       id: string,
       name: string,
+      type: AssetType,
+      fileFormat: AssetFileFormat,
+      fileName: string,
+      fileSize: number,
       description?: string | null,
       createdAt: string,
       updatedAt: string,
-      owner?: string | null,
     } | null > | null,
     nextToken?: string | null,
-  } | null,
-};
-
-export type OnCreateAssetSubscription = {
-  onCreateAsset?:  {
-    __typename: "Asset",
-    id: string,
-    name: string,
-    type: AssetType,
-    fileFormat: AssetFileFormat,
-    fileName: string,
-    fileSize: number,
-    file:  {
-      __typename: "S3Object",
-      bucket: string,
-      key: string,
-      region: string,
-    },
-    description?: string | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateAssetSubscription = {
-  onUpdateAsset?:  {
-    __typename: "Asset",
-    id: string,
-    name: string,
-    type: AssetType,
-    fileFormat: AssetFileFormat,
-    fileName: string,
-    fileSize: number,
-    file:  {
-      __typename: "S3Object",
-      bucket: string,
-      key: string,
-      region: string,
-    },
-    description?: string | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteAssetSubscription = {
-  onDeleteAsset?:  {
-    __typename: "Asset",
-    id: string,
-    name: string,
-    type: AssetType,
-    fileFormat: AssetFileFormat,
-    fileName: string,
-    fileSize: number,
-    file:  {
-      __typename: "S3Object",
-      bucket: string,
-      key: string,
-      region: string,
-    },
-    description?: string | null,
-    createdAt: string,
-    updatedAt: string,
   } | null,
 };
 
@@ -601,5 +593,68 @@ export type OnDeleteTodoSubscription = {
     createdAt: string,
     updatedAt: string,
     owner?: string | null,
+  } | null,
+};
+
+export type OnCreateAssetSubscription = {
+  onCreateAsset?:  {
+    __typename: "Asset",
+    id: string,
+    name: string,
+    type: AssetType,
+    fileFormat: AssetFileFormat,
+    fileName: string,
+    fileSize: number,
+    file:  {
+      __typename: "S3Object",
+      bucket: string,
+      key: string,
+      region: string,
+    },
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateAssetSubscription = {
+  onUpdateAsset?:  {
+    __typename: "Asset",
+    id: string,
+    name: string,
+    type: AssetType,
+    fileFormat: AssetFileFormat,
+    fileName: string,
+    fileSize: number,
+    file:  {
+      __typename: "S3Object",
+      bucket: string,
+      key: string,
+      region: string,
+    },
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteAssetSubscription = {
+  onDeleteAsset?:  {
+    __typename: "Asset",
+    id: string,
+    name: string,
+    type: AssetType,
+    fileFormat: AssetFileFormat,
+    fileName: string,
+    fileSize: number,
+    file:  {
+      __typename: "S3Object",
+      bucket: string,
+      key: string,
+      region: string,
+    },
+    description?: string | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
