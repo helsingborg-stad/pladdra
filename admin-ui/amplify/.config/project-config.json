@@ -5,8 +5,8 @@
   "javascript": {
     "framework": "react",
     "config": {
-      "SourceDir": "admin-ui/src",
-      "DistributionDir": "admin-ui/public",
+      "SourceDir": "src",
+      "DistributionDir": "public",
       "BuildCommand": "yarn build",
       "StartCommand": "yarn start"
     }
