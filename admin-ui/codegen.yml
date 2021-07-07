@@ -17,5 +17,4 @@ generates:
     config:
       namespaceName: Pladdra
       documentMode: documentNode
-      typesafeOperation: true
       strictScalars: true
