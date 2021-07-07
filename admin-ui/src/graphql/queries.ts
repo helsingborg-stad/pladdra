@@ -2,42 +2,6 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getTodo = /* GraphQL */ `
-  query GetTodo($id: ID!) {
-    getTodo(id: $id) {
-      id
-      name
-      description
-      image {
-        bucket
-        key
-        region
-      }
-      createdAt
-      updatedAt
-      owner
-    }
-  }
-`;
-export const listTodos = /* GraphQL */ `
-  query ListTodos(
-    $filter: ModelTodoFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listTodos(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        name
-        description
-        createdAt
-        updatedAt
-        owner
-      }
-      nextToken
-    }
-  }
-`;
 export const getAsset = /* GraphQL */ `
   query GetAsset($id: ID!) {
     getAsset(id: $id) {
@@ -72,6 +36,11 @@ export const listAssets = /* GraphQL */ `
         fileFormat
         fileName
         fileSize
+        file {
+          bucket
+          key
+          region
+        }
         description
         createdAt
         updatedAt
@@ -104,6 +73,11 @@ export const assetsByFileFormat = /* GraphQL */ `
         fileFormat
         fileName
         fileSize
+        file {
+          bucket
+          key
+          region
+        }
         description
         createdAt
         updatedAt
