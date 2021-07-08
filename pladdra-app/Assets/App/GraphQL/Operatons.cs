@@ -2,7 +2,7 @@ using Newtonsoft.Json;
 using GraphQL;
 using GraphQL.Client.Abstractions;
 
-namespace Pladdra {
+namespace Pladdra.API {
 
     public class CreateAssetGQL {
       /// <summary>

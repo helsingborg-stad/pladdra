@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using GraphQL;
 
-namespace Pladdra {
+namespace Pladdra.API {
   public class Types {
     
     #region Asset
