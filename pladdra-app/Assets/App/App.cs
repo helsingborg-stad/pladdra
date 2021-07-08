@@ -31,9 +31,10 @@ namespace Pladdra
         private GameObject _login;
         private GameObject _loginLoaderText;
         private GameObject _mainMenu;
-        private GameObject _download;
+        private GameObject _assets;
 
         private Auth _auth;
+        private Assets _assetsManager;
 
         void Awake()
         {
@@ -42,10 +43,11 @@ namespace Pladdra
 
             _login = GameObject.Find("Login");
             _mainMenu = GameObject.Find("MainMenu");
-            _download = GameObject.Find("Download");
+            _assets = GameObject.Find("Assets");
 
 
             _auth = FindObjectOfType<Auth>();
+            _assetsManager = FindObjectOfType<Assets>();
         }
 
         void Start()
@@ -67,13 +69,11 @@ namespace Pladdra
             {
                 _login.SetActive(false);
                 _mainMenu.SetActive(true);
-                _download.SetActive(false);
             }
             else
             {
                 _login.SetActive(true);
                 _mainMenu.SetActive(false);
-                _download.SetActive(false);
             }
 
             // clear out passwords
@@ -113,6 +113,13 @@ namespace Pladdra
         private void onAssetsClick()
         {
             Debug.Log("onAssetsClick");
+
+            _assetsManager.SyncAssets();
+        }
+
+        public void Test()
+        {
+            Debug.Log("Test!!");
         }
     }
 }
