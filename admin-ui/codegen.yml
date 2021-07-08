@@ -10,11 +10,11 @@ generates:
     plugins:
       - c-sharp
     config:
-      namespaceName: Pladdra
+      namespaceName: Pladdra.API
   ../pladdra-app/Assets/App/GraphQL/Operatons.cs:
     plugins:
       - c-sharp-operations
     config:
-      namespaceName: Pladdra
+      namespaceName: Pladdra.API
       documentMode: documentNode
       strictScalars: true
