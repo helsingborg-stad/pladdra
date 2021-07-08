@@ -16,6 +16,7 @@ namespace Pladdra
         public List<Pladdra.API.Types.Asset> resolvedAssets;
         public List<Pladdra.API.Types.Asset> rejectedAssets;
 
+
         public string appSyncApiUrl;
         public string appSyncApiKey;
         public string appSyncApiID;
@@ -24,6 +25,10 @@ namespace Pladdra
         private S3 _S3;
 
         private GraphQLHttpClient _client;
+
+        private AssetsCache _assetsCache;
+
+        private PigletImport _PigletImport;
 
         protected static string assetsJson = "assets.json";
 
@@ -39,22 +44,29 @@ namespace Pladdra
                         remoteAssets = items;
                     }
 
-                    AssetsCache assetsCache = new AssetsCache();
-                    SaveDataManager.LoadJsonData(assetsCache, true);
-                    diffAssets = remoteAssets.Where(asset => (assetsCache.items.Count == 0
-                    || (assetsCache.items.Where(item => item.id == asset.id).ToList().Count == 0))).ToList();
+                    if (_assetsCache == null)
+                    {
+                        _assetsCache = new AssetsCache();
+                    }
+
+                    SaveDataManager.LoadJsonData(_assetsCache, true);
+                    diffAssets = remoteAssets.Where(asset => (_assetsCache.items.Count == 0
+                    || (_assetsCache.items.Where(item => item.id == asset.id).ToList().Count == 0))).ToList();
                     if (diffAssets.Count > 0)
                     {
                         foreach (Pladdra.API.Types.Asset newAsset in diffAssets)
                         {
                             Task streamTask = _S3.SaveObjectToFile("downloads/" + newAsset.id + "." + newAsset.fileFormat.ToString().ToLower(), "public/" + newAsset.file.key, newAsset.file.bucket).ContinueWith(ctx =>
                             {
-                                assetsCache.items.Add(newAsset);
+                                _assetsCache.items.Add(newAsset);
                             });
                             streamTask.Wait();
                         }
-                        SaveDataManager.SaveJsonData(assetsCache);
+                        SaveDataManager.SaveJsonData(_assetsCache);
                     }
+
+
+                    _PigletImport.Import();
                 }
                 catch (Exception e)
                 {
@@ -74,6 +86,7 @@ namespace Pladdra
         {
             _app = GetComponent<App>();
             _S3 = GetComponent<S3>();
+            _PigletImport = GetComponent<PigletImport>();
             appSyncApiUrl = _app.appSyncApiUrl;
             appSyncApiKey = _app.appSyncApiKey;
             appSyncApiID = _app.appSyncApiID;
