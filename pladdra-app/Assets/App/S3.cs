@@ -38,6 +38,8 @@ namespace Pladdra
             };
 
             GetObjectResponse response = await client.GetObjectAsync(request);
+            await Task.Run(() =>
+            {
                 using (Stream responseStream = response.ResponseStream)
                 {
                     var bytes = ReadStream(responseStream);
@@ -45,6 +47,7 @@ namespace Pladdra
                     File.WriteAllBytes(Path.Combine(Pladdra.App.CachePath, fileName), bytes);
                     responseStream.Close();
                 }
+            });
         }
 
         public static byte[] ReadStream(Stream responseStream)
