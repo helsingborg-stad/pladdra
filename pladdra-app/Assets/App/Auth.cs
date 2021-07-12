@@ -12,16 +12,19 @@ using System.Net;
 namespace Pladdra
 {
 
-    [RequireComponent(typeof(App))]
     public class Auth : MonoBehaviour
     {
+
+        private static Auth s_instance;
+
         // the AWS region of where your services live
         public static Amazon.RegionEndpoint Region = Amazon.RegionEndpoint.EUCentral1;
 
         // In production, should probably keep these in a config file
-        protected string IdentityPool; //insert your Cognito User Pool ID, found under General Settings
-        protected string AppClientID; //insert App client ID, found under App Client Settings
-        protected string userPoolId;
+
+        [SerializeField] private string cognitoIdentityPoolID;
+        [SerializeField] private string cognitoAppClientID;
+        [SerializeField] private string cognitoUserPoolID;
 
         private AmazonCognitoIdentityProviderClient _provider;
         private CognitoAWSCredentials _cognitoAWSCredentials;
@@ -29,7 +32,7 @@ namespace Pladdra
         private CognitoUser _user;
         private App _app;
 
-        public async Task<bool> RefreshSession()
+        public static async Task<bool> RefreshSession()
         {
             Debug.Log("RefreshSession");
 
@@ -39,10 +42,10 @@ namespace Pladdra
 
             try
             {
-                CognitoUserPool userPool = new CognitoUserPool(userPoolId, AppClientID, _provider);
+                CognitoUserPool userPool = new CognitoUserPool(s_instance.cognitoUserPoolID, s_instance.cognitoAppClientID, s_instance._provider);
 
                 // apparently the username field can be left blank for a token refresh request
-                CognitoUser user = new CognitoUser("", AppClientID, userPool, _provider);
+                CognitoUser user = new CognitoUser("", s_instance.cognitoAppClientID, userPool, s_instance._provider);
 
                 // The "Refresh token expiration (days)" (Cognito->UserPool->General Settings->App clients->Show Details) is the
                 // amount of time since the last login that you can use the refresh token to get new tokens. After that period the refresh
@@ -75,9 +78,9 @@ namespace Pladdra
                 SaveDataManager.SaveJsonData(userSessionCacheToUpdate);
 
                 // update credentials with the latest access token
-                _cognitoAWSCredentials = user.GetCognitoAWSCredentials(IdentityPool, Region);
+                s_instance._cognitoAWSCredentials = user.GetCognitoAWSCredentials(s_instance.cognitoIdentityPoolID, Region);
 
-                _user = user;
+                s_instance._user = user;
 
                 return true;
             }
@@ -99,12 +102,12 @@ namespace Pladdra
             return false;
         }
 
-        public async Task<bool> Login(string userName, string password)
+        public static async Task<bool> Login(string userName, string password)
         {
             // Debug.Log("Login: " + userName + ", " + password);
 
-            CognitoUserPool userPool = new CognitoUserPool(userPoolId, AppClientID, _provider);
-            CognitoUser user = new CognitoUser(userName, AppClientID, userPool, _provider);
+            CognitoUserPool userPool = new CognitoUserPool(s_instance.cognitoUserPoolID, s_instance.cognitoAppClientID, s_instance._provider);
+            CognitoUser user = new CognitoUser(userName, s_instance.cognitoAppClientID, userPool, s_instance._provider);
 
             InitiateSrpAuthRequest authRequest = new InitiateSrpAuthRequest()
             {
@@ -115,7 +118,7 @@ namespace Pladdra
             {
                 AuthFlowResponse authFlowResponse = await user.StartWithSrpAuthAsync(authRequest).ConfigureAwait(false);
 
-                _userid = await GetUserIdFromProvider(authFlowResponse.AuthenticationResult.AccessToken);
+                _userid = await s_instance.GetUserIdFromProvider(authFlowResponse.AuthenticationResult.AccessToken);
                 // Debug.Log("Users unique ID from cognito: " + _userid);
 
                 UserSessionCache userSessionCache = new UserSessionCache(
@@ -129,9 +132,9 @@ namespace Pladdra
                 // This how you get credentials to use for accessing other services.
                 // This IdentityPool is your Authorization, so if you tried to access using an
                 // IdentityPool that didn't have the policy to access your target AWS service, it would fail.
-                _cognitoAWSCredentials = user.GetCognitoAWSCredentials(IdentityPool, Region);
+                s_instance._cognitoAWSCredentials = user.GetCognitoAWSCredentials(s_instance.cognitoIdentityPoolID, Region);
 
-                _user = user;
+                s_instance._user = user;
 
                 return true;
             }
@@ -142,13 +145,13 @@ namespace Pladdra
             }
         }
 
-        public async Task<bool> Signup(string username, string email, string password)
+        public static async Task<bool> Signup(string username, string email, string password)
         {
             // Debug.Log("SignUpRequest: " + username + ", " + email + ", " + password);
 
             SignUpRequest signUpRequest = new SignUpRequest()
             {
-                ClientId = AppClientID,
+                ClientId = s_instance.cognitoAppClientID,
                 Username = email,
                 Password = password
             };
@@ -167,7 +170,7 @@ namespace Pladdra
 
             try
             {
-                SignUpResponse sighupResponse = await _provider.SignUpAsync(signUpRequest);
+                SignUpResponse sighupResponse = await s_instance._provider.SignUpAsync(signUpRequest);
                 Debug.Log("Sign up successful");
                 return true;
             }
@@ -179,7 +182,7 @@ namespace Pladdra
         }
 
         // Make the user's unique id available for GameLift APIs, linking saved data to user, etc
-        public string GetUsersId()
+        public static string GetUsersId()
         {
             // Debug.Log("GetUserId: [" + _userid + "]");
             if (_userid == null || _userid == "")
@@ -199,7 +202,7 @@ namespace Pladdra
             string subId = "";
 
             Task<GetUserResponse> responseTask =
-               _provider.GetUserAsync(new GetUserRequest
+               s_instance._provider.GetUserAsync(new GetUserRequest
                {
                    AccessToken = accessToken
                });
@@ -222,9 +225,9 @@ namespace Pladdra
         // Limitation note: so this GlobalSignOutAsync signs out the user from ALL devices, and not just the game.
         // So if you had other sessions for your website or app, those would also be killed.  
         // Currently, I don't think there is native support for granular session invalidation without some work arounds.
-        public async void SignOut()
+        public static async void SignOut()
         {
-            await _user.GlobalSignOutAsync();
+            await s_instance._user.GlobalSignOutAsync();
 
             // Important! Make sure to remove the local stored tokens 
             UserSessionCache userSessionCache = new UserSessionCache("", "", "", "");
@@ -234,13 +237,13 @@ namespace Pladdra
         }
 
         // access to the user's authenticated credentials to be used to call other AWS APIs
-        public CognitoAWSCredentials GetCredentials()
+        public static CognitoAWSCredentials GetCredentials()
         {
-            return _cognitoAWSCredentials;
+            return s_instance._cognitoAWSCredentials;
         }
 
         // access to the user's access token to be used wherever needed - may not need this at all.
-        public string GetAccessToken()
+        public static string GetAccessToken()
         {
             UserSessionCache userSessionCache = new UserSessionCache();
             SaveDataManager.LoadJsonData(userSessionCache);
@@ -249,13 +252,9 @@ namespace Pladdra
 
         void Awake()
         {
-            Debug.Log("AuthenticationManager: Awake");
+            s_instance = this;
             _provider = new AmazonCognitoIdentityProviderClient(new Amazon.Runtime.AnonymousAWSCredentials(), Region);
-            _app = GetComponent<App>();
-            IdentityPool = _app.cognitoIdentityPoolID;
-            AppClientID = _app.cognitoAppClientID;
-            userPoolId = _app.cognitoUserPoolID;
+            Debug.Log("AuthenticationManager: Awake");
         }
     }
-
 }

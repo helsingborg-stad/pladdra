@@ -12,23 +12,21 @@ namespace Pladdra
         public string S3BucketName = null;
         public string SampleFileName = null;
 
-        private Auth _auth;
-        private IAmazonS3 _s3Client;
-        private IAmazonS3 client
+        private static IAmazonS3 _s3Client;
+        private static IAmazonS3 client
         {
             get
             {
                 if (_s3Client == null)
                 {
-                    _s3Client = new AmazonS3Client(_auth.GetCredentials(), Auth.Region);
+                    _s3Client = new AmazonS3Client(Auth.GetCredentials(), Auth.Region);
                 }
                 //test comment
                 return _s3Client;
             }
         }
 
-
-        public async Task SaveObjectToFile(string fileName, string keyName, string bucketName)
+        public static async Task SaveObjectToFile(string fileName, string keyName, string bucketName)
         {
             string path = Path.Combine(Pladdra.App.CachePath, fileName);
             System.IO.FileInfo file = new System.IO.FileInfo(path);
@@ -40,14 +38,15 @@ namespace Pladdra
             };
 
             GetObjectResponse response = await client.GetObjectAsync(request);
-            using (Stream responseStream = response.ResponseStream)
-            {
-                var bytes = ReadStream(responseStream);
-                file.Directory.Create();
-                File.WriteAllBytes(Path.Combine(Pladdra.App.CachePath, fileName), bytes);
-                responseStream.Close();
-            }
+                using (Stream responseStream = response.ResponseStream)
+                {
+                    var bytes = ReadStream(responseStream);
+                    file.Directory.Create();
+                    File.WriteAllBytes(Path.Combine(Pladdra.App.CachePath, fileName), bytes);
+                    responseStream.Close();
+                }
         }
+
         public static byte[] ReadStream(Stream responseStream)
         {
             byte[] buffer = new byte[16 * 1024];
@@ -62,7 +61,7 @@ namespace Pladdra
             }
         }
 
-        public async Task<ListObjectsResponse> ListingObjectsAsync(string bucketName)
+        public static async Task<ListObjectsResponse> ListingObjectsAsync(string bucketName)
         {
             ListObjectsResponse response = null;
 
@@ -85,13 +84,6 @@ namespace Pladdra
             }
 
             return response;
-        }
-
-        void Awake()
-        {
-            _auth = FindObjectOfType<Auth>();
-
-
         }
     }
 }

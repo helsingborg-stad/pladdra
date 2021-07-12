@@ -8,49 +8,63 @@ using UnityEngine;
 using Newtonsoft.Json;
 using System.Net.Http;
 
+
+using System.Threading;
+using GraphQL.Client.Abstractions;
+
 namespace Pladdra.API
 {
-    public class GraphQLClient
+    public class GraphQLClient : MonoBehaviour
     {
-        public string apiUrl;
-        public string apiKey;
-        private static GraphQLHttpClient graphQLHttpClient;
 
-        public GraphQLHttpClient Connect(string url, string key)
-        {
-            apiUrl = url;
-            apiKey = key;
-            Uri uri = new Uri(apiUrl);
-            var graphQLOptions = new GraphQLHttpClientOptions
-            {
-                EndPoint = uri,
-                PreprocessRequest = this.PreprocessRequest
-            };
+        private static GraphQLClient s_instance;
 
-            graphQLHttpClient = new GraphQLHttpClient(graphQLOptions, new NewtonsoftJsonSerializer());
+        [SerializeField] private string appSyncApiUrl;
+        [SerializeField] private string appSyncApiKey;
+        [SerializeField] private string appSyncApiID;
 
-            return graphQLHttpClient;
-        }
+        public static GraphQLHttpClient client;
 
-        public Task<GraphQLResponse<T>> Request<T>(string completeQueryString)
+        public static Task<GraphQLResponse<TResponse>> SendQueryAsync<TResponse>(GraphQLRequest request, CancellationToken cancellationToken = default) => client.SendQueryAsync<TResponse>(request, cancellationToken);
+
+
+        public static Task<GraphQLResponse<T>> Request<T>(string completeQueryString)
         {
             var request = new GraphQLRequest
             {
                 Query = completeQueryString
             };
 
-            return graphQLHttpClient.SendQueryAsync<T>(request);
+            return client.SendQueryAsync<T>(request);
         }
 
-        public Task<GraphQLHttpRequest> PreprocessRequest(GraphQLRequest request, GraphQLHttpClient client)
+        private GraphQLHttpClient Connect()
+        {
+            Uri uri = new Uri(appSyncApiUrl);
+            var graphQLOptions = new GraphQLHttpClientOptions
+            {
+                EndPoint = uri,
+                PreprocessRequest = this.PreprocessRequest
+            };
+
+            return new GraphQLHttpClient(graphQLOptions, new NewtonsoftJsonSerializer());
+        }
+
+        private Task<GraphQLHttpRequest> PreprocessRequest(GraphQLRequest request, GraphQLHttpClient client)
         {
 
             if (!client.HttpClient.DefaultRequestHeaders.Contains("x-api-key"))
             {
-                client.HttpClient.DefaultRequestHeaders.Add("x-api-key", apiKey);
+                client.HttpClient.DefaultRequestHeaders.Add("x-api-key", appSyncApiKey);
             }
 
             return Task.FromResult(new GraphQLHttpRequest(request));
+        }
+
+        private void Awake()
+        {
+            s_instance = this;
+            client = Connect();
         }
     }
 }
