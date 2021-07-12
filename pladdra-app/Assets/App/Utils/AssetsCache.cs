@@ -22,7 +22,7 @@ namespace Pladdra
         public void LoadFromJson(string jsonToLoadFrom)
         {
             AssetsCache jsonData = JsonConvert.DeserializeObject<AssetsCache>(jsonToLoadFrom);
-        var fields = this.GetType().GetFields();
+            var fields = this.GetType().GetFields(BindingFlags.Public);
             foreach (var field in jsonData.GetType().GetFields())
             {
                 var value = field.GetValue(jsonData);
