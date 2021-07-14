@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-namespace Pladdra
+namespace Pladdra.Views
 {
     public class MainMenu : View
     {

@@ -4,7 +4,7 @@ using TMPro;
 using System;
 using GraphQL.Client.Http;
 
-namespace Pladdra
+namespace Pladdra.Views
 {
     public class Download : View
     {
@@ -49,6 +49,7 @@ namespace Pladdra
                 {
                     itemsToDownloadCount = response.Result;
 
+
                     if (itemsToDownloadCount > 0)
                     {
                         SetStatusText("Downloading remote objects...");
@@ -61,6 +62,7 @@ namespace Pladdra
                 }
                 catch (Exception e)
                 {
+                    Debug.Log("Pladdra.Download.SyncronizeAssets: Failed to Syncronize Assets");
                     Debug.Log(e);
                     hasError = true;
                 }

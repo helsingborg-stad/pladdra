@@ -6,14 +6,13 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace Pladdra
+namespace Pladdra.Views
 {
     public class Login : View
     {
         public Button loginButton;
         public TMP_InputField usernameFieldLogin;
         public TMP_InputField passwordFieldLogin;
-
         public TMP_Text noticeText;
 
         public override void Initialize()
@@ -47,7 +46,7 @@ namespace Pladdra
 
         private async void onClickLogin()
         {
-            noticeText.text = "Trying to login.. please wait";
+            noticeText.text = "Signing in .. please wait";
             toggleUI(false);
 
             bool successfulLogin = await Auth.Login(usernameFieldLogin.text, passwordFieldLogin.text);
@@ -60,7 +59,7 @@ namespace Pladdra
             }
 
             toggleUI(true);
-            noticeText.text = "Failed to login please try again";
+            noticeText.text = "Failed to login, please try again.";
         }
     }
 }
