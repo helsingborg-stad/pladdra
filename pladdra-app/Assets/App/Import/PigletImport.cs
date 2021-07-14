@@ -14,6 +14,7 @@ namespace Pladdra
     /// </summary>
     public class PigletImport : MonoBehaviour
     {
+        public string filename;
         /// <summary>
         /// The currently running glTF import task.
         /// </summary>
@@ -24,18 +25,23 @@ namespace Pladdra
         /// </summary>
         private GameObject _model;
 
+        private ARTapToPlaceObject _ARTapToPlaceObject;
+
+
         /// <summary>
         /// Unity callback that is invoked before the first frame.
         /// Create the glTF import task and set up callbacks for
         /// progress messages and successful completion.
         /// </summary>
-        public void Import()
+        public void Import(ARTapToPlaceObject aRTapToPlaceObject)
         {
+            _ARTapToPlaceObject = aRTapToPlaceObject;
+            // _ARTapToPlaceObject = GetComponent<ARTapToPlaceObject>();
             // Note: To import a local .gltf/.glb/.zip file, you may
             // instead pass an absolute file path to GetImportTask
             // (e.g. "C:/Users/Joe/Desktop/piggleston.glb"), or a byte[]
             // array containing the raw byte content of the file. 
-            string path = Path.Combine(App.CachePath, "downloads/f9e456fd-7988-4665-89f1-1da498f6b46f.glb");
+            string path = Path.Combine(App.CachePath, "downloads/" + (filename ?? "f9e456fd-7988-4665-89f1-1da498f6b46f.glb"));
             Debug.Log(path);
 
             // byte[] buffer = File.ReadAllBytes(path);
@@ -47,7 +53,7 @@ namespace Pladdra
             //     // the file contents
             //     Console.WriteLine(s);
             // }
-            _task = RuntimeGltfImporter.GetImportTask(path, new GltfImportOptions { AutoScaleSize = 0.01f, AutoScale = true });
+            _task = RuntimeGltfImporter.GetImportTask(path, new GltfImportOptions { AutoScaleSize = 0.1f, AutoScale = true, ShowModelAfterImport = false });
             _task.OnProgress = OnProgress;
             _task.OnCompleted = OnComplete;
         }
@@ -62,6 +68,9 @@ namespace Pladdra
         private void OnComplete(GameObject importedModel)
         {
             _model = importedModel;
+            _ARTapToPlaceObject.spawnedObject = _model;
+            _ARTapToPlaceObject.isActive = true;
+            // _ARTapToPlaceObject.gameObjectToInstantiate = importedModel;
             Debug.Log("Success!");
         }
 

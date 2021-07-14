@@ -10,7 +10,7 @@ namespace Pladdra
     {
         private static AssetsManager s_instance;
 
-        public List<Pladdra.API.Types.Asset> localAssets
+        public List<Pladdra.API.Types.Asset> items
         {
             get
             {
@@ -38,9 +38,10 @@ namespace Pladdra
         public async static Task<int> FetchRemote()
         {
             var response = await GraphQLClient.SendQueryAsync<Pladdra.API.Types.Query>(Pladdra.API.ListAssetsGQL.Request());
+
             s_instance.remoteAssets = response.Data.listAssets.items;
-            s_instance.diffAssets = s_instance.remoteAssets.Where(asset => (s_instance.localAssets.Count == 0
-                               || (s_instance.localAssets.Where(item => item.id == asset.id).ToList().Count == 0))).ToList();
+            s_instance.diffAssets = s_instance.remoteAssets.Where(asset => (s_instance.items.Count == 0
+                               || (s_instance.items.Where(item => item.id == asset.id).ToList().Count == 0))).ToList();
 
 
             return s_instance.diffAssets.Count;
@@ -63,7 +64,7 @@ namespace Pladdra
 
         public static List<Pladdra.API.Types.Asset> GetAssets()
         {
-            return s_instance.localAssets;
+            return s_instance.items;
         }
 
         public static void GetAsset(string ID)
