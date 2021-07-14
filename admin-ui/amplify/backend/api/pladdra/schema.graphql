@@ -1,0 +1,63 @@
+type S3Object {
+  bucket: String!
+  key: String!
+  region: String!
+}
+
+input S3ObjectInput {
+  bucket: String!
+  key: String!
+  region: String!
+  localUri: String
+  mimeType: String
+  url: String
+  _url: String
+}
+
+enum AssetType {
+  MESH
+}
+
+enum AssetFileFormat {
+  GLTF
+  GLB
+  OBJ
+  FBX
+  DWG
+}
+
+type Asset
+  @model
+  @auth(
+    rules: [
+      { allow: private }
+      { allow: public, provider: apiKey, operations: [read] }
+    ]
+  )
+  @key(
+    name: "byFileFormat"
+    fields: ["fileFormat", "createdAt", "updatedAt"]
+    queryField: "assetsByFileFormat"
+  ) {
+  id: ID!
+  name: String!
+  type: AssetType!
+  fileFormat: AssetFileFormat!
+  fileName: String!
+  fileSize: Int!
+  file: S3Object!
+  description: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+input CreateAssetInput {
+  id: ID
+  name: String!
+  type: AssetType!
+  fileFormat: AssetFileFormat!
+  fileName: String!
+  fileSize: Int!
+  file: S3ObjectInput!
+  description: String
+}

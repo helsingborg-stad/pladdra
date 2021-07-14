@@ -1,0 +1,20 @@
+overwrite: true
+schema:
+  - src/graphql/schema.json
+config:
+  scalars:
+    AWSDateTime: string
+documents: "src/graphql/**/!(*.d).{ts,tsx}"
+generates:
+  ../pladdra-app/Assets/App/GraphQL/API.cs:
+    plugins:
+      - c-sharp
+    config:
+      namespaceName: Pladdra.API
+  ../pladdra-app/Assets/App/GraphQL/Operatons.cs:
+    plugins:
+      - c-sharp-operations
+    config:
+      namespaceName: Pladdra.API
+      documentMode: documentNode
+      strictScalars: true

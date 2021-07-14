@@ -27,4 +27,7 @@
         <type fullname="Amazon.*" preserve="all" />
         <namespace fullname="Amazon.Util.Internal.PlatformServices" preserve="all" />
     </assembly>
+    <assembly fullname="System.Core">
+        <type fullname="System.Linq.Expressions.Interpreter.LightLambda" preserve="all" />
+    </assembly>
  </linker>
