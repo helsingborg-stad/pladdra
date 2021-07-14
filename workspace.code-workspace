@@ -1,10 +1,7 @@
 {
 	"folders": [
 		{
-			"path": "./admin-ui"
-		},
-		{
-			"path": "./amplify"
+			"path": "./pladdra-backend"
 		},
 		{
 			"path": "./pladdra-app"
