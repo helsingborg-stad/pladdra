@@ -9,7 +9,7 @@ using TMPro;
 
 namespace Pladdra.Views
 {
-    public class Library : View
+    public class AssetsLibrary : View
     {
         public Button backButton;
 
@@ -54,6 +54,7 @@ namespace Pladdra.Views
 
         private void onClickItem(Pladdra.API.Types.Asset asset)
         {
+            ViewManager.ShowLast();
             Debug.Log(asset);
         }
 

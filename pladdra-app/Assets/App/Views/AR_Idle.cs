@@ -20,7 +20,7 @@ namespace Pladdra.Views
         }
         private void onClickLibrary()
         {
-            ViewManager.Show<Library>(true);
+            ViewManager.Show<AssetsLibrary>(true);
         }
     }
 }
