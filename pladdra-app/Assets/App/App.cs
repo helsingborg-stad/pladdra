@@ -22,6 +22,7 @@ namespace Pladdra
         void Awake()
         {
             CachePath = Application.persistentDataPath;
+            Application.targetFrameRate = 30;
         }
     }
 }
