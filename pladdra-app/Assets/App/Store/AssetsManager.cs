@@ -30,8 +30,11 @@ namespace Pladdra
 
         private static AssetsCache _assetsCache;
 
+        private static string downloadPath;
+
         private void Start()
         {
+            downloadPath = "downloads/";
             _assetsCache = new AssetsCache();
             SaveDataManager.LoadJsonData(_assetsCache, true);
         }
@@ -54,26 +57,43 @@ namespace Pladdra
             var response = await GraphQLClient.SendQueryAsync<Pladdra.API.Types.Query>(Pladdra.API.ListAssetsGQL.Request());
 
             s_instance.remoteAssets = response.Data.listAssets.items;
-            s_instance.diffAssets = s_instance.remoteAssets.Where(asset => (s_instance.items.Count == 0
-                               || (s_instance.items.Where(item => item.id == asset.id).ToList().Count == 0))).ToList();
-
+            s_instance.diffAssets = s_instance.remoteAssets.Where(asset => !AsssetFileExists(asset)).ToList();
 
             return s_instance.diffAssets.Count;
         }
 
         public static Task<bool> SyncRemote()
         {
-            foreach (Pladdra.API.Types.Asset newAsset in s_instance.diffAssets)
+            _assetsCache.items = s_instance.remoteAssets;
+            SaveDataManager.SaveJsonData(_assetsCache);
+
+            if (s_instance.diffAssets.Count > 0)
             {
-                // Debug.Log("SyncRemote : " + newAsset.id);
-                Task streamTask = S3.SaveObjectToFile("downloads/" + newAsset.id + "." + newAsset.fileFormat.ToString().ToLower(), "public/" + newAsset.file.key, newAsset.file.bucket).ContinueWith(ctx =>
-                {
-                    _assetsCache.items.Add(newAsset);
-                    SaveDataManager.SaveJsonData(_assetsCache);
-                });
-                streamTask.Wait();
+                s_instance.diffAssets.ForEach(DownloadAsset);
             }
             return Task.FromResult(true);
+        }
+
+        private static bool AsssetFileExists(Pladdra.API.Types.Asset asset)
+        {
+            string fileName = asset.id + "." + asset.fileFormat.ToString().ToLower();
+            string path = Path.Combine(App.CachePath, downloadPath, fileName);
+            return File.Exists(path);
+        }
+
+        private static void DownloadAsset(Pladdra.API.Types.Asset asset)
+        {
+            string fileName = asset.id + "." + asset.fileFormat.ToString().ToLower();
+            string path = Path.Combine(downloadPath, fileName);
+            string bucketKey = "public/" + asset.file.key;
+
+            Task streamTask = S3.SaveObjectToFile(path, bucketKey, asset.file.bucket).ContinueWith(ctx =>
+            {
+                // _assetsCache.items.Add(asset);
+                // SaveDataManager.SaveJsonData(_assetsCache);
+            });
+            streamTask.Wait();
+            Task.FromResult(true);
         }
 
         public static List<Pladdra.API.Types.Asset> GetAssets()
