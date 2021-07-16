@@ -27,19 +27,31 @@ namespace Pladdra.Views
         public override void Initialize()
         {
             backButton.onClick.AddListener(onClickBackButton);
-
         }
 
         private void OnEnable()
         {
-            if (itemsToRender == null || itemsToRender.Count == 0)
+            RenderAssets();
+        }
+
+        private void RenderAssets()
+        {
+            if (itemsToRender == AssetsManager.GetAssets())
+                return;
+
+            if (items != null && items.Count > 0)
             {
-                items = new List<GameObject>();
-                itemsToRender = AssetsManager.GetAssets();
-                if (itemsToRender.Count > 0)
+                items.ForEach(obj =>
                 {
-                    itemsToRender.ForEach(InstantiateItem);
-                }
+                    Destroy(obj);
+                });
+            }
+
+            items = new List<GameObject>();
+            itemsToRender = AssetsManager.GetAssets();
+            if (itemsToRender.Count > 0)
+            {
+                itemsToRender.ForEach(InstantiateItem);
             }
         }
 
