@@ -1,6 +1,7 @@
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.IO;
 using UnityEngine;
 using Pladdra.API;
 
@@ -35,6 +36,19 @@ namespace Pladdra
             SaveDataManager.LoadJsonData(_assetsCache, true);
         }
 
+        public static void clearCache()
+        {
+            string assetsJson = Path.Combine(Pladdra.App.CachePath, "assets.json");
+            string downloadsDir = Path.Combine(Pladdra.App.CachePath, "downloads");
+
+            if (File.Exists(assetsJson)) { File.Delete(assetsJson); }
+            _assetsCache = new AssetsCache();
+            SaveDataManager.LoadJsonData(_assetsCache, true);
+
+            if (Directory.Exists(downloadsDir)) { Directory.Delete(downloadsDir, true); }
+            Directory.CreateDirectory(downloadsDir);
+        }
+
         public async static Task<int> FetchRemote()
         {
             var response = await GraphQLClient.SendQueryAsync<Pladdra.API.Types.Query>(Pladdra.API.ListAssetsGQL.Request());
@@ -51,6 +65,7 @@ namespace Pladdra
         {
             foreach (Pladdra.API.Types.Asset newAsset in s_instance.diffAssets)
             {
+                // Debug.Log("SyncRemote : " + newAsset.id);
                 Task streamTask = S3.SaveObjectToFile("downloads/" + newAsset.id + "." + newAsset.fileFormat.ToString().ToLower(), "public/" + newAsset.file.key, newAsset.file.bucket).ContinueWith(ctx =>
                 {
                     _assetsCache.items.Add(newAsset);
@@ -58,7 +73,6 @@ namespace Pladdra
                 });
                 streamTask.Wait();
             }
-
             return Task.FromResult(true);
         }
 
