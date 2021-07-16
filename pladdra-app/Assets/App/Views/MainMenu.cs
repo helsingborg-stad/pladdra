@@ -11,29 +11,37 @@ namespace Pladdra.Views
         public Button downloadButton;
 
         public Button logoutButton;
-
+        public Button devToolsButton;
 
         public override void Initialize()
         {
             logoutButton.onClick.AddListener(onClickLogout);
-            startButton.onClick.AddListener(onClickStart);
-            downloadButton.onClick.AddListener(onClickDownload);
+            startButton.onClick.AddListener(() => ViewManager.Show<AR_Idle>());
+            downloadButton.onClick.AddListener(() => ViewManager.Show<Download>());
+
+            if (devToolsButton != null)
+            {
+                devToolsButton.onClick.AddListener(() => ViewManager.Show<DeveloperTools>());
+            }
+        }
+
+        private void OnEnable()
+        {
+            Auth.RefreshSession().ContinueWith(response =>
+            {
+                bool successfulRefresh = response.Result;
+
+                if (!successfulRefresh)
+                {
+                    ViewManager.Show<Login>();
+                }
+            });
         }
 
         private void onClickLogout()
         {
             Auth.SignOut();
             ViewManager.Show<Login>();
-        }
-
-        private void onClickStart()
-        {
-            ViewManager.Show<AR_Idle>();
-        }
-
-        private void onClickDownload()
-        {
-            ViewManager.Show<Download>();
         }
     }
 }
