@@ -3160,7 +3160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bec1f5736e4ef4d42aea9255a4f710b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _startingView: {fileID: 1823936275}
+  _startingView: {fileID: 540658624}
   _views:
   - {fileID: 168301774}
   - {fileID: 1823936275}
@@ -5540,7 +5540,6 @@ MonoBehaviour:
   backButton: {fileID: 1597772776}
   assetGrid: {fileID: 1740743474}
   assetItemPrefab: {fileID: 1409194928699795103, guid: f3eeb6c00a5724f478fe1bd571fb7351, type: 3}
-  debugText: {fileID: 962775011}
 --- !u!1001 &319857324091570466
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5846,6 +5845,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6323324692323054214, guid: d27c5a5860a1e43d78ac6a1dbed6311b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -0.00061035156
+      objectReference: {fileID: 0}
     - target: {fileID: 6323324692686839424, guid: d27c5a5860a1e43d78ac6a1dbed6311b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -5856,7 +5859,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6323324692686839424, guid: d27c5a5860a1e43d78ac6a1dbed6311b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 17.88
       objectReference: {fileID: 0}
     - target: {fileID: 6323324692686839424, guid: d27c5a5860a1e43d78ac6a1dbed6311b, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -5872,7 +5875,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6323324692954089542, guid: d27c5a5860a1e43d78ac6a1dbed6311b, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 17.88
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d27c5a5860a1e43d78ac6a1dbed6311b, type: 3}
