@@ -9,9 +9,6 @@ namespace Pladdra
 {
     public class S3 : MonoBehaviour
     {
-        public string S3BucketName = null;
-        public string SampleFileName = null;
-
         private static IAmazonS3 _s3Client;
         private static IAmazonS3 client
         {
@@ -30,24 +27,33 @@ namespace Pladdra
         {
             string path = Path.Combine(Pladdra.App.CachePath, fileName);
             System.IO.FileInfo file = new System.IO.FileInfo(path);
-
             GetObjectRequest request = new GetObjectRequest
             {
                 BucketName = bucketName,
                 Key = keyName,
             };
 
-            GetObjectResponse response = await client.GetObjectAsync(request);
-            await Task.Run(() =>
+            try
             {
-                using (Stream responseStream = response.ResponseStream)
+                GetObjectResponse response = await client.GetObjectAsync(request);
+                await Task.Run(() =>
                 {
-                    var bytes = ReadStream(responseStream);
-                    file.Directory.Create();
-                    File.WriteAllBytes(Path.Combine(Pladdra.App.CachePath, fileName), bytes);
-                    responseStream.Close();
-                }
-            });
+                    using (Stream responseStream = response.ResponseStream)
+                    {
+
+                        var bytes = ReadStream(responseStream);
+                        file.Directory.Create();
+                        File.WriteAllBytes(path, bytes);
+                        responseStream.Close();
+                    }
+                });
+            }
+            catch (Exception e)
+            {
+                Debug.Log(e.Message);
+                Debug.Log(e);
+            }
+
         }
 
         public static byte[] ReadStream(Stream responseStream)
