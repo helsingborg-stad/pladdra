@@ -5,12 +5,15 @@ using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
+using Newtonsoft.Json;
 
 namespace Pladdra.Views
 {
+    public delegate void OnSelectEventHandler(Pladdra.API.Types.Asset asset);
+
     public class AssetsLibrary : View
     {
+        public static event OnSelectEventHandler onSelectAsset;
         public Button backButton;
 
         public GridLayoutGroup assetGrid;
@@ -24,18 +27,19 @@ namespace Pladdra.Views
         public override void Initialize()
         {
             backButton.onClick.AddListener(onClickBackButton);
+
         }
 
         private void OnEnable()
         {
             if (itemsToRender == null || itemsToRender.Count == 0)
             {
+                items = new List<GameObject>();
                 itemsToRender = AssetsManager.GetAssets();
-            }
-
-            if (itemsToRender.Count > 0 && itemsToRender.Count != items.Count)
-            {
-                itemsToRender.ForEach(InstantiateItem);
+                if (itemsToRender.Count > 0)
+                {
+                    itemsToRender.ForEach(InstantiateItem);
+                }
             }
         }
 
@@ -43,19 +47,21 @@ namespace Pladdra.Views
         {
             GameObject newObj = (GameObject)Instantiate(assetItemPrefab, assetGrid.gameObject.transform);
             AssetGridItem item = newObj.GetComponent<AssetGridItem>();
-
             item.titleComponent.text = asset.name;
             item.metaComponent.text = asset.id;
-
             item.buttonComponent.onClick.AddListener(() => onClickItem(asset));
-
             items.Add(newObj);
         }
 
-        private void onClickItem(Pladdra.API.Types.Asset asset)
+        protected virtual void onClickItem(Pladdra.API.Types.Asset asset)
         {
+            // Debug.Log("onClickItem: " + asset.fileName);
+            OnSelectEventHandler handler = onSelectAsset;
+
+            if (handler != null)
+                handler(asset);
+
             ViewManager.ShowLast();
-            Debug.Log(asset);
         }
 
         private void onClickBackButton()
