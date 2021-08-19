@@ -63,5 +63,8 @@ com.kyrylokuzyk.arfoundationremote
 ARFoundationRemoteInstaller
 ARFoundationRemoteCompanionApp
 Assets/Packages
+Packages
+!Packages/manifest.json
+!Packages/packages-lock.json
 Assets/Packages.meta
 .env
