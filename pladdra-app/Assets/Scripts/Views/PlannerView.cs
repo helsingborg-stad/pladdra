@@ -21,9 +21,20 @@ namespace Pladdra.MVC.Views
 
         public override void Initialize()
         {
+            renderEvent = new UnityEvent();
             context = new PlannerModel();
             controller = new PlannerController(context, renderEvent);
-            // logoutButton.onClick.AddListener(controller.OnClickLogout);
+            renderEvent.AddListener(() => shouldRender = true);
+        }
+
+        private void Update()
+        {
+            if (shouldRender)
+            {
+                shouldRender = false;
+
+                //
+            }
         }
     }
 }

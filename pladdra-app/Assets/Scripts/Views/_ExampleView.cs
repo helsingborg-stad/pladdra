@@ -21,12 +21,10 @@ namespace Pladdra.MVC.Views
 
         public override void Initialize()
         {
-            // logoutButton.onClick.AddListener(controller.OnClickLogout);
-        }
-
-        private void ReRender()
-        {
-            shouldRender = true;
+            renderEvent = new UnityEvent();
+            context = new ExampleModel();
+            controller = new ExampleController(context, renderEvent);
+            renderEvent.AddListener(() => shouldRender = true);
         }
 
         private void Update()
