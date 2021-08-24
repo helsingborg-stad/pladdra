@@ -151,19 +151,37 @@ export type DeleteAssetInput = {
   id: string,
 };
 
-export type ModelAssetFilterInput = {
-  id?: ModelIDInput | null,
-  name?: ModelStringInput | null,
-  type?: ModelAssetTypeInput | null,
-  fileFormat?: ModelAssetFileFormatInput | null,
-  fileName?: ModelStringInput | null,
-  fileSize?: ModelIntInput | null,
-  description?: ModelStringInput | null,
+export type CreateBlockInput = {
+  id?: string | null,
+  createdAt?: string | null,
+  updatedAt?: string | null,
+  workspaceID: string,
+  assetID: string,
+  position: Vect3Input,
+  rotation: QuatInput,
+};
+
+export type Vect3Input = {
+  x: number,
+  y: number,
+  z: number,
+};
+
+export type QuatInput = {
+  x: number,
+  y: number,
+  z: number,
+  w: number,
+};
+
+export type ModelBlockConditionInput = {
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
-  and?: Array< ModelAssetFilterInput | null > | null,
-  or?: Array< ModelAssetFilterInput | null > | null,
-  not?: ModelAssetFilterInput | null,
+  workspaceID?: ModelIDInput | null,
+  assetID?: ModelIDInput | null,
+  and?: Array< ModelBlockConditionInput | null > | null,
+  or?: Array< ModelBlockConditionInput | null > | null,
+  not?: ModelBlockConditionInput | null,
 };
 
 export type ModelIDInput = {
@@ -180,6 +198,109 @@ export type ModelIDInput = {
   attributeExists?: boolean | null,
   attributeType?: ModelAttributeTypes | null,
   size?: ModelSizeInput | null,
+};
+
+export type Block = {
+  __typename: "Block",
+  id: string,
+  createdAt: string,
+  updatedAt: string,
+  workspaceID: string,
+  assetID: string,
+  position: Vect3,
+  rotation: Quat,
+  owner?: string | null,
+};
+
+export type Vect3 = {
+  __typename: "Vect3",
+  x: number,
+  y: number,
+  z: number,
+};
+
+export type Quat = {
+  __typename: "Quat",
+  x: number,
+  y: number,
+  z: number,
+  w: number,
+};
+
+export type UpdateBlockInput = {
+  id: string,
+  createdAt?: string | null,
+  updatedAt?: string | null,
+  workspaceID?: string | null,
+  assetID?: string | null,
+  position?: Vect3Input | null,
+  rotation?: QuatInput | null,
+};
+
+export type DeleteBlockInput = {
+  id: string,
+};
+
+export type CreateWorkspaceInput = {
+  id?: string | null,
+  name: string,
+  createdAt?: string | null,
+  updatedAt?: string | null,
+  description?: string | null,
+};
+
+export type ModelWorkspaceConditionInput = {
+  name?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  and?: Array< ModelWorkspaceConditionInput | null > | null,
+  or?: Array< ModelWorkspaceConditionInput | null > | null,
+  not?: ModelWorkspaceConditionInput | null,
+};
+
+export type Workspace = {
+  __typename: "Workspace",
+  id: string,
+  name: string,
+  createdAt: string,
+  updatedAt: string,
+  description?: string | null,
+  blocks?: ModelBlockConnection | null,
+  owner?: string | null,
+};
+
+export type ModelBlockConnection = {
+  __typename: "ModelBlockConnection",
+  items?:  Array<Block | null > | null,
+  nextToken?: string | null,
+};
+
+export type UpdateWorkspaceInput = {
+  id: string,
+  name?: string | null,
+  createdAt?: string | null,
+  updatedAt?: string | null,
+  description?: string | null,
+};
+
+export type DeleteWorkspaceInput = {
+  id: string,
+};
+
+export type ModelAssetFilterInput = {
+  id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  type?: ModelAssetTypeInput | null,
+  fileFormat?: ModelAssetFileFormatInput | null,
+  fileName?: ModelStringInput | null,
+  fileSize?: ModelIntInput | null,
+  description?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  and?: Array< ModelAssetFilterInput | null > | null,
+  or?: Array< ModelAssetFilterInput | null > | null,
+  not?: ModelAssetFilterInput | null,
 };
 
 export type ModelAssetConnection = {
@@ -208,6 +329,34 @@ export enum ModelSortDirection {
   DESC = "DESC",
 }
 
+
+export type ModelBlockFilterInput = {
+  id?: ModelIDInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  workspaceID?: ModelIDInput | null,
+  assetID?: ModelIDInput | null,
+  and?: Array< ModelBlockFilterInput | null > | null,
+  or?: Array< ModelBlockFilterInput | null > | null,
+  not?: ModelBlockFilterInput | null,
+};
+
+export type ModelWorkspaceFilterInput = {
+  id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  and?: Array< ModelWorkspaceFilterInput | null > | null,
+  or?: Array< ModelWorkspaceFilterInput | null > | null,
+  not?: ModelWorkspaceFilterInput | null,
+};
+
+export type ModelWorkspaceConnection = {
+  __typename: "ModelWorkspaceConnection",
+  items?:  Array<Workspace | null > | null,
+  nextToken?: string | null,
+};
 
 export type CreateAssetMutationVariables = {
   input: CreateAssetInput,
@@ -284,6 +433,186 @@ export type DeleteAssetMutation = {
     description?: string | null,
     createdAt: string,
     updatedAt: string,
+  } | null,
+};
+
+export type CreateBlockMutationVariables = {
+  input: CreateBlockInput,
+  condition?: ModelBlockConditionInput | null,
+};
+
+export type CreateBlockMutation = {
+  createBlock?:  {
+    __typename: "Block",
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+    workspaceID: string,
+    assetID: string,
+    position:  {
+      __typename: "Vect3",
+      x: number,
+      y: number,
+      z: number,
+    },
+    rotation:  {
+      __typename: "Quat",
+      x: number,
+      y: number,
+      z: number,
+      w: number,
+    },
+    owner?: string | null,
+  } | null,
+};
+
+export type UpdateBlockMutationVariables = {
+  input: UpdateBlockInput,
+  condition?: ModelBlockConditionInput | null,
+};
+
+export type UpdateBlockMutation = {
+  updateBlock?:  {
+    __typename: "Block",
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+    workspaceID: string,
+    assetID: string,
+    position:  {
+      __typename: "Vect3",
+      x: number,
+      y: number,
+      z: number,
+    },
+    rotation:  {
+      __typename: "Quat",
+      x: number,
+      y: number,
+      z: number,
+      w: number,
+    },
+    owner?: string | null,
+  } | null,
+};
+
+export type DeleteBlockMutationVariables = {
+  input: DeleteBlockInput,
+  condition?: ModelBlockConditionInput | null,
+};
+
+export type DeleteBlockMutation = {
+  deleteBlock?:  {
+    __typename: "Block",
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+    workspaceID: string,
+    assetID: string,
+    position:  {
+      __typename: "Vect3",
+      x: number,
+      y: number,
+      z: number,
+    },
+    rotation:  {
+      __typename: "Quat",
+      x: number,
+      y: number,
+      z: number,
+      w: number,
+    },
+    owner?: string | null,
+  } | null,
+};
+
+export type CreateWorkspaceMutationVariables = {
+  input: CreateWorkspaceInput,
+  condition?: ModelWorkspaceConditionInput | null,
+};
+
+export type CreateWorkspaceMutation = {
+  createWorkspace?:  {
+    __typename: "Workspace",
+    id: string,
+    name: string,
+    createdAt: string,
+    updatedAt: string,
+    description?: string | null,
+    blocks?:  {
+      __typename: "ModelBlockConnection",
+      items?:  Array< {
+        __typename: "Block",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        workspaceID: string,
+        assetID: string,
+        owner?: string | null,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type UpdateWorkspaceMutationVariables = {
+  input: UpdateWorkspaceInput,
+  condition?: ModelWorkspaceConditionInput | null,
+};
+
+export type UpdateWorkspaceMutation = {
+  updateWorkspace?:  {
+    __typename: "Workspace",
+    id: string,
+    name: string,
+    createdAt: string,
+    updatedAt: string,
+    description?: string | null,
+    blocks?:  {
+      __typename: "ModelBlockConnection",
+      items?:  Array< {
+        __typename: "Block",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        workspaceID: string,
+        assetID: string,
+        owner?: string | null,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type DeleteWorkspaceMutationVariables = {
+  input: DeleteWorkspaceInput,
+  condition?: ModelWorkspaceConditionInput | null,
+};
+
+export type DeleteWorkspaceMutation = {
+  deleteWorkspace?:  {
+    __typename: "Workspace",
+    id: string,
+    name: string,
+    createdAt: string,
+    updatedAt: string,
+    description?: string | null,
+    blocks?:  {
+      __typename: "ModelBlockConnection",
+      items?:  Array< {
+        __typename: "Block",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        workspaceID: string,
+        assetID: string,
+        owner?: string | null,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    owner?: string | null,
   } | null,
 };
 
@@ -377,6 +706,125 @@ export type AssetsByFileFormatQuery = {
   } | null,
 };
 
+export type GetBlockQueryVariables = {
+  id: string,
+};
+
+export type GetBlockQuery = {
+  getBlock?:  {
+    __typename: "Block",
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+    workspaceID: string,
+    assetID: string,
+    position:  {
+      __typename: "Vect3",
+      x: number,
+      y: number,
+      z: number,
+    },
+    rotation:  {
+      __typename: "Quat",
+      x: number,
+      y: number,
+      z: number,
+      w: number,
+    },
+    owner?: string | null,
+  } | null,
+};
+
+export type ListBlocksQueryVariables = {
+  filter?: ModelBlockFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListBlocksQuery = {
+  listBlocks?:  {
+    __typename: "ModelBlockConnection",
+    items?:  Array< {
+      __typename: "Block",
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+      workspaceID: string,
+      assetID: string,
+      position:  {
+        __typename: "Vect3",
+        x: number,
+        y: number,
+        z: number,
+      },
+      rotation:  {
+        __typename: "Quat",
+        x: number,
+        y: number,
+        z: number,
+        w: number,
+      },
+      owner?: string | null,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetWorkspaceQueryVariables = {
+  id: string,
+};
+
+export type GetWorkspaceQuery = {
+  getWorkspace?:  {
+    __typename: "Workspace",
+    id: string,
+    name: string,
+    createdAt: string,
+    updatedAt: string,
+    description?: string | null,
+    blocks?:  {
+      __typename: "ModelBlockConnection",
+      items?:  Array< {
+        __typename: "Block",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        workspaceID: string,
+        assetID: string,
+        owner?: string | null,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type ListWorkspacesQueryVariables = {
+  filter?: ModelWorkspaceFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListWorkspacesQuery = {
+  listWorkspaces?:  {
+    __typename: "ModelWorkspaceConnection",
+    items?:  Array< {
+      __typename: "Workspace",
+      id: string,
+      name: string,
+      createdAt: string,
+      updatedAt: string,
+      description?: string | null,
+      blocks?:  {
+        __typename: "ModelBlockConnection",
+        nextToken?: string | null,
+      } | null,
+      owner?: string | null,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type OnCreateAssetSubscription = {
   onCreateAsset?:  {
     __typename: "Asset",
@@ -437,5 +885,179 @@ export type OnDeleteAssetSubscription = {
     description?: string | null,
     createdAt: string,
     updatedAt: string,
+  } | null,
+};
+
+export type OnCreateBlockSubscriptionVariables = {
+  owner?: string | null,
+};
+
+export type OnCreateBlockSubscription = {
+  onCreateBlock?:  {
+    __typename: "Block",
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+    workspaceID: string,
+    assetID: string,
+    position:  {
+      __typename: "Vect3",
+      x: number,
+      y: number,
+      z: number,
+    },
+    rotation:  {
+      __typename: "Quat",
+      x: number,
+      y: number,
+      z: number,
+      w: number,
+    },
+    owner?: string | null,
+  } | null,
+};
+
+export type OnUpdateBlockSubscriptionVariables = {
+  owner?: string | null,
+};
+
+export type OnUpdateBlockSubscription = {
+  onUpdateBlock?:  {
+    __typename: "Block",
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+    workspaceID: string,
+    assetID: string,
+    position:  {
+      __typename: "Vect3",
+      x: number,
+      y: number,
+      z: number,
+    },
+    rotation:  {
+      __typename: "Quat",
+      x: number,
+      y: number,
+      z: number,
+      w: number,
+    },
+    owner?: string | null,
+  } | null,
+};
+
+export type OnDeleteBlockSubscriptionVariables = {
+  owner?: string | null,
+};
+
+export type OnDeleteBlockSubscription = {
+  onDeleteBlock?:  {
+    __typename: "Block",
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+    workspaceID: string,
+    assetID: string,
+    position:  {
+      __typename: "Vect3",
+      x: number,
+      y: number,
+      z: number,
+    },
+    rotation:  {
+      __typename: "Quat",
+      x: number,
+      y: number,
+      z: number,
+      w: number,
+    },
+    owner?: string | null,
+  } | null,
+};
+
+export type OnCreateWorkspaceSubscriptionVariables = {
+  owner?: string | null,
+};
+
+export type OnCreateWorkspaceSubscription = {
+  onCreateWorkspace?:  {
+    __typename: "Workspace",
+    id: string,
+    name: string,
+    createdAt: string,
+    updatedAt: string,
+    description?: string | null,
+    blocks?:  {
+      __typename: "ModelBlockConnection",
+      items?:  Array< {
+        __typename: "Block",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        workspaceID: string,
+        assetID: string,
+        owner?: string | null,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnUpdateWorkspaceSubscriptionVariables = {
+  owner?: string | null,
+};
+
+export type OnUpdateWorkspaceSubscription = {
+  onUpdateWorkspace?:  {
+    __typename: "Workspace",
+    id: string,
+    name: string,
+    createdAt: string,
+    updatedAt: string,
+    description?: string | null,
+    blocks?:  {
+      __typename: "ModelBlockConnection",
+      items?:  Array< {
+        __typename: "Block",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        workspaceID: string,
+        assetID: string,
+        owner?: string | null,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnDeleteWorkspaceSubscriptionVariables = {
+  owner?: string | null,
+};
+
+export type OnDeleteWorkspaceSubscription = {
+  onDeleteWorkspace?:  {
+    __typename: "Workspace",
+    id: string,
+    name: string,
+    createdAt: string,
+    updatedAt: string,
+    description?: string | null,
+    blocks?:  {
+      __typename: "ModelBlockConnection",
+      items?:  Array< {
+        __typename: "Block",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        workspaceID: string,
+        assetID: string,
+        owner?: string | null,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    owner?: string | null,
   } | null,
 };

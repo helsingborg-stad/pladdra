@@ -1,17 +1,18 @@
 overwrite: true
 schema:
+  - amplify/backend/api/pladdra/build/schema.graphql
   - src/graphql/schema.json
 config:
   scalars:
     AWSDateTime: string
 documents: "src/graphql/**/!(*.d).{ts,tsx}"
 generates:
-  ../pladdra-app/Assets/App/GraphQL/API.cs:
+  ../pladdra-app/Assets/Scripts/API/Types.codegen.cs:
     plugins:
       - c-sharp
     config:
       namespaceName: Pladdra.API
-  ../pladdra-app/Assets/App/GraphQL/Operatons.cs:
+  ../pladdra-app/Assets/Scripts/API/Operatons.codegen.cs:
     plugins:
       - c-sharp-operations
     config:
