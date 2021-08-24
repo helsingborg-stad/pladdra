@@ -81,6 +81,7 @@ public class ViewManager : MonoBehaviour
     {
         for (int i = 0; i < _views.Length; i++)
         {
+            _views[i]._Initialize();
             _views[i].Initialize();
 
             _views[i].Hide();
