@@ -1608,9 +1608,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8f0de3c1fe7747d6a638daad74f7248, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  appSyncApiUrl: https://552z6jyyyvgczcl56rn54qk4xe.appsync-api.eu-central-1.amazonaws.com/graphql
-  appSyncApiKey: da2-lxmccoi2v5ddhdwruvthtkodn4
-  appSyncApiID: rb4plagcfbdvliyjdpfx6uo5lm
+  appSyncApiUrl: 
+  appSyncApiKey: 
+  appSyncApiID: 
 --- !u!114 &1303838167
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1635,9 +1635,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d788ca7367db430f880781e2fde0de6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cognitoIdentityPoolID: eu-central-1:c36e496c-08c8-467e-ac87-3b0b848f223c
-  cognitoAppClientID: 7eda1vtv82u9us9eaq0d25jo5e
-  cognitoUserPoolID: eu-central-1_EkYfapdxz
+  cognitoIdentityPoolID: 
+  cognitoAppClientID: 
+  cognitoUserPoolID: 
 --- !u!114 &1303838169
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1680,6 +1680,7 @@ MonoBehaviour:
   _views:
   - {fileID: 2093950349}
   - {fileID: 1614645258}
+  - {fileID: 1898074745}
 --- !u!114 &1303838173
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1954,6 +1955,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af2486ff100264820b611f1541f73571, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  renderEvent:
+    m_PersistentCalls:
+      m_Calls: []
   startButton: {fileID: 1976776409}
   downloadButton: {fileID: 2122102418}
   logoutButton: {fileID: 894130008}
@@ -2273,6 +2277,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1898074744}
+  - component: {fileID: 1898074745}
   m_Layer: 0
   m_Name: Planner
   m_TagString: Untagged
@@ -2294,6 +2299,18 @@ Transform:
   m_Father: {fileID: 1536892496}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1898074745
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1898074743}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 01d53cecb345f4885832943bfa367f8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1964130335
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2470,6 +2487,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1175110d42d84b3195629a469d55f0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  renderEvent:
+    m_PersistentCalls:
+      m_Calls: []
   loginButton: {fileID: 82909332}
   usernameFieldLogin: {fileID: 1662537469}
   passwordFieldLogin: {fileID: 1599871599}

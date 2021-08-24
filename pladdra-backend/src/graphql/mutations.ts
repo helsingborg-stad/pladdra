@@ -71,3 +71,159 @@ export const deleteAsset = /* GraphQL */ `
     }
   }
 `;
+export const createBlock = /* GraphQL */ `
+  mutation CreateBlock(
+    $input: CreateBlockInput!
+    $condition: ModelBlockConditionInput
+  ) {
+    createBlock(input: $input, condition: $condition) {
+      id
+      createdAt
+      updatedAt
+      workspaceID
+      assetID
+      position {
+        x
+        y
+        z
+      }
+      rotation {
+        x
+        y
+        z
+        w
+      }
+      owner
+    }
+  }
+`;
+export const updateBlock = /* GraphQL */ `
+  mutation UpdateBlock(
+    $input: UpdateBlockInput!
+    $condition: ModelBlockConditionInput
+  ) {
+    updateBlock(input: $input, condition: $condition) {
+      id
+      createdAt
+      updatedAt
+      workspaceID
+      assetID
+      position {
+        x
+        y
+        z
+      }
+      rotation {
+        x
+        y
+        z
+        w
+      }
+      owner
+    }
+  }
+`;
+export const deleteBlock = /* GraphQL */ `
+  mutation DeleteBlock(
+    $input: DeleteBlockInput!
+    $condition: ModelBlockConditionInput
+  ) {
+    deleteBlock(input: $input, condition: $condition) {
+      id
+      createdAt
+      updatedAt
+      workspaceID
+      assetID
+      position {
+        x
+        y
+        z
+      }
+      rotation {
+        x
+        y
+        z
+        w
+      }
+      owner
+    }
+  }
+`;
+export const createWorkspace = /* GraphQL */ `
+  mutation CreateWorkspace(
+    $input: CreateWorkspaceInput!
+    $condition: ModelWorkspaceConditionInput
+  ) {
+    createWorkspace(input: $input, condition: $condition) {
+      id
+      name
+      createdAt
+      updatedAt
+      description
+      blocks {
+        items {
+          id
+          createdAt
+          updatedAt
+          workspaceID
+          assetID
+          owner
+        }
+        nextToken
+      }
+      owner
+    }
+  }
+`;
+export const updateWorkspace = /* GraphQL */ `
+  mutation UpdateWorkspace(
+    $input: UpdateWorkspaceInput!
+    $condition: ModelWorkspaceConditionInput
+  ) {
+    updateWorkspace(input: $input, condition: $condition) {
+      id
+      name
+      createdAt
+      updatedAt
+      description
+      blocks {
+        items {
+          id
+          createdAt
+          updatedAt
+          workspaceID
+          assetID
+          owner
+        }
+        nextToken
+      }
+      owner
+    }
+  }
+`;
+export const deleteWorkspace = /* GraphQL */ `
+  mutation DeleteWorkspace(
+    $input: DeleteWorkspaceInput!
+    $condition: ModelWorkspaceConditionInput
+  ) {
+    deleteWorkspace(input: $input, condition: $condition) {
+      id
+      name
+      createdAt
+      updatedAt
+      description
+      blocks {
+        items {
+          id
+          createdAt
+          updatedAt
+          workspaceID
+          assetID
+          owner
+        }
+        nextToken
+      }
+      owner
+    }
+  }
+`;

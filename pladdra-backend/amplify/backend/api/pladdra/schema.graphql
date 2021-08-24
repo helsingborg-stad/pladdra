@@ -4,6 +4,19 @@ type S3Object {
   region: String!
 }
 
+type Vect3 {
+  x: Int!
+  y: Int!
+  z: Int!
+}
+
+type Quat {
+  x: Int!
+  y: Int!
+  z: Int!
+  w: Int!
+}
+
 input S3ObjectInput {
   bucket: String!
   key: String!
@@ -60,4 +73,31 @@ input CreateAssetInput {
   fileSize: Int!
   file: S3ObjectInput!
   description: String
+}
+
+type Block
+  @model
+  @auth(rules: [{ allow: owner }, { allow: public, provider: apiKey }])
+  @key(
+    name: "blocksByWorkspace"
+    fields: ["workspaceID", "updatedAt", "createdAt"]
+  ) {
+  id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  workspaceID: ID!
+  assetID: ID!
+  position: Vect3!
+  rotation: Quat!
+}
+
+type Workspace
+  @model
+  @auth(rules: [{ allow: owner }, { allow: public, provider: apiKey }]) {
+  id: ID!
+  name: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  description: String
+  blocks: [Block!]! @connection(keyName: "blocksByWorkspace", fields: ["id"])
 }
