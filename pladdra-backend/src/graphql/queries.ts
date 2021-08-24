@@ -86,3 +86,101 @@ export const assetsByFileFormat = /* GraphQL */ `
     }
   }
 `;
+export const getBlock = /* GraphQL */ `
+  query GetBlock($id: ID!) {
+    getBlock(id: $id) {
+      id
+      createdAt
+      updatedAt
+      workspaceID
+      assetID
+      position {
+        x
+        y
+        z
+      }
+      rotation {
+        x
+        y
+        z
+        w
+      }
+      owner
+    }
+  }
+`;
+export const listBlocks = /* GraphQL */ `
+  query ListBlocks(
+    $filter: ModelBlockFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listBlocks(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        createdAt
+        updatedAt
+        workspaceID
+        assetID
+        position {
+          x
+          y
+          z
+        }
+        rotation {
+          x
+          y
+          z
+          w
+        }
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getWorkspace = /* GraphQL */ `
+  query GetWorkspace($id: ID!) {
+    getWorkspace(id: $id) {
+      id
+      name
+      createdAt
+      updatedAt
+      description
+      blocks {
+        items {
+          id
+          createdAt
+          updatedAt
+          workspaceID
+          assetID
+          owner
+        }
+        nextToken
+      }
+      owner
+    }
+  }
+`;
+export const listWorkspaces = /* GraphQL */ `
+  query ListWorkspaces(
+    $filter: ModelWorkspaceFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listWorkspaces(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        createdAt
+        updatedAt
+        description
+        blocks {
+          nextToken
+        }
+        owner
+      }
+      nextToken
+    }
+  }
+`;
