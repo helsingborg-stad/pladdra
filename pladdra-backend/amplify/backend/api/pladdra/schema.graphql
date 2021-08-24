@@ -74,3 +74,30 @@ input CreateAssetInput {
   file: S3ObjectInput!
   description: String
 }
+
+type Block
+  @model
+  @auth(rules: [{ allow: owner }, { allow: public, provider: apiKey }])
+  @key(
+    name: "blocksByWorkspace"
+    fields: ["workspaceID", "updatedAt", "createdAt"]
+  ) {
+  id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  workspaceID: ID!
+  assetID: ID!
+  position: Vect3!
+  rotation: Quat!
+}
+
+type Workspace
+  @model
+  @auth(rules: [{ allow: owner }, { allow: public, provider: apiKey }]) {
+  id: ID!
+  name: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  description: String
+  blocks: [Block!]! @connection(keyName: "blocksByWorkspace", fields: ["id"])
+}
