@@ -4,6 +4,19 @@ type S3Object {
   region: String!
 }
 
+type Vect3 {
+  x: Int!
+  y: Int!
+  z: Int!
+}
+
+type Quat {
+  x: Int!
+  y: Int!
+  z: Int!
+  w: Int!
+}
+
 input S3ObjectInput {
   bucket: String!
   key: String!
