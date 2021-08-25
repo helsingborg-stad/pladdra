@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6785729183130350778}
   - component: {fileID: 6785729183130350779}
   - component: {fileID: 6785729183130350776}
-  m_Layer: 0
+  m_Layer: 2
   m_Name: AR Marker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
