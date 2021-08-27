@@ -9,7 +9,7 @@ namespace Pladdra.Components
     {
         public UnityEvent<RaycastHit> onHitEvent;
         public Camera ARCamera;
-        void FixedUpdate()
+        void Update()
         {
             RaycastHit hit;
 
