@@ -26,7 +26,7 @@ namespace Pladdra.MVC.Controllers
 
         public async void OnClickLogin(string userName, string password)
         {
-            model.noticeMessage = "Signing in .. please wait";
+            model.noticeMessage = "Loggar in ..";
             model.isLoading = true;
             render.Invoke();
 
@@ -46,8 +46,7 @@ namespace Pladdra.MVC.Controllers
 
                 return;
             }
-
-            model.noticeMessage = "Something went wrong ...";
+            model.noticeMessage = "Något gick fel, försök igen.";
             render.Invoke();
         }
     }
