@@ -9,8 +9,8 @@ namespace Pladdra.MVC.Controllers
     public interface IMenuController
     {
         public IMenuModel model { get; }
-        public void OnClickStart();
-        public void OnClickSync();
+        public void OnClickCreateWorkspace();
+        public void OnClickListWorkspace();
         public void OnClickLogout();
     }
 
@@ -20,26 +20,30 @@ namespace Pladdra.MVC.Controllers
 
         UnityEvent render;
 
+        public MenuController(IMenuModel menuModel)
+        {
+            model = menuModel;
+        }
         public MenuController(IMenuModel menuModel, UnityEvent renderEvent)
         {
             model = menuModel;
             render = renderEvent;
         }
 
-        public void OnClickStart()
+        public void OnClickCreateWorkspace()
         {
-            ViewManager.Show<PlannerView>();
+            ViewManager.Show<CreateWorkspaceView>(true);
         }
 
-        public void OnClickSync()
+        public void OnClickListWorkspace()
         {
-            // ViewManager.Show<Download>();
+            ViewManager.Show<ListWorkspaceView>(true);
         }
 
         public void OnClickLogout()
         {
             Auth.SignOut();
-            ViewManager.Show<LoginView>();
+            ViewManager.Show<LoginView>(true);
         }
     }
 }
