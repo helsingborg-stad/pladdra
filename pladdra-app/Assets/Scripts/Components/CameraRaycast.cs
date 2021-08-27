@@ -1,32 +1,35 @@
 using UnityEngine;
-using UnityEngine.XR.ARFoundation;
+using UnityEditor;
+using UnityEngine.Events;
+using System;
 
-public class CameraRaycast : MonoBehaviour {
-    public Camera ARCamera;
-    public GameObject arMarkerPrefab;
-    GameObject createdARMarker;
+namespace Pladdra.Components {
+    public class CameraRaycast : MonoBehaviour {
+        public UnityEvent<RaycastHit> onHitEvent;
 
+        public Camera ARCamera;
 
-    void placeSphereAtPhysical() {
-        RaycastHit hit;
+        public UnityEngine.Object targetType;
 
+        public MonoScript scriptType;
 
-        if (Physics.Raycast(ARCamera.transform.position, ARCamera.transform.forward, out hit, float.MaxValue)) {
-            ARPlane plane = hit.transform.GetComponent<ARPlane>();
+        // Update is called once per frame
+        void FixedUpdate() {
+            RaycastHit hit;
 
-            if (plane == null) return;
+            if (Physics.Raycast(ARCamera.transform.position, ARCamera.transform.forward, out hit, float.MaxValue)) {
+                if (targetType != null) {
+                    MonoScript script = targetType as MonoScript;
+                    Type scriptType = script.GetClass();
+                    Component outComponent;
 
-            if (createdARMarker == null) {
-                createdARMarker = Instantiate(arMarkerPrefab, hit.point, Quaternion.identity);
-            } else {
-                createdARMarker.transform.position = hit.point;
+                    if(!hit.transform.TryGetComponent(out outComponent)) {
+                        return;
+                    }
+                }
+
+                onHitEvent.Invoke(hit);
             }
         }
-    }
- 
-
-    // Update is called once per frame
-    void FixedUpdate() {
-        placeSphereAtPhysical();
     }
 }

@@ -2462,6 +2462,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d53cecb345f4885832943bfa367f8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  arMarkerPrefab: {fileID: 6785729183130350777, guid: b257c711dad994d8d8ff262be87f9fe4,
+    type: 3}
+  createdARMarker: {fileID: 0}
 --- !u!114 &1898074746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2474,12 +2477,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 384f9f9b47f824ec58ab4fb10783d4fb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
   ARCamera: {fileID: 463273329}
-  arMarkerPrefab: {fileID: 6785729183130350777, guid: b257c711dad994d8d8ff262be87f9fe4,
-    type: 3}
-  arPlaneManager: {fileID: 1843153035}
-  m_RaycastManager: {fileID: 1843153037}
-  layerMask: 1024
+  targetType: {fileID: 11500000, guid: 5f66da7470dce8f4d821d71dd2b1d4ac, type: 3}
+  scriptType: {fileID: 0}
 --- !u!1001 &1964130335
 PrefabInstance:
   m_ObjectHideFlags: 0
