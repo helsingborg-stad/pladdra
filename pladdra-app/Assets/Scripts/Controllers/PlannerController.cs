@@ -24,8 +24,10 @@ namespace Pladdra.MVC.Controllers
             render = renderEvent;
         }
 
-        public void OnCameraRaycast(RaycastHit hit) {
+        public void OnCameraRaycast(RaycastHit hit)
+        {
             model.raycastHitPosition = hit.point;
+            render.Invoke();
         }
     }
 }

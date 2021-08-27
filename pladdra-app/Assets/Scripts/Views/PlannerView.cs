@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
-
+using UnityEngine.XR.ARFoundation;
 
 using Pladdra.MVC.Models;
 using Pladdra.MVC.Controllers;
@@ -19,8 +19,7 @@ namespace Pladdra.MVC.Views
         private IPlannerModel context;
         private IPlannerController controller;
         private UnityEvent renderEvent;
-        private bool shouldRender = true;
-
+        private bool shouldRender = false;
         public GameObject arMarkerPrefab;
         public GameObject createdARMarker;
 
@@ -34,23 +33,33 @@ namespace Pladdra.MVC.Views
             context = new PlannerModel();
             controller = new PlannerController(context, renderEvent);
 
-            raycaster.onHitEvent.AddListener(controller.OnCameraRaycast);
+            raycaster.onHitEvent.AddListener(HandleCameraRaycast);
             renderEvent.AddListener(() => shouldRender = true);
         }
-        
+
+        private void HandleCameraRaycast(RaycastHit hit)
+        {
+            ARPlane plane = hit.transform.gameObject.GetComponent<ARPlane>();
+            if (plane == null)
+                return;
+
+            controller.OnCameraRaycast(hit);
+        }
+
         private void Update()
         {
             if (shouldRender)
             {
-                shouldRender = false;
-            }
-        }
+                if (createdARMarker == null)
+                {
+                    createdARMarker = Instantiate(arMarkerPrefab, context.raycastHitPosition, Quaternion.identity);
+                }
+                else
+                {
+                    createdARMarker.transform.position = context.raycastHitPosition;
+                }
 
-        private void FixedUpdate () {
-            if (createdARMarker == null) {
-                createdARMarker = Instantiate(arMarkerPrefab, context.raycastHitPosition, Quaternion.identity);
-            } else {
-                createdARMarker.transform.position = context.raycastHitPosition;
+                shouldRender = false;
             }
         }
     }
