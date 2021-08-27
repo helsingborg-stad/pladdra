@@ -9,9 +9,8 @@ namespace Pladdra.Components {
 
         public Camera ARCamera;
 
+        [Tooltip("The component to look for in hit objects.\nIf specified, it only triggers the hit event if the hit object contains the component.\nIf not specified, it triggers the event on any hit.")]
         public UnityEngine.Object targetType;
-
-        public MonoScript scriptType;
 
         // Update is called once per frame
         void FixedUpdate() {
