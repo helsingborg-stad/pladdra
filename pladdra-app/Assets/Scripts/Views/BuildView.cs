@@ -25,6 +25,10 @@ namespace Pladdra.MVC.Views
         {
             context = new BuildModel();
             controller = new BuildController(context);
+
+            menuButton.onClick.AddListener(controller.OnClickMenu);
+            GridButton.onClick.AddListener(controller.OnClickGridButton);
+            LibraryButton.onClick.AddListener(controller.OnClickInventoryButton);
         }
     }
 }

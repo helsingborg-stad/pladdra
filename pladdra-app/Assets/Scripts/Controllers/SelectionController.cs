@@ -9,6 +9,10 @@ namespace Pladdra.MVC.Controllers
     public interface ISelectionController
     {
         public ISelectionModel model { get; }
+
+        public void OnClickMenu();
+        public void OnClickPlace();
+        public void OnClickRemove();
     }
 
     public class SelectionController : ISelectionController
@@ -25,6 +29,19 @@ namespace Pladdra.MVC.Controllers
         {
             model = SelectionModel;
             render = renderEvent;
+        }
+
+        public void OnClickMenu()
+        {
+            ViewManager.Show<MenuView>();
+        }
+        public void OnClickPlace()
+        {
+            ViewManager.Show<BuildView>();
+        }
+        public void OnClickRemove()
+        {
+            ViewManager.Show<BuildView>();
         }
     }
 }

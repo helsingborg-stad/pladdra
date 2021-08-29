@@ -25,6 +25,10 @@ namespace Pladdra.MVC.Views
         {
             context = new EditGridModel();
             controller = new EditGridController(context);
+
+            menuButton.onClick.AddListener(controller.OnClickMenu);
+            placeButton.onClick.AddListener(controller.OnClickPlace);
+            removeButton.onClick.AddListener(controller.OnClickRemove);
         }
     }
 }

@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2391401390973064409}
   - component: {fileID: 3189889825819991566}
+  - component: {fileID: 4203699658644356126}
   m_Layer: 0
   m_Name: DisposeGridView
   m_TagString: Untagged
@@ -55,6 +56,23 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   ARCamera: {fileID: 0}
+--- !u!114 &4203699658644356126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3189889825819991555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26f48d2835ba34149b2793a0b985ebdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuButton: {fileID: 3225224224075842738}
+  placeButton: {fileID: 1631311925242333570}
+  arMarkerPrefab: {fileID: 6785729183130350777, guid: b257c711dad994d8d8ff262be87f9fe4,
+    type: 3}
+  createdARMarker: {fileID: 0}
 --- !u!1001 &370154614292834345
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -419,6 +437,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57d5d9d3b9446463dbdf6fa47c0eab2e, type: 3}
+--- !u!114 &1631311925242333570 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 319857324778775572, guid: 57d5d9d3b9446463dbdf6fa47c0eab2e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1356648945808534934}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1636332254237598598
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -668,6 +698,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57d5d9d3b9446463dbdf6fa47c0eab2e, type: 3}
+--- !u!114 &3225224224075842738 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 319857324778775572, guid: 57d5d9d3b9446463dbdf6fa47c0eab2e,
+    type: 3}
+  m_PrefabInstance: {fileID: 2932424804910260390}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &7278225036824886765
 PrefabInstance:
   m_ObjectHideFlags: 0

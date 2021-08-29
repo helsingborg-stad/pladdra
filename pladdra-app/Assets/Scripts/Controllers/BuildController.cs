@@ -9,6 +9,10 @@ namespace Pladdra.MVC.Controllers
     public interface IBuildController
     {
         public IBuildModel model { get; }
+
+        public void OnClickMenu();
+        public void OnClickGridButton();
+        public void OnClickInventoryButton();
     }
 
     public class BuildController : IBuildController
@@ -25,6 +29,19 @@ namespace Pladdra.MVC.Controllers
         {
             model = BuildModel;
             render = renderEvent;
+        }
+        public void OnClickMenu()
+        {
+            ViewManager.Show<MenuView>();
+        }
+
+        public void OnClickGridButton()
+        {
+            ViewManager.Show<EditGridView>();
+        }
+        public void OnClickInventoryButton()
+        {
+            ViewManager.Show<InventoryView>();
         }
     }
 }

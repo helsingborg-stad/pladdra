@@ -8,6 +8,8 @@ namespace Pladdra.MVC.Controllers
 {
     public interface IInventoryController
     {
+        public void OnClickBack();
+        public void OnClickItem();
         public IInventoryModel model { get; }
     }
 
@@ -25,6 +27,15 @@ namespace Pladdra.MVC.Controllers
         {
             model = InventoryModel;
             render = renderEvent;
+        }
+
+        public void OnClickBack()
+        {
+            ViewManager.Show<BuildView>();
+        }
+        public void OnClickItem()
+        {
+            ViewManager.Show<SelectionView>();
         }
     }
 }

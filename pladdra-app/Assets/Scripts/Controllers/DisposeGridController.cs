@@ -9,6 +9,10 @@ namespace Pladdra.MVC.Controllers
     public interface IDisposeGridController
     {
         public IDisposeGridModel model { get; }
+
+        public void OnClickMenu();
+        public void OnClickPlace();
+
         void OnCameraRaycast(RaycastHit hit);
     }
 
@@ -28,6 +32,15 @@ namespace Pladdra.MVC.Controllers
         {
             model.raycastHitPosition = hit.point;
             render.Invoke();
+        }
+
+        public void OnClickMenu()
+        {
+            ViewManager.Show<MenuView>();
+        }
+        public void OnClickPlace()
+        {
+            ViewManager.Show<EditGridView>();
         }
     }
 }

@@ -25,6 +25,8 @@ namespace Pladdra.MVC.Views
         {
             context = new InventoryModel();
             controller = new InventoryController(context);
+
+            backButton.onClick.AddListener(controller.OnClickBack);
         }
     }
 }

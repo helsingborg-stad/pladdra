@@ -37,6 +37,9 @@ namespace Pladdra.MVC.Views
 
             raycaster.onHitEvent.AddListener(HandleCameraRaycast);
             renderEvent.AddListener(() => shouldRender = true);
+
+            menuButton.onClick.AddListener(controller.OnClickMenu);
+            placeButton.onClick.AddListener(controller.OnClickPlace);
         }
 
         private void HandleCameraRaycast(RaycastHit hit)

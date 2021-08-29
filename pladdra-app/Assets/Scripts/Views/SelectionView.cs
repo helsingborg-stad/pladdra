@@ -25,6 +25,10 @@ namespace Pladdra.MVC.Views
         {
             context = new SelectionModel();
             controller = new SelectionController(context);
+
+            menuButton.onClick.AddListener(controller.OnClickMenu);
+            placeButton.onClick.AddListener(controller.OnClickPlace);
+            removeButton.onClick.AddListener(controller.OnClickRemove);
         }
     }
 }
