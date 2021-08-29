@@ -11,7 +11,6 @@ namespace Pladdra.Components
             get
             {
 
-                Debug.Log(_renderEvent);
                 if (_renderEvent != null)
                 {
                     return _renderEvent;
