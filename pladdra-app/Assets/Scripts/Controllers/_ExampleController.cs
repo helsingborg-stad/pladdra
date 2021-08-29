@@ -17,6 +17,10 @@ namespace Pladdra.MVC.Controllers
 
         UnityEvent render;
 
+        public ExampleController(IExampleModel ExampleModel)
+        {
+            model = ExampleModel;
+        }
         public ExampleController(IExampleModel ExampleModel, UnityEvent renderEvent)
         {
             model = ExampleModel;

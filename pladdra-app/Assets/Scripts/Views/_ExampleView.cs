@@ -16,25 +16,11 @@ namespace Pladdra.MVC.Views
     {
         private IExampleModel context;
         private IExampleController controller;
-        private UnityEvent renderEvent;
-        private bool shouldRender = true;
 
         public override void Initialize()
         {
-            renderEvent = new UnityEvent();
             context = new ExampleModel();
-            controller = new ExampleController(context, renderEvent);
-            renderEvent.AddListener(() => shouldRender = true);
-        }
-
-        private void Update()
-        {
-            if (shouldRender)
-            {
-                shouldRender = false;
-
-                //
-            }
+            controller = new ExampleController(context);
         }
     }
 }
