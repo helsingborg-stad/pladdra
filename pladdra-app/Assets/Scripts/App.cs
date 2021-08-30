@@ -19,8 +19,11 @@ namespace Pladdra
     {
         public static string CachePath;
 
+        public static MVC.Models.WorkspaceModel workspaceModel;
+
         void Awake()
         {
+            App.workspaceModel = new MVC.Models.WorkspaceModel();
             CachePath = Application.persistentDataPath;
             Application.targetFrameRate = 30;
         }
