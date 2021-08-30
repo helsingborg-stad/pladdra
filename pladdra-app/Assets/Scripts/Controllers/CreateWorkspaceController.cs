@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using Pladdra.MVC.Models;
@@ -10,7 +11,7 @@ namespace Pladdra.MVC.Controllers
     {
         public ICreateWorkspaceModel model { get; }
 
-        public void OnClickCreate();
+        public void OnClickCreate(string name);
         public void OnClickBack();
     }
 
@@ -26,10 +27,15 @@ namespace Pladdra.MVC.Controllers
             render = renderEvent;
         }
 
-        public void OnClickCreate()
+        public void OnClickCreate(string name)
         {
-
+            Pladdra.API.Types.CreateWorkspaceInput input = new API.Types.CreateWorkspaceInput();
+            input.id = System.Guid.NewGuid().ToString();
+            input.name = name;
+            App.workspaceModel.Create(input);
+            ViewManager.Show<DisposeGridView>();
         }
+
         public void OnClickBack()
         {
             ViewManager.ShowLast();

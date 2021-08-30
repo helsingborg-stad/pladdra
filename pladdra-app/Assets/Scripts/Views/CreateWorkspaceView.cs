@@ -33,8 +33,13 @@ namespace Pladdra.MVC.Views
             context = new CreateWorkspaceModel();
             controller = new CreateWorkspaceController(context, render);
 
-            createButton.onClick.AddListener(controller.OnClickCreate);
+            createButton.onClick.AddListener(() => controller.OnClickCreate(nameField.text));
             backButton.onClick.AddListener(controller.OnClickBack);
+        }
+
+        private void OnEnable()
+        {
+            nameField.text = "";
         }
     }
 }
