@@ -34,11 +34,15 @@ namespace Pladdra.MVC.Controllers
 
         public void OnClickLoad(string workspaceId)
         {
-
+            ViewManager.Show<DisposeGridView>();
         }
         public void OnClickDelete(string workspaceId)
         {
-
+            Debug.Log(workspaceId);
+            API.Types.DeleteWorkspaceInput input = new API.Types.DeleteWorkspaceInput();
+            input.id = workspaceId;
+            App.workspaceModel.Delete(input);
+            render.Invoke();
         }
     }
 }

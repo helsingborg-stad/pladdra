@@ -12,6 +12,7 @@ using Pladdra.MVC.Models;
 using Pladdra.MVC.Controllers;
 using Pladdra.Components;
 
+using Newtonsoft.Json;
 namespace Pladdra.MVC.Views
 {
     [RequireComponent(typeof(WithReRender))]
@@ -24,15 +25,56 @@ namespace Pladdra.MVC.Views
         public GameObject itemPrefab;
         public VerticalLayoutGroup workspaceList;
         public Button backButton;
+        private List<GameObject> items;
+        private List<Pladdra.API.Types.Workspace> itemsToRender;
 
         public override void Initialize()
         {
             withReRender = GetComponent<WithReRender>();
+            withReRender.OnRender += RenderItems;
             render = withReRender.renderEvent;
             context = new ListWorkspaceModel();
             controller = new ListWorkspaceController(context, render);
 
             backButton.onClick.AddListener(controller.OnClickBack);
+        }
+
+        private void InstantiateItem(Pladdra.API.Types.Workspace workspace)
+        {
+            GameObject newObj = (GameObject)Instantiate(itemPrefab, workspaceList.gameObject.transform);
+            ListWorkspaceViewItem item = newObj.GetComponent<ListWorkspaceViewItem>();
+            item.titleText.text = workspace.name;
+            item.updatedDateText.text = workspace.updatedAt;
+            item.loadButton.onClick.AddListener(() => controller.OnClickLoad(workspace.id));
+            item.deleteButton.onClick.AddListener(() => controller.OnClickDelete(workspace.id));
+            items.Add(newObj);
+        }
+
+        private void RenderItems()
+        {
+            if (items != null && items.Count > 0)
+            {
+                items.ForEach(obj =>
+                {
+                    Destroy(obj);
+                });
+            }
+
+            items = new List<GameObject>();
+            itemsToRender = new List<Pladdra.API.Types.Workspace>();
+            itemsToRender = App.workspaceModel.List();
+
+            if (itemsToRender.Count > 0)
+            {
+                itemsToRender.ForEach(InstantiateItem);
+            }
+        }
+
+        private void OnEnable()
+        {
+            // string serializedJson = JsonConvert.SerializeObject(App.workspaceModel.List());
+            // Debug.Log(serializedJson);
+            RenderItems();
         }
     }
 }
