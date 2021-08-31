@@ -18,14 +18,16 @@ namespace Pladdra.MVC.Views
     public class LoginView : View
     {
         public UnityEvent render;
-        private ILoginModel context;
-        private ILoginController controller;
+        private LoginModel context;
+        private LoginController controller;
         private bool shouldRender = true;
         public Button loginButton;
         public TMP_InputField usernameFieldLogin;
         public TMP_InputField passwordFieldLogin;
         public TMP_Text noticeText;
-        WithReRender withReRender;
+        public WithReRender withReRender;
+
+        public bool refreshTokenOnShow;
 
         public override void Initialize()
         {
@@ -41,10 +43,12 @@ namespace Pladdra.MVC.Views
             loginButton.onClick.AddListener(() => controller.OnClickLogin(usernameFieldLogin.text, passwordFieldLogin.text));
         }
 
-        private void OnEnable()
+        public override void Show()
         {
-            passwordFieldLogin.text = "";
-            noticeText.text = "";
+            gameObject.SetActive(true);
+
+            if (refreshTokenOnShow == true)
+                controller.RefreshToken();
         }
 
         private void SetNoticeText()

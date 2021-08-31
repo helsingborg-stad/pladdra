@@ -15,14 +15,15 @@ namespace Pladdra.MVC.Views
 {
     public class MenuView : View
     {
-        private IMenuModel context;
-        private IMenuController controller;
+        private MenuModel context;
+        private MenuController controller;
         private UnityEvent renderEvent;
         private bool shouldRender = true;
         public Button createButton;
         public Button listButton;
         public Button logoutButton;
         public Button devToolsButton;
+        public bool refreshTokenOnShow;
 
         public override void Initialize()
         {
@@ -34,6 +35,14 @@ namespace Pladdra.MVC.Views
             createButton.onClick.AddListener(controller.OnClickCreateWorkspace);
             listButton.onClick.AddListener(controller.OnClickListWorkspace);
             logoutButton.onClick.AddListener(controller.OnClickLogout);
+        }
+
+        public override void Show()
+        {
+            gameObject.SetActive(true);
+
+            if (refreshTokenOnShow == true)
+                controller.RefreshToken();
         }
     }
 }

@@ -42,12 +42,21 @@ namespace Pladdra.MVC.Controllers
                 render.Invoke();
                 model.resetPassword = false;
                 // Navigate to Menu
-                ViewManager.Show<MenuView>();
+                ViewManager.Show<AppLoadingView>();
 
                 return;
             }
             model.noticeMessage = "Något gick fel, försök igen.";
             render.Invoke();
+        }
+
+        public async void RefreshToken()
+        {
+            bool successfulRefresh = await Auth.RefreshSession();
+            if (successfulRefresh)
+            {
+                ViewManager.Show<MenuView>();
+            }
         }
     }
 }

@@ -45,5 +45,14 @@ namespace Pladdra.MVC.Controllers
             Auth.SignOut();
             ViewManager.Show<LoginView>(true);
         }
+
+        public async void RefreshToken()
+        {
+            bool successfulRefresh = await Auth.RefreshSession();
+            if (!successfulRefresh)
+            {
+                ViewManager.Show<LoginView>();
+            }
+        }
     }
 }
