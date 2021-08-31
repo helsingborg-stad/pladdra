@@ -41,6 +41,8 @@ namespace Pladdra.MVC.Views
             controller = new LoginController(context, render);
 
             loginButton.onClick.AddListener(() => controller.OnClickLogin(usernameFieldLogin.text, passwordFieldLogin.text));
+
+            noticeText.text = "";
         }
 
         public override void Show()
