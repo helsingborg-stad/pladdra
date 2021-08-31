@@ -27,6 +27,7 @@ namespace Pladdra.MVC.Views
         public Button backButton;
         private List<GameObject> items;
         private List<Pladdra.API.Types.Workspace> itemsToRender;
+        private WorkspaceModel workspaceModel;
 
         public override void Initialize()
         {
@@ -37,6 +38,9 @@ namespace Pladdra.MVC.Views
             controller = new ListWorkspaceController(context, render);
 
             backButton.onClick.AddListener(controller.OnClickBack);
+
+            App.GetModel<WorkspaceModel>(out var workspaceModelInstance);
+            workspaceModel = workspaceModelInstance;
         }
 
         private void InstantiateItem(Pladdra.API.Types.Workspace workspace)
@@ -61,8 +65,7 @@ namespace Pladdra.MVC.Views
             }
 
             items = new List<GameObject>();
-            itemsToRender = new List<Pladdra.API.Types.Workspace>();
-            itemsToRender = App.workspaceModel.List();
+            itemsToRender = workspaceModel.List();
 
             if (itemsToRender.Count > 0)
             {
@@ -72,9 +75,10 @@ namespace Pladdra.MVC.Views
 
         private void OnEnable()
         {
-            // string serializedJson = JsonConvert.SerializeObject(App.workspaceModel.List());
-            // Debug.Log(serializedJson);
-            RenderItems();
+            if (workspaceModel != null)
+            {
+                RenderItems();
+            }
         }
     }
 }

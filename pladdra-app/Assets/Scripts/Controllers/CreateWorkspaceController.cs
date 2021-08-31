@@ -21,10 +21,15 @@ namespace Pladdra.MVC.Controllers
 
         UnityEvent render;
 
+        private WorkspaceModel workspaceModel;
+
         public CreateWorkspaceController(ICreateWorkspaceModel CreateWorkspaceModel, UnityEvent renderEvent)
         {
             model = CreateWorkspaceModel;
             render = renderEvent;
+
+            App.GetModel<WorkspaceModel>(out var workspaceModelInstance);
+            workspaceModel = workspaceModelInstance;
         }
 
         public void OnClickCreate(string name)
@@ -32,7 +37,7 @@ namespace Pladdra.MVC.Controllers
             Pladdra.API.Types.CreateWorkspaceInput input = new API.Types.CreateWorkspaceInput();
             input.id = System.Guid.NewGuid().ToString();
             input.name = name;
-            App.workspaceModel.Create(input);
+            workspaceModel.Create(input);
             ViewManager.Show<DisposeGridView>();
         }
 

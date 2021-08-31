@@ -19,11 +19,13 @@ namespace Pladdra.MVC.Views
         public Button backButton;
         public GridLayoutGroup inventoryGrid;
         public GameObject inventoryItemPrefab;
-        private List<Pladdra.API.Types.Asset> itemsToRender;
+        private List<AssetModel.Asset> itemsToRender;
         private List<GameObject> items;
 
         private IInventoryModel context;
         private IInventoryController controller;
+
+        private AssetModel assetModel;
 
         public override void Initialize()
         {
@@ -31,18 +33,21 @@ namespace Pladdra.MVC.Views
             controller = new InventoryController(context);
 
             backButton.onClick.AddListener(controller.OnClickBack);
+
+            App.GetModel<AssetModel>(out var assetModelInstance);
+            assetModel = assetModelInstance;
         }
-    
+
         private void OnEnable()
         {
-            RenderItems();
+            if (assetModel != null)
+            {
+                RenderItems();
+            }
         }
 
         private void RenderItems()
         {
-            if (itemsToRender == AssetsManager.GetAssets())
-                return;
-
             if (items != null && items.Count > 0)
             {
                 items.ForEach(obj =>
@@ -52,7 +57,9 @@ namespace Pladdra.MVC.Views
             }
 
             items = new List<GameObject>();
-            itemsToRender = AssetsManager.GetAssets();
+            itemsToRender = new List<AssetModel.Asset>();
+            itemsToRender = assetModel.List();
+
             if (itemsToRender.Count > 0)
             {
                 itemsToRender.ForEach(InstantiateItem);
@@ -71,7 +78,6 @@ namespace Pladdra.MVC.Views
 
         protected virtual void onClickItem(Pladdra.API.Types.Asset asset)
         {
-            // Debug.Log("onClickItem: " + asset.fileName);
             OnSelectEventHandler handler = onSelectAsset;
 
             if (handler != null)

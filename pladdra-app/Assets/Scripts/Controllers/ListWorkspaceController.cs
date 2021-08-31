@@ -20,11 +20,15 @@ namespace Pladdra.MVC.Controllers
         public IListWorkspaceModel model { get; }
 
         UnityEvent render;
+        private WorkspaceModel workspaceModel;
 
         public ListWorkspaceController(IListWorkspaceModel ListWorkspaceModel, UnityEvent renderEvent)
         {
             model = ListWorkspaceModel;
             render = renderEvent;
+
+            App.GetModel<WorkspaceModel>(out var workspaceModelInstance);
+            workspaceModel = workspaceModelInstance;
         }
 
         public void OnClickBack()
@@ -38,10 +42,9 @@ namespace Pladdra.MVC.Controllers
         }
         public void OnClickDelete(string workspaceId)
         {
-            Debug.Log(workspaceId);
             API.Types.DeleteWorkspaceInput input = new API.Types.DeleteWorkspaceInput();
             input.id = workspaceId;
-            App.workspaceModel.Delete(input);
+            workspaceModel.Delete(input);
             render.Invoke();
         }
     }
