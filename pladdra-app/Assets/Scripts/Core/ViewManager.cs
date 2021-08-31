@@ -2,10 +2,14 @@ using System.Collections.Generic;
 
 using UnityEngine;
 
+using Pladdra;
+using Pladdra.MVC.Views;
+
 public class ViewManager : MonoBehaviour
 {
     private static ViewManager s_instance;
 
+    [SerializeField] private bool _initOnStart;
     [SerializeField] private View _startingView;
 
     [SerializeField] private View[] _views;
@@ -13,6 +17,23 @@ public class ViewManager : MonoBehaviour
     private View _currentView;
 
     private readonly Stack<View> _history = new Stack<View>();
+
+    public static void Init()
+    {
+        for (int i = 0; i < s_instance._views.Length; i++)
+        {
+            s_instance._views[i]._Initialize();
+            s_instance._views[i].Initialize();
+
+            s_instance._views[i].Hide();
+        }
+
+        if (s_instance._startingView != null)
+        {
+            Show(s_instance._startingView, true);
+            s_instance.RefreshSession();
+        }
+    }
 
     public static T GetView<T>() where T : View
     {
@@ -79,17 +100,24 @@ public class ViewManager : MonoBehaviour
 
     private void Start()
     {
-        for (int i = 0; i < _views.Length; i++)
+        if (_initOnStart == true)
         {
-            _views[i]._Initialize();
-            _views[i].Initialize();
-
-            _views[i].Hide();
+            Init();
         }
+    }
 
-        if (_startingView != null)
+
+
+    private void RefreshSession()
+    {
+        Auth.RefreshSession().ContinueWith(response =>
         {
-            Show(_startingView, true);
-        }
+            bool successfulRefresh = response.Result;
+
+            if (!successfulRefresh)
+            {
+                ViewManager.Show<LoginView>();
+            }
+        });
     }
 }
