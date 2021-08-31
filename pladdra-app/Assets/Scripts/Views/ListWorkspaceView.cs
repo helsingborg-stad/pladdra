@@ -46,7 +46,7 @@ namespace Pladdra.MVC.Views
         private void InstantiateItem(Pladdra.API.Types.Workspace workspace)
         {
             GameObject newObj = (GameObject)Instantiate(itemPrefab, workspaceList.gameObject.transform);
-            ListWorkspaceViewItem item = newObj.GetComponent<ListWorkspaceViewItem>();
+            WorkspaceItem item = newObj.GetComponent<WorkspaceItem>();
             item.titleText.text = workspace.name;
             item.updatedDateText.text = workspace.updatedAt;
             item.loadButton.onClick.AddListener(() => controller.OnClickLoad(workspace.id));

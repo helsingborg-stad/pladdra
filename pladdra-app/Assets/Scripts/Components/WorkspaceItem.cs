@@ -11,16 +11,13 @@ using TMPro;
 using Pladdra.MVC.Models;
 using Pladdra.MVC.Controllers;
 
-namespace Pladdra.MVC.Views
+namespace Pladdra.Components
 {
-    public class ListWorkspaceViewItem : View
+    public class WorkspaceItem : MonoBehaviour
     {
         public TMP_Text titleText;
         public TMP_Text updatedDateText;
         public Button loadButton;
         public Button deleteButton;
-
-        public override void Initialize()
-        { }
     }
 }
