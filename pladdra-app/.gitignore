@@ -72,3 +72,5 @@ Assets/Packages.meta
 
 /[Aa]ssets/**/dev__*
 /[Aa]ssets/**/dev__*.meta
+/[Aa]ssets/**/___*.*
+/[Aa]ssets/**/___*.meta
