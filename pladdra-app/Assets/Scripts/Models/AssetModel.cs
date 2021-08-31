@@ -25,6 +25,19 @@ namespace Pladdra.MVC.Models
     [System.Serializable]
     public class AssetModel : IAssetModel, ISaveable
     {
+        public class Asset : API.Types.Asset
+        {
+            [JsonProperty("previewTexturePath")]
+            public string previewTexturePath;
+
+            [JsonProperty("meshPath")]
+            public string meshPath;
+
+            [JsonProperty("prefabPath")]
+            public string prefabPath;
+        }
+
+
         private string downloadPath = "downloads/";
         private string dataJsonPath = "assets.json";
         private List<AssetModel.Asset> _items;
@@ -43,11 +56,6 @@ namespace Pladdra.MVC.Models
                 _items = value;
                 SaveJson();
             }
-        }
-
-        public void SaveJson()
-        {
-            SaveDataManager.SaveJsonData(this);
         }
 
         public bool Exists(string id)
@@ -126,16 +134,9 @@ namespace Pladdra.MVC.Models
             }
         }
 
-        public class Asset : API.Types.Asset
+        private void SaveJson()
         {
-            [JsonProperty("previewTexturePath")]
-            public string previewTexturePath;
-
-            [JsonProperty("meshPath")]
-            public string meshPath;
-
-            [JsonProperty("prefabPath")]
-            public string prefabPath;
+            SaveDataManager.SaveJsonData(this);
         }
 
         public string ToJson()
