@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5342665551506029116}
   - component: {fileID: 95628515313018169}
+  - component: {fileID: 4998408610402691285}
   m_Layer: 5
   m_Name: AppLoadingView
   m_TagString: Untagged
@@ -49,6 +50,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b798fdf652dd46cca9d8ed4f5ec1e2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loadingText: {fileID: 5615356220626738692}
+--- !u!114 &4998408610402691285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1416307590425740893}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7ba17c3dfe8d41818a45647dfe1e1d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shouldRender: 0
 --- !u!1 &2943110469054935581
 GameObject:
   m_ObjectHideFlags: 0
@@ -275,7 +290,7 @@ GameObject:
   - component: {fileID: 9111385823104097000}
   - component: {fileID: 5615356220626738692}
   m_Layer: 5
-  m_Name: NoticeText
+  m_Name: LoadingText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
