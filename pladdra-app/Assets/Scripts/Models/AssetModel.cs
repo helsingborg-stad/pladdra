@@ -135,9 +135,9 @@ namespace Pladdra.MVC.Models
 
         private void GenerateThumbnail(AssetModel.Asset asset) {
             string fullMeshPath = Path.Combine(Pladdra.App.CachePath, asset.meshPath);
-
-            void onFinished (GameObject importedModel) {
-                PigletImporter.onImportFinished.RemoveListener(onFinished);
+            
+            PigletImporter.import(fullMeshPath, (GameObject importedModel) => {
+                 //PigletImporter.onImportFinished.RemoveListener(onFinished);
                 RuntimePreviewGenerator.MarkTextureNonReadable = false;
                 Texture2D thumbnail = RuntimePreviewGenerator.GenerateModelPreview(importedModel.transform);
 
@@ -151,10 +151,7 @@ namespace Pladdra.MVC.Models
                 FileManager.WriteToFile(fullPreviewPath, pngBytes);
 
                 asset.previewTexturePath = fullPreviewPath;
-            }
-
-            PigletImporter.onImportFinished.AddListener(onFinished);
-            PigletImporter.startImport(fullMeshPath);
+            });
         }
 
         private void DeleteMesh(AssetModel.Asset asset)
