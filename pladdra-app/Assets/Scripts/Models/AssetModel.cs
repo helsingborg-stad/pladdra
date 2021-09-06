@@ -135,23 +135,26 @@ namespace Pladdra.MVC.Models
 
         private void GenerateThumbnail(AssetModel.Asset asset) {
             string fullMeshPath = Path.Combine(Pladdra.App.CachePath, asset.meshPath);
-            
-            PigletImporter.import(fullMeshPath, (GameObject importedModel) => {
-                 //PigletImporter.onImportFinished.RemoveListener(onFinished);
-                RuntimePreviewGenerator.MarkTextureNonReadable = false;
-                Texture2D thumbnail = RuntimePreviewGenerator.GenerateModelPreview(importedModel.transform);
 
-                string fileName = asset.id + ".png";
-                string path = Path.Combine(downloadPath, fileName);
-                string fullPreviewPath = Path.Combine(Pladdra.App.CachePath, path);
+            string fileName = asset.id + ".png";
+            string assetPath = Path.Combine(downloadPath, fileName);
+            string fullPreviewPath = Path.Combine(Pladdra.App.CachePath, assetPath);
 
+            asset.previewTexturePath = File.Exists(assetPath) && asset.meshPath == null ? assetPath : asset.previewTexturePath;
 
-                byte[] pngBytes = thumbnail.EncodeToPNG();
+            if (asset.previewTexturePath == null || !File.Exists(fullPreviewPath)) {
+                PigletImporter.import(fullMeshPath, (GameObject importedModel) => {
+                    //PigletImporter.onImportFinished.RemoveListener(onFinished);
+                    RuntimePreviewGenerator.MarkTextureNonReadable = false;
+                    Texture2D thumbnail = RuntimePreviewGenerator.GenerateModelPreview(importedModel.transform);
+                    
+                    byte[] pngBytes = thumbnail.EncodeToPNG();
 
-                FileManager.WriteToFile(fullPreviewPath, pngBytes);
+                    FileManager.WriteToFile(fullPreviewPath, pngBytes);
 
-                asset.previewTexturePath = fullPreviewPath;
-            });
+                    asset.previewTexturePath = fullPreviewPath;
+                });
+            }
         }
 
         private void DeleteMesh(AssetModel.Asset asset)
