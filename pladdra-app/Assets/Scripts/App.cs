@@ -17,6 +17,7 @@ namespace Pladdra
     [RequireComponent(typeof(S3))]
     [RequireComponent(typeof(GraphQLClient))]
     [RequireComponent(typeof(ViewManager))]
+    [RequireComponent(typeof(Components.PigletImporter))]
     public class App : MonoBehaviour
     {
         public static string CachePath;

@@ -2,10 +2,13 @@ using System.Reflection;
 using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Threading;
 using System.IO;
 using UnityEngine;
 using Pladdra;
 using Pladdra.Core;
+using Pladdra.Components;
+using Piglet;
 
 using Newtonsoft.Json;
 
@@ -78,6 +81,8 @@ namespace Pladdra.MVC.Models
             AssetModel.Asset createdItem = (AssetModel.Asset)JsonConvert.DeserializeObject<AssetModel.Asset>(serializedJson);
 
             DownloadMesh(createdItem);
+            GenerateThumbnail(createdItem);
+
 
             items.Insert(0, createdItem);
             items = items;
@@ -90,6 +95,9 @@ namespace Pladdra.MVC.Models
             AssetModel.Asset match = items.Find(item => item.id.Contains(updatedItem.id));
 
             DownloadMesh(updatedItem);
+            GenerateThumbnail(updatedItem);
+
+
 
             items.ForEach(item =>
             {
@@ -125,6 +133,30 @@ namespace Pladdra.MVC.Models
             }
         }
 
+        private void GenerateThumbnail(AssetModel.Asset asset) {
+            string fullMeshPath = Path.Combine(Pladdra.App.CachePath, asset.meshPath);
+
+            string fileName = asset.id + ".png";
+            string assetPath = Path.Combine(downloadPath, fileName);
+            string fullPreviewPath = Path.Combine(Pladdra.App.CachePath, assetPath);
+
+            asset.previewTexturePath = File.Exists(assetPath) && asset.meshPath == null ? assetPath : asset.previewTexturePath;
+
+            if (asset.previewTexturePath == null || !File.Exists(fullPreviewPath)) {
+                PigletImporter.import(fullMeshPath, (GameObject importedModel) => {
+                    //PigletImporter.onImportFinished.RemoveListener(onFinished);
+                    RuntimePreviewGenerator.MarkTextureNonReadable = false;
+                    Texture2D thumbnail = RuntimePreviewGenerator.GenerateModelPreview(importedModel.transform);
+                    
+                    byte[] pngBytes = thumbnail.EncodeToPNG();
+
+                    FileManager.WriteToFile(fullPreviewPath, pngBytes);
+
+                    asset.previewTexturePath = fullPreviewPath;
+                });
+            }
+        }
+
         private void DeleteMesh(AssetModel.Asset asset)
         {
             if (asset.meshPath != null && File.Exists(asset.meshPath))
@@ -146,6 +178,7 @@ namespace Pladdra.MVC.Models
 
         public void LoadFromJson(string jsonToLoadFrom)
         {
+            Debug.Log(jsonToLoadFrom);
             AssetModel jsonData = JsonConvert.DeserializeObject<AssetModel>(jsonToLoadFrom);
 
             var fields = this.GetType().GetFields(BindingFlags.Public);
