@@ -27,6 +27,8 @@ namespace Pladdra.MVC.Views
         public Button removeButton;
         public Button placeButton;
 
+        public Vector3 gridSize;
+
         public Grid grid
         {
             get
@@ -46,28 +48,6 @@ namespace Pladdra.MVC.Views
         private bool initialized = false;
 
 
-        /// <summary>The method used to find fingers to use with this component. See LeanFingerFilter documentation for more information.</summary>
-        public LeanFingerFilter Use = new LeanFingerFilter(true);
-
-        /// <summary>The axis of rotation.</summary>
-        public Vector3 Axis { set { axis = value; } get { return axis; } }
-        [FSA("Axis")] [SerializeField] private Vector3 axis = Vector3.down;
-
-        /// <summary>Rotate locally or globally?</summary>
-        public Space Space { set { space = value; } get { return space; } }
-        [FSA("Sensitivity")] [SerializeField] private Space space = Space.Self;
-
-        /// <summary>The sensitivity of the rotation.
-        /// 1 = Default.
-        /// 2 = Double.</summary>
-        public float Sensitivity { set { sensitivity = value; } get { return sensitivity; } }
-        [FSA("Sensitivity")] [SerializeField] private float sensitivity = 1.0f;
-
-        public float twistDegrees;
-
-        public Vector3 gridSize;
-
-
         public override void Initialize()
         {
             controller = new EditGridController();
@@ -85,14 +65,6 @@ namespace Pladdra.MVC.Views
             if (gridObject.transform.position.x != grid.position.X
             || gridObject.transform.position.y != grid.position.Y)
                 gridObject.transform.position = new Vector3(grid.position.X, grid.position.Y, grid.position.Z);
-        }
-
-        public void RotateGrid()
-        {
-            if (twistDegrees != 0)
-            {
-                gridObject.transform.Rotate(axis, twistDegrees, space);
-            }
         }
 
         public void ToggleGrid()
@@ -160,14 +132,5 @@ namespace Pladdra.MVC.Views
             if (gridSelectable != null)
                 gridSelectable.enabled = false;
         }
-
-        // private void Update()
-        // {
-        //     var fingers = Use.UpdateAndGetFingers();
-        //     twistDegrees = LeanGesture.GetTwistDegrees(fingers) * sensitivity;
-
-        //     // TransformGrid();
-        //     RotateGrid();
-        // }
     }
 }
