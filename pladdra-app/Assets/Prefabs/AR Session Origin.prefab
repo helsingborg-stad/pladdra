@@ -142,6 +142,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AR Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 8493868161715515476, guid: 01c3415a29bf1442080c5146b6503f41,
+        type: 3}
+      propertyPath: m_TagString
+      value: MainCamera
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01c3415a29bf1442080c5146b6503f41, type: 3}
 --- !u!4 &3723995667991243518 stripped
