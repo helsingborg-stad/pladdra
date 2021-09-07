@@ -24,7 +24,7 @@ namespace Pladdra.Components
 
         public bool shouldRender = false;
         public delegate void RenderDelegate();
-        public RenderDelegate OnRender;
+        public event RenderDelegate OnRender;
         private UnityEvent _renderEvent;
 
         private void Update()
