@@ -1,31 +1,37 @@
 using UnityEngine;
 using UnityEngine.Events;
-using Pladdra.MVC.Models;
+
 using Pladdra.MVC.Views;
 
 
 namespace Pladdra.MVC.Controllers
 {
-    public interface IEditGridController
-    {
-        public IEditGridModel model { get; }
+    using Pladdra.MVC.Models;
 
-        public void OnClickMenu();
-        public void OnClickPlace();
-        public void OnClickRemove();
-    }
-
-    public class EditGridController : IEditGridController
+    public class EditGridController
     {
-        public IEditGridModel model { get; }
+        public Grid grid
+        {
+            get
+            {
+                App.GetModel<Grid>(out var instance);
+                return instance;
+            }
+        }
+
+        public EditGridModel model { get; }
 
         UnityEvent render;
 
-        public EditGridController(IEditGridModel EditGridModel)
+        public EditGridController()
+        {
+        }
+
+        public EditGridController(EditGridModel EditGridModel)
         {
             model = EditGridModel;
         }
-        public EditGridController(IEditGridModel EditGridModel, UnityEvent renderEvent)
+        public EditGridController(EditGridModel EditGridModel, UnityEvent renderEvent)
         {
             model = EditGridModel;
             render = renderEvent;
@@ -36,11 +42,22 @@ namespace Pladdra.MVC.Controllers
         }
         public void OnClickPlace()
         {
+            ARController.TogglePlaneDetection(false);
             ViewManager.Show<BuildView>();
         }
         public void OnClickRemove()
         {
+            grid.visible = false;
             ViewManager.Show<DisposeGridView>();
+        }
+
+        public void OnGridChanged(float twistDegree)
+        {
+
+        }
+        public void OnTwistGesture(float twistDegree)
+        {
+
         }
     }
 }

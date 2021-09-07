@@ -54,6 +54,35 @@ MonoBehaviour:
   menuButton: {fileID: 6642275870968473842}
   removeButton: {fileID: 6902400385407679532}
   placeButton: {fileID: 215782889582044047}
+  gridPrefab: {fileID: 2274876778655719386, guid: 54d747e815fbb43d1b749bd911098c74,
+    type: 3}
+  gridObject: {fileID: 0}
+--- !u!114 &761902769910017668
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 509685045864309427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_Spacing: 12
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 0
+  m_ChildControlWidth: 1
+  m_ChildControlHeight: 1
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &1310377535797915396
 GameObject:
   m_ObjectHideFlags: 0
@@ -524,32 +553,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &761902769910017668
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 509685045864309427}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59f8146938fff824cb5fd77236b75775, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  m_Spacing: 12
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 0
-  m_ChildControlWidth: 1
-  m_ChildControlHeight: 1
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!1001 &472528246854633371
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -966,15 +969,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c58d70bbc272943e483ad1e72c64c0db, type: 3}
---- !u!224 &7266342041992243252 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 3259769620962729741, guid: c58d70bbc272943e483ad1e72c64c0db,
-    type: 3}
-  m_PrefabInstance: {fileID: 5326136191479248697}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &509685045864309427 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5690579041190073738, guid: c58d70bbc272943e483ad1e72c64c0db,
+    type: 3}
+  m_PrefabInstance: {fileID: 5326136191479248697}
+  m_PrefabAsset: {fileID: 0}
+--- !u!224 &7266342041992243252 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 3259769620962729741, guid: c58d70bbc272943e483ad1e72c64c0db,
     type: 3}
   m_PrefabInstance: {fileID: 5326136191479248697}
   m_PrefabAsset: {fileID: 0}

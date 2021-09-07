@@ -6,22 +6,17 @@ using Pladdra.MVC.Views;
 
 namespace Pladdra.MVC.Controllers
 {
-    public interface ILoadWorkspaceController
+    public class LoadWorkspaceController
     {
-        public ILoadWorkspaceModel model { get; }
-    }
-
-    public class LoadWorkspaceController : ILoadWorkspaceController
-    {
-        public ILoadWorkspaceModel model { get; }
+        public LoadWorkspaceModel model { get; }
 
         UnityEvent render;
 
-        public LoadWorkspaceController(ILoadWorkspaceModel LoadWorkspaceModel)
+        public LoadWorkspaceController(LoadWorkspaceModel LoadWorkspaceModel)
         {
             model = LoadWorkspaceModel;
         }
-        public LoadWorkspaceController(ILoadWorkspaceModel LoadWorkspaceModel, UnityEvent renderEvent)
+        public LoadWorkspaceController(LoadWorkspaceModel LoadWorkspaceModel, UnityEvent renderEvent)
         {
             model = LoadWorkspaceModel;
             render = renderEvent;

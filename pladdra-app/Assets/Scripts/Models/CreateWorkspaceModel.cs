@@ -4,12 +4,7 @@ using UnityEngine;
 
 namespace Pladdra.MVC.Models
 {
-    public interface ICreateWorkspaceModel
-    {
-        void CreateWorkspace();
-    }
-
-    public class CreateWorkspaceModel : ICreateWorkspaceModel
+    public class CreateWorkspaceModel
     {
         public void CreateWorkspace()
         {

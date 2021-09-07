@@ -6,24 +6,17 @@ using Pladdra.MVC.Views;
 
 namespace Pladdra.MVC.Controllers
 {
-    public interface IInventoryController
+    public class InventoryController
     {
-        public void OnClickBack();
-        public void OnClickItem();
-        public IInventoryModel model { get; }
-    }
-
-    public class InventoryController : IInventoryController
-    {
-        public IInventoryModel model { get; }
+        public InventoryModel model { get; }
 
         UnityEvent render;
 
-        public InventoryController(IInventoryModel InventoryModel)
+        public InventoryController(InventoryModel InventoryModel)
         {
             model = InventoryModel;
         }
-        public InventoryController(IInventoryModel InventoryModel, UnityEvent renderEvent)
+        public InventoryController(InventoryModel InventoryModel, UnityEvent renderEvent)
         {
             model = InventoryModel;
             render = renderEvent;

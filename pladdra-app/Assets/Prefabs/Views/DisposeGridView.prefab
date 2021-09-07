@@ -105,6 +105,26 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.x
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1333522338736452566, guid: 7742c15e81568413c90a406b0cf40076,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1333522338736452566, guid: 7742c15e81568413c90a406b0cf40076,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 1791045846500591946, guid: 7742c15e81568413c90a406b0cf40076,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 24
+      objectReference: {fileID: 0}
+    - target: {fileID: 1791045846500591946, guid: 7742c15e81568413c90a406b0cf40076,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 24
+      objectReference: {fileID: 0}
     - target: {fileID: 2587980934565710177, guid: 7742c15e81568413c90a406b0cf40076,
         type: 3}
       propertyPath: m_AnchorMax.y
@@ -194,6 +214,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5710636222132211538, guid: 7742c15e81568413c90a406b0cf40076,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 5710636222132211538, guid: 7742c15e81568413c90a406b0cf40076,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 16
       objectReference: {fileID: 0}
     - target: {fileID: 6178375734104073844, guid: 7742c15e81568413c90a406b0cf40076,
         type: 3}
@@ -243,7 +273,7 @@ PrefabInstance:
     - target: {fileID: 6562274739250056538, guid: 7742c15e81568413c90a406b0cf40076,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 326.3455
+      value: 220.9642
       objectReference: {fileID: 0}
     - target: {fileID: 6562274739250056538, guid: 7742c15e81568413c90a406b0cf40076,
         type: 3}
@@ -304,6 +334,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7740478011170451824, guid: 7742c15e81568413c90a406b0cf40076,
+        type: 3}
+      propertyPath: m_fontSize
+      value: 16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7740478011170451824, guid: 7742c15e81568413c90a406b0cf40076,
+        type: 3}
+      propertyPath: m_fontSizeBase
+      value: 16
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7742c15e81568413c90a406b0cf40076, type: 3}

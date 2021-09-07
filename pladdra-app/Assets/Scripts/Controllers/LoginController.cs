@@ -6,19 +6,13 @@ using Pladdra.MVC.Views;
 
 namespace Pladdra.MVC.Controllers
 {
-    public interface ILoginController
+    public class LoginController
     {
-        public ILoginModel model { get; }
-        void OnClickLogin(string userName, string password);
-    }
-
-    public class LoginController : ILoginController
-    {
-        public ILoginModel model { get; }
+        public LoginModel model { get; }
 
         UnityEvent render;
 
-        public LoginController(ILoginModel loginModel, UnityEvent renderEvent)
+        public LoginController(LoginModel loginModel, UnityEvent renderEvent)
         {
             model = loginModel;
             render = renderEvent;

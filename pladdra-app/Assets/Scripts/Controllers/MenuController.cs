@@ -6,25 +6,17 @@ using Pladdra.MVC.Views;
 
 namespace Pladdra.MVC.Controllers
 {
-    public interface IMenuController
+    public class MenuController
     {
-        public IMenuModel model { get; }
-        public void OnClickCreateWorkspace();
-        public void OnClickListWorkspace();
-        public void OnClickLogout();
-    }
-
-    public class MenuController : IMenuController
-    {
-        public IMenuModel model { get; }
+        public MenuModel model { get; }
 
         UnityEvent render;
 
-        public MenuController(IMenuModel menuModel)
+        public MenuController(MenuModel menuModel)
         {
             model = menuModel;
         }
-        public MenuController(IMenuModel menuModel, UnityEvent renderEvent)
+        public MenuController(MenuModel menuModel, UnityEvent renderEvent)
         {
             model = menuModel;
             render = renderEvent;

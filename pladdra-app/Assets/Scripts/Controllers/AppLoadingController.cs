@@ -17,24 +17,18 @@ using Pladdra.MVC.Views;
 
 namespace Pladdra.MVC.Controllers
 {
-    public interface IAppLoadingController
+    public class AppLoadingController
     {
-        public IAppLoadingModel model { get; }
-        void InitializeApplication();
-    }
-
-    public class AppLoadingController : IAppLoadingController
-    {
-        public IAppLoadingModel model { get; }
+        public AppLoadingModel model { get; }
 
         UnityEvent render;
 
-        public AppLoadingController(IAppLoadingModel AppLoadingModel)
+        public AppLoadingController(AppLoadingModel AppLoadingModel)
         {
             model = AppLoadingModel;
         }
 
-        public AppLoadingController(IAppLoadingModel AppLoadingModel, UnityEvent renderEvent)
+        public AppLoadingController(AppLoadingModel AppLoadingModel, UnityEvent renderEvent)
         {
             model = AppLoadingModel;
             render = renderEvent;
