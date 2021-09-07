@@ -16,7 +16,7 @@ namespace Pladdra.MVC.Controllers
 
         private WorkspaceModel workspaceModel;
         private Grid grid;
-        private PlannerModel plannerModel;
+        private Planner planner;
 
         public CreateWorkspaceController(CreateWorkspaceModel CreateWorkspaceModel, UnityEvent renderEvent)
         {
@@ -25,7 +25,7 @@ namespace Pladdra.MVC.Controllers
 
             App.GetModel<WorkspaceModel>(out workspaceModel);
             App.GetModel<Grid>(out grid);
-            App.GetModel<PlannerModel>(out plannerModel);
+            App.GetModel<Planner>(out planner);
         }
 
         public void OnClickCreate(string name)
@@ -39,7 +39,7 @@ namespace Pladdra.MVC.Controllers
 
             workspaceModel.Create(input, out API.Types.Workspace createdItem);
 
-            plannerModel.workspaceID = createdItem.id;
+            planner.workspaceID = createdItem.id;
             grid.size = new System.Numerics.Vector3(1f, 1f, 10f);
 
             ViewManager.Show<DisposeGridView>();
