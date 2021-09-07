@@ -69,6 +69,9 @@ namespace Pladdra.MVC.Views
 
         public void ToggleGrid()
         {
+            if (gridObject == null)
+                return;
+
             if (grid.visible)
             {
                 var scaleFactor = 16f;
