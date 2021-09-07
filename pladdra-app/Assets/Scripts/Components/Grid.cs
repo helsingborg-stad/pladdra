@@ -42,12 +42,12 @@ namespace Pladdra.Components
 
             if (isSelected == true)
             {
-                backgroundMaterial.SetColor("_Color", new Color(1f, 0f, 0f, 0.56f));
+                backgroundMaterial.SetColor("_Color", new Color(1f, 0f, 0f, 0.16f));
                 backgroundMaterial.SetColor("_SolidOutline", new Color(1f, 0f, 0f, 0.66f));
             }
             else
             {
-                backgroundMaterial.SetColor("_Color", new Color(1f, 1f, 1f, 0.56f));
+                backgroundMaterial.SetColor("_Color", new Color(1f, 1f, 1f, 0.16f));
                 backgroundMaterial.SetColor("_SolidOutline", new Color(1f, 1f, 1f, 0.66f));
             }
         }
