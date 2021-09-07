@@ -192,6 +192,7 @@ MonoBehaviour:
   buttonComponent: {fileID: 6621482138805825134}
   titleComponent: {fileID: 4211137479744251430}
   metaComponent: {fileID: 5926547278658133491}
+  imageComponent: {fileID: 4232731700016504710}
 --- !u!1 &3594780136259007381
 GameObject:
   m_ObjectHideFlags: 0
