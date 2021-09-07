@@ -26,6 +26,8 @@ namespace Pladdra.MVC.Views
 
         private AssetModel assetModel;
 
+        private bool _EXPERIMENTAL = false;
+
         public override void Initialize()
         {
             context = new InventoryModel();
@@ -75,6 +77,12 @@ namespace Pladdra.MVC.Views
             item.titleComponent.text = asset.name;
             item.metaComponent.text = asset.id;
             item.buttonComponent.onClick.AddListener(() => onClickItem(asset));
+
+            if (!_EXPERIMENTAL)
+            {
+                items.Add(newObj);
+                return;
+            }
 
             if (loadedPreviewCache.ContainsKey(asset.previewTexturePath))
             {
