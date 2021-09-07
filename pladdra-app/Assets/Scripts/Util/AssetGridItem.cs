@@ -14,5 +14,7 @@ namespace Pladdra
         public Button buttonComponent;
         public Text titleComponent;
         public Text metaComponent;
+
+        public Image imageComponent;
     }
 }
