@@ -6,28 +6,16 @@ using Pladdra.MVC.Views;
 
 namespace Pladdra.MVC.Controllers
 {
-    public interface IBuildController
+    public class BuildController
     {
-        public IBuildModel model { get; }
-
-        public void OnClickMenu();
-        public void OnClickGridButton();
-        public void OnClickInventoryButton();
-    }
-
-    public class BuildController : IBuildController
-    {
-        public IBuildModel model { get; }
-
         UnityEvent render;
 
-        public BuildController(IBuildModel BuildModel)
+        public BuildController()
         {
-            model = BuildModel;
         }
-        public BuildController(IBuildModel BuildModel, UnityEvent renderEvent)
+
+        public BuildController(UnityEvent renderEvent)
         {
-            model = BuildModel;
             render = renderEvent;
         }
         public void OnClickMenu()
@@ -37,6 +25,7 @@ namespace Pladdra.MVC.Controllers
 
         public void OnClickGridButton()
         {
+            ARController.TogglePlaneDetection(true);
             ViewManager.Show<EditGridView>();
         }
         public void OnClickInventoryButton()

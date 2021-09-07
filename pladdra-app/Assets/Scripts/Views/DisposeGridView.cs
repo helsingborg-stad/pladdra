@@ -8,6 +8,7 @@ using UnityEngine.Events;
 using TMPro;
 using UnityEngine.XR.ARFoundation;
 
+using Pladdra.Core;
 using Pladdra.MVC.Models;
 using Pladdra.MVC.Controllers;
 using Pladdra.Components;
@@ -20,10 +21,11 @@ namespace Pladdra.MVC.Views
         public Button placeButton;
         public GameObject arMarkerPrefab;
         public GameObject createdARMarker;
-        private IDisposeGridModel context;
-        private IDisposeGridController controller;
+        private DisposeGridModel context;
+        private DisposeGridController controller;
         private UnityEvent renderEvent;
         private bool shouldRender = false;
+        private bool initialized = false;
 
         CameraRaycast raycaster;
 
@@ -40,6 +42,35 @@ namespace Pladdra.MVC.Views
 
             menuButton.onClick.AddListener(controller.OnClickMenu);
             placeButton.onClick.AddListener(controller.OnClickPlace);
+
+            initialized = true;
+
+            // var mesh = PlaneMeshGenerator.GenerateHorizontal(4, 4, 10, true);
+            // var gridObj = new GameObject("Grid");
+            // var filter = gridObj.AddComponent<MeshFilter>();
+            // filter.mesh = mesh;
+            // var renderer = gridObj.AddComponent<MeshRenderer>();
+            // var material = renderer.material;
+            // material.color = new Color(1, 0, 0, 0.5f);
+        }
+
+        private void OnEnable()
+        {
+            if (!initialized)
+                return;
+
+            if (createdARMarker == null)
+                createdARMarker = Instantiate(arMarkerPrefab, context.raycastHitPosition, Quaternion.identity);
+
+            ARController.TogglePlaneDetection(true);
+
+            createdARMarker.SetActive(true);
+        }
+
+        private void OnDisable()
+        {
+            if (createdARMarker != null)
+                createdARMarker.SetActive(false);
         }
 
         private void HandleCameraRaycast(RaycastHit hit)
@@ -55,13 +86,9 @@ namespace Pladdra.MVC.Views
         {
             if (shouldRender)
             {
-                if (createdARMarker == null)
+                if (createdARMarker != null)
                 {
-                    createdARMarker = Instantiate(arMarkerPrefab, context.raycastHitPosition, Quaternion.identity);
-                }
-                else
-                {
-                    createdARMarker.transform.position = context.raycastHitPosition;
+                    createdARMarker.transform.position = context.raycastHitPosition + new Vector3(0, 0, 0.01f);
                 }
 
                 shouldRender = false;

@@ -6,13 +6,19 @@ using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
 using TMPro;
-using Pladdra.API;
-using Pladdra.MVC.Models;
+
 using System.Linq;
 
-using Pladdra.Core;
+
+using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
+
+
 namespace Pladdra
 {
+    using Pladdra.API;
+    using Pladdra.Core;
+    using Pladdra.MVC.Models;
     [RequireComponent(typeof(Auth))]
     [RequireComponent(typeof(S3))]
     [RequireComponent(typeof(GraphQLClient))]
@@ -20,6 +26,9 @@ namespace Pladdra
     [RequireComponent(typeof(Components.PigletImporter))]
     public class App : MonoBehaviour
     {
+
+        public static ARRaycastManager _AARRaycastManager;
+
         public static string CachePath;
         private List<IModel> models;
         private static App _instance;
@@ -59,6 +68,8 @@ namespace Pladdra
             IModel[] instances = {
                 new AssetModel(),
                 new WorkspaceModel(),
+                new PlannerModel(),
+                new Grid(),
             };
 
             for (int i = 0; i < instances.Length; i++)

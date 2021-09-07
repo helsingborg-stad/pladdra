@@ -7,7 +7,6 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
 
-
 using Pladdra.MVC.Models;
 using Pladdra.MVC.Controllers;
 using Pladdra.Components;
@@ -17,8 +16,8 @@ namespace Pladdra.MVC.Views
     [RequireComponent(typeof(WithReRender))]
     public class CreateWorkspaceView : View
     {
-        private ICreateWorkspaceModel context;
-        private ICreateWorkspaceController controller;
+        private CreateWorkspaceModel context;
+        private CreateWorkspaceController controller;
         public UnityEvent render;
         public WithReRender withReRender;
         public TMP_InputField nameField;

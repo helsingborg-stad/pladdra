@@ -18,13 +18,11 @@ namespace Pladdra.MVC.Views
         public Button menuButton;
         public Button GridButton;
         public Button LibraryButton;
-        private IBuildModel context;
-        private IBuildController controller;
+        private BuildController controller;
 
         public override void Initialize()
         {
-            context = new BuildModel();
-            controller = new BuildController(context);
+            controller = new BuildController();
 
             menuButton.onClick.AddListener(controller.OnClickMenu);
             GridButton.onClick.AddListener(controller.OnClickGridButton);

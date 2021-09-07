@@ -14,8 +14,8 @@ namespace Pladdra.MVC.Views
 {
     public class LoadWorkspaceView : View
     {
-        private ILoadWorkspaceModel context;
-        private ILoadWorkspaceController controller;
+        private LoadWorkspaceModel context;
+        private LoadWorkspaceController controller;
 
         public override void Initialize()
         {

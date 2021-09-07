@@ -18,8 +18,8 @@ namespace Pladdra.MVC.Views
         public Button removeButton;
         public Button placeButton;
 
-        private ISelectionModel context;
-        private ISelectionController controller;
+        private SelectionModel context;
+        private SelectionController controller;
 
         public override void Initialize()
         {

@@ -21,8 +21,8 @@ namespace Pladdra.MVC.Views
 
         private Dictionary<string, Sprite> loadedPreviewCache = new Dictionary<string, Sprite>();
 
-        private IInventoryModel context;
-        private IInventoryController controller;
+        private InventoryModel context;
+        private InventoryController controller;
 
         private AssetModel assetModel;
 
@@ -61,7 +61,8 @@ namespace Pladdra.MVC.Views
 
             if (itemsToRender.Count > 0)
             {
-                itemsToRender.ForEach((item) => {
+                itemsToRender.ForEach((item) =>
+                {
                     InstantiateItem(item);
                 });
             }
@@ -75,10 +76,14 @@ namespace Pladdra.MVC.Views
             item.metaComponent.text = asset.id;
             item.buttonComponent.onClick.AddListener(() => onClickItem(asset));
 
-            if (loadedPreviewCache.ContainsKey(asset.previewTexturePath)) {
+            if (loadedPreviewCache.ContainsKey(asset.previewTexturePath))
+            {
                 item.imageComponent.sprite = loadedPreviewCache[asset.previewTexturePath];
-            } else {
-                StartCoroutine(RemoteImageUtil.loadRemoteImage("file://"+asset.previewTexturePath, (Texture2D texture) => {
+            }
+            else
+            {
+                StartCoroutine(RemoteImageUtil.loadRemoteImage("file://" + asset.previewTexturePath, (Texture2D texture) =>
+                {
                     Debug.Log("loaded remote item");
 
                     Sprite sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);

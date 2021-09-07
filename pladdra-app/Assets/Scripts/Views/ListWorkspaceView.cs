@@ -18,8 +18,8 @@ namespace Pladdra.MVC.Views
     [RequireComponent(typeof(WithReRender))]
     public class ListWorkspaceView : View
     {
-        private IListWorkspaceModel context;
-        private IListWorkspaceController controller;
+        private ListWorkspaceModel context;
+        private ListWorkspaceController controller;
         public UnityEvent render;
         private WithReRender withReRender;
         public GameObject itemPrefab;

@@ -15,7 +15,7 @@ namespace Pladdra.MVC.Views
     public class ExampleView : View
     {
         private IExampleModel context;
-        private IExampleController controller;
+        private ExampleController controller;
 
         public override void Initialize()
         {

@@ -6,29 +6,26 @@ using Pladdra.MVC.Views;
 
 namespace Pladdra.MVC.Controllers
 {
-    public interface IListWorkspaceController
-    {
-        public IListWorkspaceModel model { get; }
+    using Pladdra.MVC.Models;
 
-        public void OnClickBack();
-        public void OnClickLoad(string workspaceId);
-        public void OnClickDelete(string workspaceId);
-    }
-
-    public class ListWorkspaceController : IListWorkspaceController
+    public class ListWorkspaceController
     {
-        public IListWorkspaceModel model { get; }
+        public ListWorkspaceModel model { get; }
 
         UnityEvent render;
         private WorkspaceModel workspaceModel;
+        private Grid grid;
+        private PlannerModel plannerModel;
 
-        public ListWorkspaceController(IListWorkspaceModel ListWorkspaceModel, UnityEvent renderEvent)
+        public ListWorkspaceController(ListWorkspaceModel ListWorkspaceModel, UnityEvent renderEvent)
         {
             model = ListWorkspaceModel;
             render = renderEvent;
 
-            App.GetModel<WorkspaceModel>(out var workspaceModelInstance);
-            workspaceModel = workspaceModelInstance;
+
+            App.GetModel<WorkspaceModel>(out workspaceModel);
+            App.GetModel<Grid>(out grid);
+            App.GetModel<PlannerModel>(out plannerModel);
         }
 
         public void OnClickBack()
@@ -38,6 +35,9 @@ namespace Pladdra.MVC.Controllers
 
         public void OnClickLoad(string workspaceId)
         {
+            plannerModel.workspaceID = workspaceId;
+            grid.size = new System.Numerics.Vector3(1f, 1f, 10f);
+
             ViewManager.Show<DisposeGridView>();
         }
         public void OnClickDelete(string workspaceId)

@@ -12,18 +12,8 @@ using Pladdra.Core;
 
 namespace Pladdra.MVC.Models
 {
-    public interface IWorkspaceModel
-    {
-        public List<API.Types.Workspace> items { get; set; }
-        public API.Types.Workspace Get(string id);
-        public List<API.Types.Workspace> List();
-        public void Create(API.Types.CreateWorkspaceInput input);
-        public void Update(API.Types.UpdateWorkspaceInput input);
-        public void Delete(API.Types.DeleteWorkspaceInput input);
-    }
-
     [System.Serializable]
-    public class WorkspaceModel : IModel, IWorkspaceModel, ISaveable
+    public class WorkspaceModel : IModel, ISaveable
     {
         private List<API.Types.Workspace> _items;
 
@@ -55,14 +45,18 @@ namespace Pladdra.MVC.Models
 
         public List<API.Types.Workspace> List() => items;
 
-        public void Create(API.Types.CreateWorkspaceInput input)
+        public void Create(API.Types.CreateWorkspaceInput input, out API.Types.Workspace createdItem)
         {
             string serializedJson = JsonConvert.SerializeObject(input);
 
-            API.Types.Workspace createdItem = (API.Types.Workspace)JsonConvert.DeserializeObject<API.Types.Workspace>(serializedJson);
+            createdItem = (API.Types.Workspace)JsonConvert.DeserializeObject<API.Types.Workspace>(serializedJson);
             items.Insert(0, createdItem);
 
             SaveJson();
+        }
+        public void Create(API.Types.CreateWorkspaceInput input)
+        {
+            Create(input, out API.Types.Workspace createdItem);
         }
 
         public void Update(API.Types.UpdateWorkspaceInput input)

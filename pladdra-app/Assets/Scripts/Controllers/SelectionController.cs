@@ -6,26 +6,17 @@ using Pladdra.MVC.Views;
 
 namespace Pladdra.MVC.Controllers
 {
-    public interface ISelectionController
+    public class SelectionController
     {
-        public ISelectionModel model { get; }
-
-        public void OnClickMenu();
-        public void OnClickPlace();
-        public void OnClickRemove();
-    }
-
-    public class SelectionController : ISelectionController
-    {
-        public ISelectionModel model { get; }
+        public SelectionModel model { get; }
 
         UnityEvent render;
 
-        public SelectionController(ISelectionModel SelectionModel)
+        public SelectionController(SelectionModel SelectionModel)
         {
             model = SelectionModel;
         }
-        public SelectionController(ISelectionModel SelectionModel, UnityEvent renderEvent)
+        public SelectionController(SelectionModel SelectionModel, UnityEvent renderEvent)
         {
             model = SelectionModel;
             render = renderEvent;

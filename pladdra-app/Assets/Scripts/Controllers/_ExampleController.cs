@@ -6,12 +6,7 @@ using Pladdra.MVC.Views;
 
 namespace Pladdra.MVC.Controllers
 {
-    public interface IExampleController
-    {
-        public IExampleModel model { get; }
-    }
-
-    public class ExampleController : IExampleController
+    public class ExampleController
     {
         public IExampleModel model { get; }
 
