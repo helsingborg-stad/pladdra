@@ -54,6 +54,7 @@ MonoBehaviour:
   inventoryGrid: {fileID: 3542989177660601775}
   inventoryItemPrefab: {fileID: 1409194928699795103, guid: f3eeb6c00a5724f478fe1bd571fb7351,
     type: 3}
+  placeholderIcon: {fileID: 21300000, guid: 1cf6f961419084daba8fc6721029eee2, type: 3}
 --- !u!1 &1320838360733203594
 GameObject:
   m_ObjectHideFlags: 0
