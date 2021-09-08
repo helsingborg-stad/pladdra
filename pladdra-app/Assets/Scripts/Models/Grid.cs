@@ -7,9 +7,32 @@ namespace Pladdra.MVC.Models
 {
     public class Grid : IModel
     {
-        public Vector3 size;
+        public event GridEventHandler OnSizeChanged;
+        public event GridEventHandler OnIsLockedChanged;
+        public event GridEventHandler OnVisibleChanged;
+        public event GridEventHandler OnPositionChanged;
+        public event GridEventHandler OnRotationChanged;
+
+        private Vector3 _size;
         private bool _isLocked;
-        public delegate void IsLockedEvent();
+        private bool _visible;
+        private Vector3 _position;
+        private Quaternion _rotation;
+
+        public Vector3 size
+        {
+            get { return _size; }
+            set
+            {
+                if (_size != value)
+                {
+                    _size = value;
+                    if (OnSizeChanged != null)
+                        OnSizeChanged();
+                }
+            }
+        }
+
         public bool isLocked
         {
             get { return _isLocked; }
@@ -24,9 +47,6 @@ namespace Pladdra.MVC.Models
             }
         }
 
-        public event IsLockedEvent OnIsLockedChanged;
-        private bool _visible;
-        public delegate void VisibleEvent();
         public bool visible
         {
             get { return _visible; }
@@ -41,11 +61,6 @@ namespace Pladdra.MVC.Models
             }
         }
 
-        public event VisibleEvent OnVisibleChanged;
-
-
-        private Vector3 _position;
-        public delegate void PositionEvent();
         public Vector3 position
         {
             get { return _position; }
@@ -59,11 +74,7 @@ namespace Pladdra.MVC.Models
                 }
             }
         }
-        public event PositionEvent OnPositionChanged;
 
-
-        private Quaternion _rotation;
-        public delegate void RotationEvent();
         public Quaternion rotation
         {
             get { return _rotation; }
@@ -77,6 +88,6 @@ namespace Pladdra.MVC.Models
                 }
             }
         }
-        public event PositionEvent OnRotationChanged;
+        public delegate void GridEventHandler();
     }
 }
