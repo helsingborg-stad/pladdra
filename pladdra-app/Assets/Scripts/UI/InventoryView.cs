@@ -26,7 +26,9 @@ namespace Pladdra.MVC.Views
 
         private AssetModel assetModel;
 
-        private bool _EXPERIMENTAL = false;
+        public Sprite placeholderIcon;
+
+        private bool _EXPERIMENTAL = true;
 
         public override void Initialize()
         {
@@ -84,6 +86,13 @@ namespace Pladdra.MVC.Views
                 return;
             }
 
+             if (asset.previewTexturePath == null) {
+                item.imageComponent.sprite = placeholderIcon;
+                items.Add(newObj);
+                return;
+             }
+
+
             if (loadedPreviewCache.ContainsKey(asset.previewTexturePath))
             {
                 item.imageComponent.sprite = loadedPreviewCache[asset.previewTexturePath];
@@ -92,12 +101,18 @@ namespace Pladdra.MVC.Views
             {
                 StartCoroutine(RemoteImageUtil.loadRemoteImage("file://" + asset.previewTexturePath, (Texture2D texture) =>
                 {
-                    Debug.Log("loaded remote item");
+                    if (texture == null) {
+                        item.imageComponent.sprite = placeholderIcon;
+                        loadedPreviewCache[asset.previewTexturePath] = placeholderIcon;
+                    } else {
 
-                    Sprite sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
-                    item.imageComponent.sprite = sprite;
+                        Debug.Log("loaded remote item");
 
-                    loadedPreviewCache[asset.previewTexturePath] = sprite;
+                        Sprite sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
+                        item.imageComponent.sprite = sprite;
+
+                        loadedPreviewCache[asset.previewTexturePath] = sprite;
+                    }
                 }));
             }
 
