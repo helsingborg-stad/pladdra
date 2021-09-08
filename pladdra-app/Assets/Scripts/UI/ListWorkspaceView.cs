@@ -27,7 +27,7 @@ namespace Pladdra.MVC.Views
         public Button backButton;
         private List<GameObject> items;
         private List<Pladdra.API.Types.Workspace> itemsToRender;
-        private WorkspaceModel workspaceModel;
+        private WorkspaceList workspaceModel;
 
         public override void Initialize()
         {
@@ -39,7 +39,7 @@ namespace Pladdra.MVC.Views
 
             backButton.onClick.AddListener(controller.OnClickBack);
 
-            App.GetModel<WorkspaceModel>(out var workspaceModelInstance);
+            App.GetModel<WorkspaceList>(out var workspaceModelInstance);
             workspaceModel = workspaceModelInstance;
         }
 

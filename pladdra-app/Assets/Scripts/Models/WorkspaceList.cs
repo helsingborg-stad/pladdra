@@ -13,7 +13,7 @@ using Pladdra.Core;
 namespace Pladdra.MVC.Models
 {
     [System.Serializable]
-    public class WorkspaceModel : IModel, ISaveable
+    public class WorkspaceList : IModel, ISaveable
     {
         private List<API.Types.Workspace> _items;
 
@@ -91,7 +91,7 @@ namespace Pladdra.MVC.Models
 
         public void LoadFromJson(string jsonToLoadFrom)
         {
-            WorkspaceModel jsonData = JsonConvert.DeserializeObject<WorkspaceModel>(jsonToLoadFrom);
+            WorkspaceList jsonData = JsonConvert.DeserializeObject<WorkspaceList>(jsonToLoadFrom);
 
             var fields = this.GetType().GetFields(BindingFlags.Public);
             foreach (var field in jsonData.GetType().GetFields())

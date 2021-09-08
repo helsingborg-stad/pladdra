@@ -67,7 +67,7 @@ namespace Pladdra
             // Init your global models here
             IModel[] instances = {
                 new AssetModel(),
-                new WorkspaceModel(),
+                new WorkspaceList(),
                 new Planner(),
                 new Grid(),
             };
