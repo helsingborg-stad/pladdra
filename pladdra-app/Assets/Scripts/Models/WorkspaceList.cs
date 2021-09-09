@@ -37,6 +37,12 @@ namespace Pladdra.MVC.Models
             SaveDataManager.SaveJsonData(this);
         }
 
+        public T Get<T>(string id)
+        {
+            List<API.Types.Workspace> item = items.Where(item => item.id == id).ToList();
+            return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(item[0]));
+        }
+
         public API.Types.Workspace Get(string id)
         {
             List<API.Types.Workspace> item = items.Where(item => item.id == id).ToList();
