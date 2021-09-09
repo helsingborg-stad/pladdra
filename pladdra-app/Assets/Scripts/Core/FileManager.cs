@@ -6,8 +6,13 @@ using UnityEngine;
 // based on https://github.com/UnityTechnologies/UniteNow20-Persistent-Data
 public static class FileManager
 {
-    public static bool WriteToFile(string a_FileName, byte[] a_FileContents) {
+    public static bool WriteToFile(string a_FileName, byte[] a_FileContents)
+    {
         var fullPath = Path.Combine(Pladdra.App.CachePath, a_FileName);
+
+        var dirPath = Path.GetDirectoryName(fullPath);
+        if (!Directory.Exists(dirPath))
+            Directory.CreateDirectory(dirPath);
 
         try
         {
@@ -24,6 +29,10 @@ public static class FileManager
     public static bool WriteToFile(string a_FileName, string a_FileContents)
     {
         var fullPath = Path.Combine(Pladdra.App.CachePath, a_FileName);
+
+        var dirPath = Path.GetDirectoryName(fullPath);
+        if (!Directory.Exists(dirPath))
+            Directory.CreateDirectory(dirPath);
 
         try
         {
