@@ -69,7 +69,6 @@ namespace Pladdra.MVC.Controllers
 
         public void TogglePlaneDetection()
         {
-            Debug.Log(context.planeDetection);
             if (planeManager.enabled == context.planeDetection)
                 return;
 
