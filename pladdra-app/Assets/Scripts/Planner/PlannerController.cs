@@ -30,6 +30,8 @@ namespace Pladdra.MVC.Controllers
             // workspaceController = new WorkspaceController();
 
             context.Init += Initialize;
+            context.Init += plannerGUI.inventoryGUI.Initialize;
+
             context.UpdatedState += OnStateChanged;
             context.OnHideTopAppBarChanged += () => plannerGUI.topAppBar.SetActive(!context.hideTopAppBar);
 
@@ -46,7 +48,6 @@ namespace Pladdra.MVC.Controllers
             plannerGUI.buildGUI.Hide();
             plannerGUI.inventoryGUI.Hide();
         }
-
 
         private void OnStateChanged()
         {

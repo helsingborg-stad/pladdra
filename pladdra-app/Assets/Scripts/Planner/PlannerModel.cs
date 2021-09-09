@@ -51,6 +51,14 @@ namespace Pladdra.MVC.Models
                 return instance;
             }
         }
+        public AssetModel assets
+        {
+            get
+            {
+                App.GetModel<AssetModel>(out var instance);
+                return instance;
+            }
+        }
 
         public Workspace workspace
         {
