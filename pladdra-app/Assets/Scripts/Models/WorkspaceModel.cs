@@ -13,9 +13,9 @@ using Pladdra.Core;
 namespace Pladdra.MVC.Models
 {
     [System.Serializable]
-    public class Workspace : Pladdra.API.Types.Workspace
+    public class WorkspaceModel : Pladdra.API.Types.Workspace
     {
-        private Savable<Workspace> savable;
+        private Savable<WorkspaceModel> savable;
 
         public void Load()
         {
@@ -32,7 +32,7 @@ namespace Pladdra.MVC.Models
         private void MakeSavable()
         {
             if (savable == null)
-                savable = new Savable<Workspace>();
+                savable = new Savable<WorkspaceModel>();
 
             savable.fileName = "workspaces/" + (id ?? "workspace") + ".json";
             savable.instance = this;

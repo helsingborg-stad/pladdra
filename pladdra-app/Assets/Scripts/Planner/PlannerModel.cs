@@ -60,7 +60,7 @@ namespace Pladdra.MVC.Models
             }
         }
 
-        public Workspace workspace
+        public WorkspaceModel workspace
         {
             get;
             private set;
@@ -80,7 +80,7 @@ namespace Pladdra.MVC.Models
 
         public void InitializeWorkspace(string workspaceId)
         {
-            workspace = workspaceList.Get<Workspace>(workspaceId);
+            workspace = workspaceList.Get<WorkspaceModel>(workspaceId);
             workspace.Load();
 
             Init();
