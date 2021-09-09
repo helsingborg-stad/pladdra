@@ -18,6 +18,7 @@ namespace Pladdra
 {
     using Pladdra.API;
     using Pladdra.Core;
+    using Pladdra.MVC.Controllers;
     using Pladdra.MVC.Models;
     [RequireComponent(typeof(Auth))]
     [RequireComponent(typeof(S3))]
@@ -59,7 +60,15 @@ namespace Pladdra
         void Start()
         {
             Models();
+            Controllers();
             Views();
+        }
+
+        private void Controllers()
+        {
+            object[] instances = {
+                new PlannerController(),
+            };
         }
 
         private void Models()
@@ -69,6 +78,7 @@ namespace Pladdra
                 new AssetModel(),
                 new WorkspaceList(),
                 new Planner(),
+                new PlannerModel(),
                 new Grid(),
             };
 
