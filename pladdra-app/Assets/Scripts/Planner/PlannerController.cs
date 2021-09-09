@@ -29,12 +29,15 @@ namespace Pladdra.MVC.Controllers
             gridController = new GridController();
             // workspaceController = new WorkspaceController();
 
+            // Subscribe Init
             context.Init += Initialize;
             context.Init += plannerGUI.inventoryGUI.Initialize;
 
+            //Subscribe model events
             context.UpdatedState += OnStateChanged;
             context.OnHideTopAppBarChanged += () => plannerGUI.topAppBar.SetActive(!context.hideTopAppBar);
 
+            //Subscribe GUI Handlers
             plannerGUI.placeGridGUI.placeGridButton.onClick.AddListener(OnClickPlaceGrid);
             plannerGUI.editGridGUI.removeGridButton.onClick.AddListener(OnClickRemoveGrid);
             plannerGUI.editGridGUI.lockGridButton.onClick.AddListener(OnClickLockGrid);
@@ -43,6 +46,7 @@ namespace Pladdra.MVC.Controllers
             plannerGUI.inventoryGUI.backButton.onClick.AddListener(OnClickExitInventory);
             plannerGUI.inventoryGUI.OnClickGridItem += OnClickInvetoryItem;
 
+            //Hide GUI partials
             plannerGUI.placeGridGUI.Hide();
             plannerGUI.editGridGUI.Hide();
             plannerGUI.buildGUI.Hide();
