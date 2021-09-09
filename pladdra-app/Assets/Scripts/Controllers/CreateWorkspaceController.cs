@@ -37,7 +37,7 @@ namespace Pladdra.MVC.Controllers
             input.id = System.Guid.NewGuid().ToString();
             input.name = name;
 
-            workspaceModel.Create(input, out API.Types.Workspace createdWorkspace);
+            workspaceModel.Create(input, out Core.Types.Workspace createdWorkspace);
             planner.workspaceID = createdWorkspace.id;
             planner.InitializeWorkspace(createdWorkspace.id);
         }

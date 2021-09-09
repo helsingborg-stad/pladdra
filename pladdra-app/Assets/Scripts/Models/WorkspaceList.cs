@@ -15,15 +15,14 @@ namespace Pladdra.MVC.Models
     [System.Serializable]
     public class WorkspaceList : IModel, ISaveable
     {
-        private List<API.Types.Workspace> _items;
-
-        public List<API.Types.Workspace> items
+        private List<Core.Types.Workspace> _items;
+        public List<Core.Types.Workspace> items
         {
             get
             {
                 if (_items == null)
                 {
-                    _items = new List<API.Types.Workspace>();
+                    _items = new List<Core.Types.Workspace>();
                 }
 
                 return _items;
@@ -32,6 +31,9 @@ namespace Pladdra.MVC.Models
             set { _items = value; }
         }
 
+
+
+
         public void SaveJson()
         {
             SaveDataManager.SaveJsonData(this);
@@ -39,37 +41,38 @@ namespace Pladdra.MVC.Models
 
         public T Get<T>(string id)
         {
-            List<API.Types.Workspace> item = items.Where(item => item.id == id).ToList();
+            List<Core.Types.Workspace> item = items.Where(item => item.id == id).ToList();
             return JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(item[0]));
         }
 
-        public API.Types.Workspace Get(string id)
+        public Core.Types.Workspace Get(string id)
         {
-            List<API.Types.Workspace> item = items.Where(item => item.id == id).ToList();
+            List<Core.Types.Workspace> item = items.Where(item => item.id == id).ToList();
             return item[0];
         }
 
-        public List<API.Types.Workspace> List() => items;
+        public List<Core.Types.Workspace> List() => items;
 
-        public void Create(API.Types.CreateWorkspaceInput input, out API.Types.Workspace createdItem)
+        public void Create(API.Types.CreateWorkspaceInput input, out Core.Types.Workspace createdItem)
         {
             string serializedJson = JsonConvert.SerializeObject(input);
 
-            createdItem = (API.Types.Workspace)JsonConvert.DeserializeObject<API.Types.Workspace>(serializedJson);
+            createdItem = (Core.Types.Workspace)JsonConvert.DeserializeObject<Core.Types.Workspace>(serializedJson);
             items.Insert(0, createdItem);
 
             SaveJson();
         }
+
         public void Create(API.Types.CreateWorkspaceInput input)
         {
-            Create(input, out API.Types.Workspace createdItem);
+            Create(input, out Core.Types.Workspace createdItem);
         }
 
         public void Update(API.Types.UpdateWorkspaceInput input)
         {
             string serializedJson = JsonConvert.SerializeObject(input);
-            API.Types.Workspace updatedItem = JsonConvert.DeserializeObject<API.Types.Workspace>(serializedJson);
-            API.Types.Workspace match = items.Find(item => item.id.Contains(updatedItem.id));
+            Core.Types.Workspace updatedItem = JsonConvert.DeserializeObject<Core.Types.Workspace>(serializedJson);
+            Core.Types.Workspace match = items.Find(item => item.id.Contains(updatedItem.id));
 
             items.ForEach(item =>
             {
@@ -84,7 +87,7 @@ namespace Pladdra.MVC.Models
 
         public void Delete(API.Types.DeleteWorkspaceInput input)
         {
-            List<API.Types.Workspace> updatedItems = items.Where(item => item.id != input.id).ToList();
+            List<Core.Types.Workspace> updatedItems = items.Where(item => item.id != input.id).ToList();
             items = updatedItems;
 
             SaveJson();
@@ -92,6 +95,11 @@ namespace Pladdra.MVC.Models
 
         public string ToJson()
         {
+            // var jsonString = JsonConvert.SerializeObject(this);
+
+
+            // WorkspaceList jsonData = JsonConvert.DeserializeObject<WorkspaceList>(jsonString);
+
             return JsonConvert.SerializeObject(this);
         }
 
