@@ -8,6 +8,11 @@ namespace Pladdra.MVC.Models
 {
     public class PlannerModel : IModel
     {
+        public event PlannerEventHandler UpdatedState;
+        public event PlannerEventHandler Init;
+        public event PlannerEventHandler OnHideTopAppBarChanged;
+
+
         public enum State
         {
             Initializing,
@@ -21,9 +26,6 @@ namespace Pladdra.MVC.Models
         }
 
         public State state = State.Inactive;
-
-        public event PlannerEventHandler UpdatedState;
-        public event PlannerEventHandler Init;
 
         public Grid grid
         {
@@ -74,6 +76,21 @@ namespace Pladdra.MVC.Models
             workspace.Load();
 
             Init();
+        }
+
+        private bool _hideTopAppBar;
+        public bool hideTopAppBar
+        {
+            get { return _hideTopAppBar; }
+            set
+            {
+                if (_hideTopAppBar != value)
+                {
+                    _hideTopAppBar = value;
+                    if (OnHideTopAppBarChanged != null)
+                        OnHideTopAppBarChanged();
+                }
+            }
         }
 
         public delegate void PlannerEventHandler();

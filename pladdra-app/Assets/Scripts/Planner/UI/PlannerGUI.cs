@@ -15,6 +15,7 @@ namespace Pladdra.MVC.Views
 {
     public class PlannerGUI : View
     {
+        public GameObject topAppBar;
         public PlannerPlaceGridGUI placeGridGUI;
         public PlannerEditGridGUI editGridGUI;
         public PlannerBuildGUI buildGUI;

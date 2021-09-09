@@ -31,6 +31,7 @@ namespace Pladdra.MVC.Controllers
 
             context.Init += Initialize;
             context.UpdatedState += OnStateChanged;
+            context.OnHideTopAppBarChanged += () => plannerGUI.topAppBar.SetActive(!context.hideTopAppBar);
 
             plannerGUI.placeGridGUI.placeGridButton.onClick.AddListener(OnClickPlaceGrid);
             plannerGUI.editGridGUI.removeGridButton.onClick.AddListener(OnClickRemoveGrid);
