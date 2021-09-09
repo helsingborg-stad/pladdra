@@ -15,9 +15,11 @@ namespace Pladdra.MVC.Views
         public static event OnSelectEventHandler onSelectAsset;
         public Button backButton;
         public GridLayoutGroup inventoryGrid;
+        public GridLayoutGroup categoryGrid;
         public GameObject inventoryItemPrefab;
         private List<AssetModel.Asset> itemsToRender;
         private List<GameObject> items;
+        private List<GameObject> categoryItems;
 
         private Dictionary<string, Sprite> loadedPreviewCache = new Dictionary<string, Sprite>();
 
@@ -29,6 +31,10 @@ namespace Pladdra.MVC.Views
         public Sprite placeholderIcon;
 
         private bool _EXPERIMENTAL = true;
+
+        [SerializeField]
+        public List<InventoryModel.InventoryCategory> categories;
+        public List<InventoryModel.InventoryCategory> categoryItemsToRender;
 
         public override void Initialize()
         {
@@ -46,6 +52,24 @@ namespace Pladdra.MVC.Views
             if (assetModel != null)
             {
                 RenderItems();
+                RenderCategories();
+            }
+        }
+
+        private void RenderCategories () {
+            if (categoryItems != null && categoryItems.Count > 0) {
+                categoryItems.ForEach(obj => Destroy(obj));
+            }
+
+            categoryItems = new List<GameObject>();
+            categoryItemsToRender = new List<InventoryModel.InventoryCategory>();
+            categoryItemsToRender = categories;
+
+            if (categoryItemsToRender.Count > 0) {
+                categoryItemsToRender.ForEach((item) =>
+                {
+                    InstantiateCategoryItem(item);
+                });
             }
         }
 
@@ -71,6 +95,17 @@ namespace Pladdra.MVC.Views
                 });
             }
         }
+
+        private void InstantiateCategoryItem(InventoryModel.InventoryCategory category) {
+            GameObject newObj = (GameObject)Instantiate(inventoryItemPrefab, categoryGrid.gameObject.transform);
+            AssetGridItem item = newObj.GetComponent<AssetGridItem>();
+            item.titleComponent.text = category.name;
+            item.metaComponent.text = category.name;
+            item.buttonComponent.onClick.AddListener(() => Debug.Log("Clicked category: "+category.name));
+        
+            categoryItems.Add(newObj);
+        }
+
 
         private void InstantiateItem(AssetModel.Asset asset)
         {
