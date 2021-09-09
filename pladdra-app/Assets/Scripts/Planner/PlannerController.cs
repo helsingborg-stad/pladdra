@@ -40,7 +40,10 @@ namespace Pladdra.MVC.Controllers
             plannerGUI.inventoryGUI.backButton.onClick.AddListener(OnClickExitInventory);
             plannerGUI.inventoryGUI.OnClickGridItem += OnClickInvetoryItem;
 
-            OnStateChanged();
+            plannerGUI.placeGridGUI.Hide();
+            plannerGUI.editGridGUI.Hide();
+            plannerGUI.buildGUI.Hide();
+            plannerGUI.inventoryGUI.Hide();
         }
 
 
