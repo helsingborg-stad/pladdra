@@ -12,6 +12,7 @@ namespace Pladdra.MVC.Controllers
     public class ARController
     {
         private ARPlaneManager planeManager;
+        private ARMarkerView arMarkerView;
 
         private AR context
         {
@@ -24,8 +25,46 @@ namespace Pladdra.MVC.Controllers
 
         public ARController()
         {
+            arMarkerView = GameObject.Find("AR Marker").GetComponent<ARMarkerView>();
             planeManager = GameObject.Find("AR Session Origin").GetComponent<ARPlaneManager>();
+
             context.PlaneDetectionChanged += TogglePlaneDetection;
+            context.RaycastChanged += ToggleRaycast;
+            context.ShowMarkerChanged += ToggleMarker;
+            context.RaycastHitPositionChanged += SetMarkerPosition;
+
+
+            arMarkerView.OnRaycastHitARPlane += SetRaycastPosition;
+            arMarkerView.Initialize();
+        }
+
+        public void SetRaycastPosition(RaycastHit hit)
+        {
+            context.raycastHitPosition = new System.Numerics.Vector3(hit.point.x, hit.point.y, hit.point.z) + new System.Numerics.Vector3(0, 0.003f, 0);
+        }
+
+        public void ToggleRaycast()
+        {
+            arMarkerView.ToggleCameraRaycast(context.raycast);
+        }
+
+        public void ToggleMarker()
+        {
+            if (context.showMarker)
+            {
+
+                arMarkerView.Show();
+                context.RaycastHitPositionChanged += SetMarkerPosition;
+                return;
+            }
+
+            arMarkerView.Hide();
+            context.RaycastHitPositionChanged -= SetMarkerPosition;
+        }
+
+        public void SetMarkerPosition()
+        {
+            arMarkerView.TransformMarker(new Vector3(context.raycastHitPosition.X, context.raycastHitPosition.Y, context.raycastHitPosition.Z) + new Vector3(0, 0, 0.01f));
         }
 
         public void TogglePlaneDetection()

@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 6785729183130350778}
   - component: {fileID: 6785729183130350779}
   - component: {fileID: 6785729183130350776}
+  - component: {fileID: 3804241350734650900}
+  - component: {fileID: 5454917803541668544}
   m_Layer: 2
   m_Name: AR Marker
   m_TagString: Untagged
@@ -96,3 +98,31 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0.000000059604645, y: 0, z: -0.00000008940697}
+--- !u!114 &3804241350734650900
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6785729183130350777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 384f9f9b47f824ec58ab4fb10783d4fb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  onHitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  ARCamera: {fileID: 0}
+--- !u!114 &5454917803541668544
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6785729183130350777}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc74a48a2ea6e4a38885189c87cb03ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

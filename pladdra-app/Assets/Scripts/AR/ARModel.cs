@@ -12,6 +12,13 @@ namespace Pladdra.MVC.Models
     {
         public event AREventHandler RaycastHitPositionChanged;
         public event AREventHandler PlaneDetectionChanged;
+        public event AREventHandler RaycastChanged;
+        public event AREventHandler ShowMarkerChanged;
+
+
+
+
+
         public Vector3 _raycastHitPosition { get; set; }
         public Vector3 raycastHitPosition
         {
@@ -41,9 +48,34 @@ namespace Pladdra.MVC.Models
                 }
             }
         }
-
-        public bool raycast;
-        public bool showMarker;
+        public bool _raycast { get; set; }
+        public bool raycast
+        {
+            get { return _raycast; }
+            set
+            {
+                if (_raycast != value)
+                {
+                    _raycast = value;
+                    if (RaycastChanged != null)
+                        RaycastChanged();
+                }
+            }
+        }
+        public bool _showMarker { get; set; }
+        public bool showMarker
+        {
+            get { return _showMarker; }
+            set
+            {
+                if (_showMarker != value)
+                {
+                    _showMarker = value;
+                    if (ShowMarkerChanged != null)
+                        ShowMarkerChanged();
+                }
+            }
+        }
 
         public delegate void AREventHandler();
     }
