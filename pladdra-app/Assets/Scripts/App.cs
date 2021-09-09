@@ -67,6 +67,7 @@ namespace Pladdra
         private void Controllers()
         {
             object[] instances = {
+                new ARController(),
                 new PlannerController(),
             };
         }
