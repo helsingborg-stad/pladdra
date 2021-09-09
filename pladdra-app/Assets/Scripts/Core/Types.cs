@@ -5,55 +5,55 @@ using GraphQL;
 
 namespace Pladdra.Core.Types
 {
-    public class Quat
+    public class Quat : Pladdra.API.Types.Quat
     {
         #region members
         [JsonProperty("x")]
-        public int x { get; set; }
+        public new float x { get; set; }
 
         [JsonProperty("y")]
-        public int y { get; set; }
+        public new float y { get; set; }
 
         [JsonProperty("z")]
-        public int z { get; set; }
+        public new float z { get; set; }
 
         [JsonProperty("w")]
-        public int w { get; set; }
+        public new float w { get; set; }
         #endregion
     }
 
-    public class Vect3
+    public class Vect3 : Pladdra.API.Types.Vect3
     {
         #region members
         [JsonProperty("x")]
-        public float x { get; set; }
+        public new float x { get; set; }
 
         [JsonProperty("y")]
-        public float y { get; set; }
+        public new float y { get; set; }
 
         [JsonProperty("z")]
-        public float z { get; set; }
+        public new float z { get; set; }
         #endregion
     }
 
     public class Block : Pladdra.API.Types.Block
     {
         [JsonProperty("position")]
-        public Vect3 position { get; set; }
+        public new Vect3 position { get; set; }
 
         [JsonProperty("rotation")]
-        public Quat rotation { get; set; }
+        public new Quat rotation { get; set; }
     }
 
     public class Workspace : Pladdra.API.Types.Workspace
     {
 
         [JsonProperty("blocks")]
-        public ModelBlockConnection blocks { get; set; }
+        public new ModelBlockConnection blocks { get; set; }
     }
 
     public class ModelBlockConnection : Pladdra.API.Types.ModelBlockConnection
     {
-        public List<Block> items { get; set; }
+        public new List<Block> items { get; set; }
     }
 }
