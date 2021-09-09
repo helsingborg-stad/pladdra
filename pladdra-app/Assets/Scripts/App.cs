@@ -78,7 +78,7 @@ namespace Pladdra
             IModel[] instances = {
                 new AssetModel(),
                 new WorkspaceList(),
-                new AR(),
+                new ARModel(),
                 new PlannerModel(),
                 new Grid(),
             };

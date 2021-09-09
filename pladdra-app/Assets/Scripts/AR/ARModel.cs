@@ -8,7 +8,7 @@ namespace Pladdra.MVC.Models
 {
     using System.Numerics;
     using Pladdra.Core;
-    public class AR : IModel
+    public class ARModel : IModel
     {
         public event AREventHandler RaycastHitPositionChanged;
         public event AREventHandler PlaneDetectionChanged;

@@ -33,11 +33,11 @@ namespace Pladdra.MVC.Models
                 return instance;
             }
         }
-        public AR ar
+        public ARModel ar
         {
             get
             {
-                App.GetModel<AR>(out var instance);
+                App.GetModel<ARModel>(out var instance);
                 return instance;
             }
         }

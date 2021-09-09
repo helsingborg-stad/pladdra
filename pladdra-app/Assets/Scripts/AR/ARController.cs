@@ -14,11 +14,11 @@ namespace Pladdra.MVC.Controllers
         private ARPlaneManager planeManager;
         private ARMarkerView arMarkerView;
 
-        private AR context
+        private ARModel context
         {
             get
             {
-                Pladdra.App.GetModel<AR>(out var instance);
+                Pladdra.App.GetModel<ARModel>(out var instance);
                 return instance;
             }
         }
