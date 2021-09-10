@@ -21,13 +21,13 @@ namespace Pladdra.MVC.Controllers
 
         private PlannerGUI plannerGUI { get; set; }
         private GridController gridController;
-        // private WorkspaceController workspaceController;
+        private WorkspaceController workspaceController;
 
         public PlannerController()
         {
             plannerGUI = CreateView("PlannerGUI").GetComponent<PlannerGUI>();
             gridController = new GridController();
-            // workspaceController = new WorkspaceController();
+            workspaceController = new WorkspaceController();
 
             // Subscribe Init
             context.Init += Initialize;
