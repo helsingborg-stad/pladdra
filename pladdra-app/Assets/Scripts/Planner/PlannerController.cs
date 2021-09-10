@@ -129,6 +129,7 @@ namespace Pladdra.MVC.Controllers
             ViewManager.Show<PlannerGUI>();
             SetupGrid();
             context.SetState(PlannerModel.State.PlaceGrid);
+            context.hideTopAppBar = false;
         }
 
         private void SetupGrid()
