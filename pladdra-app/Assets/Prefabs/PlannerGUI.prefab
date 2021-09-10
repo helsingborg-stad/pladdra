@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2815299b32fa4d109b5e2af72d35bfe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuButton: {fileID: 579113724349531801}
   topAppBar: {fileID: 9110826751266128394}
   placeGridGUI: {fileID: 616961677070228521}
   editGridGUI: {fileID: 2651248561264941676}
@@ -383,7 +384,8 @@ MonoBehaviour:
   onHitEvent:
     m_PersistentCalls:
       m_Calls: []
-  ARCamera: {fileID: 0}
+  ARCamera: {fileID: 8493868161715515477, guid: 01c3415a29bf1442080c5146b6503f41,
+    type: 3}
 --- !u!114 &616961677070228521
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -886,7 +888,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2651248561264941664}
-  - component: {fileID: 2651248561264941665}
   - component: {fileID: 2651248561264941676}
   m_Layer: 5
   m_Name: EditGrid
@@ -916,25 +917,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2651248561264941665
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2651248561264941679}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe3544345545543dcae69aa7ecb7ee2b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menuButton: {fileID: 0}
-  removeButton: {fileID: 8938176755055938391}
-  placeButton: {fileID: 2395375792631059700}
-  gridSize: {x: 0, y: 0, z: 0}
-  gridPrefab: {fileID: 2274876778655719386, guid: 54d747e815fbb43d1b749bd911098c74,
-    type: 3}
-  gridObject: {fileID: 0}
 --- !u!114 &2651248561264941676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -958,7 +940,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2651248561742322217}
-  - component: {fileID: 2651248561742322218}
   - component: {fileID: 2651248561742322214}
   m_Layer: 5
   m_Name: Build
@@ -987,21 +968,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2651248561742322218
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2651248561742322216}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: df8095096a4a64a51826a6f3e38bfd97, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  menuButton: {fileID: 0}
-  GridButton: {fileID: 1799738369945020160}
-  LibraryButton: {fileID: 372567529381918745}
 --- !u!114 &2651248561742322214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1070,6 +1036,7 @@ MonoBehaviour:
   inventoryGrid: {fileID: 2101837756869824055}
   inventoryItemPrefab: {fileID: 1409194928699795103, guid: f3eeb6c00a5724f478fe1bd571fb7351,
     type: 3}
+  placeholderIcon: {fileID: 0}
 --- !u!114 &2977541787245238783
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2097,6 +2064,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 57d5d9d3b9446463dbdf6fa47c0eab2e, type: 3}
+--- !u!114 &579113724349531801 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 319857324778775572, guid: 57d5d9d3b9446463dbdf6fa47c0eab2e,
+    type: 3}
+  m_PrefabInstance: {fileID: 898802755124503181}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2443252465614432770
 PrefabInstance:
   m_ObjectHideFlags: 0
