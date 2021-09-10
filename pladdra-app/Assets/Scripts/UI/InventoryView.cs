@@ -17,7 +17,7 @@ namespace Pladdra.MVC.Views
         public GridLayoutGroup inventoryGrid;
         public GridLayoutGroup categoryGrid;
         public GameObject inventoryItemPrefab;
-        private List<AssetModel.Asset> itemsToRender;
+        private List<Pladdra.Core.Types.Asset> itemsToRender;
         private List<GameObject> items;
         private List<GameObject> categoryItems;
 
@@ -56,8 +56,10 @@ namespace Pladdra.MVC.Views
             }
         }
 
-        private void RenderCategories () {
-            if (categoryItems != null && categoryItems.Count > 0) {
+        private void RenderCategories()
+        {
+            if (categoryItems != null && categoryItems.Count > 0)
+            {
                 categoryItems.ForEach(obj => Destroy(obj));
             }
 
@@ -65,7 +67,8 @@ namespace Pladdra.MVC.Views
             categoryItemsToRender = new List<InventoryModel.InventoryCategory>();
             categoryItemsToRender = categories;
 
-            if (categoryItemsToRender.Count > 0) {
+            if (categoryItemsToRender.Count > 0)
+            {
                 categoryItemsToRender.ForEach((item) =>
                 {
                     InstantiateCategoryItem(item);
@@ -84,7 +87,7 @@ namespace Pladdra.MVC.Views
             }
 
             items = new List<GameObject>();
-            itemsToRender = new List<AssetModel.Asset>();
+            itemsToRender = new List<Pladdra.Core.Types.Asset>();
             itemsToRender = assetModel.List();
 
             if (itemsToRender.Count > 0)
@@ -96,18 +99,18 @@ namespace Pladdra.MVC.Views
             }
         }
 
-        private void InstantiateCategoryItem(InventoryModel.InventoryCategory category) {
+        private void InstantiateCategoryItem(InventoryModel.InventoryCategory category)
+        {
             GameObject newObj = (GameObject)Instantiate(inventoryItemPrefab, categoryGrid.gameObject.transform);
             AssetGridItem item = newObj.GetComponent<AssetGridItem>();
             item.titleComponent.text = category.name;
             item.metaComponent.text = category.name;
-            item.buttonComponent.onClick.AddListener(() => Debug.Log("Clicked category: "+category.name));
-        
+            item.buttonComponent.onClick.AddListener(() => Debug.Log("Clicked category: " + category.name));
+
             categoryItems.Add(newObj);
         }
 
-
-        private void InstantiateItem(AssetModel.Asset asset)
+        private void InstantiateItem(Pladdra.Core.Types.Asset asset)
         {
             GameObject newObj = (GameObject)Instantiate(inventoryItemPrefab, inventoryGrid.gameObject.transform);
             AssetGridItem item = newObj.GetComponent<AssetGridItem>();
@@ -121,11 +124,12 @@ namespace Pladdra.MVC.Views
                 return;
             }
 
-             if (asset.previewTexturePath == null) {
+            if (asset.previewTexturePath == null)
+            {
                 item.imageComponent.sprite = placeholderIcon;
                 items.Add(newObj);
                 return;
-             }
+            }
 
 
             if (loadedPreviewCache.ContainsKey(asset.previewTexturePath))
@@ -136,10 +140,13 @@ namespace Pladdra.MVC.Views
             {
                 StartCoroutine(RemoteImageUtil.loadRemoteImage("file://" + asset.previewTexturePath, (Texture2D texture) =>
                 {
-                    if (texture == null) {
+                    if (texture == null)
+                    {
                         item.imageComponent.sprite = placeholderIcon;
                         loadedPreviewCache[asset.previewTexturePath] = placeholderIcon;
-                    } else {
+                    }
+                    else
+                    {
 
                         Debug.Log("loaded remote item");
 
