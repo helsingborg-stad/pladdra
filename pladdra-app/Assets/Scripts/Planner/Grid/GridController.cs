@@ -32,9 +32,6 @@ namespace Pladdra.MVC.Controllers
 
             context.grid.OnVisibleChanged += ToggleGrid;
             context.grid.OnIsSelectableChanged += ToggleGridSelection;
-            context.grid.OnPositionChanged += TransformGrid;
-            context.grid.OnScaleChanged += ScaleGrid;
-            context.grid.OnRotationChanged += RotateGrid;
         }
 
         public void ToggleGrid()
@@ -51,19 +48,7 @@ namespace Pladdra.MVC.Controllers
 
         public void ToggleGridSelection()
         {
-            gridView.SetSelected(!context.grid.isSelectable);
-        }
-        public void ScaleGrid()
-        {
-            gridObject.transform.localScale = new Vector3(context.grid.scale, context.grid.scale, context.grid.scale);
-        }
-        public void TransformGrid()
-        {
-            gridObject.transform.position = new Vector3(context.grid.position.X, context.grid.position.Y, context.grid.position.Z);
-        }
-        public void RotateGrid()
-        {
-            // To be continued
+            gridView.SetSelected(context.grid.isSelectable);
         }
 
         public void GenerateGrid()
