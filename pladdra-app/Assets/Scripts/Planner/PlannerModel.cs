@@ -22,6 +22,7 @@ namespace Pladdra.MVC.Models
             Build,
             Selection,
             Inventory,
+            Destroy,
             Inactive,
         }
 
