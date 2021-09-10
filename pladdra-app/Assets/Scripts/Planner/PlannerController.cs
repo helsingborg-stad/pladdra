@@ -6,6 +6,7 @@ using UnityEngine;
 
 namespace Pladdra.MVC.Controllers
 {
+    using Pladdra.Core.Types;
     using Pladdra.MVC.Models;
 
     public class PlannerController
@@ -25,7 +26,7 @@ namespace Pladdra.MVC.Controllers
 
         public PlannerController()
         {
-            plannerGUI = CreateView("PlannerGUI").GetComponent<PlannerGUI>();
+            plannerGUI = GameObject.Find("PlannerGUI").GetComponent<PlannerGUI>();
             gridController = new GridController();
             workspaceController = new WorkspaceController();
 
@@ -33,7 +34,7 @@ namespace Pladdra.MVC.Controllers
             context.Init += Initialize;
             context.Init += plannerGUI.inventoryGUI.Initialize;
 
-            //Subscribe model events
+            //Subscribe model events 
             context.UpdatedState += OnStateChanged;
             context.OnHideTopAppBarChanged += () => plannerGUI.topAppBar.SetActive(!context.hideTopAppBar);
 
@@ -145,16 +146,11 @@ namespace Pladdra.MVC.Controllers
             gridController.GenerateGrid();
         }
 
-
-
-        private void DestroyWorkspace()
-        {
-
-        }
-
-
         // Common
-        public void OnClickMenu() { }
+        public void OnClickMenu()
+        {
+            context.SetState(PlannerModel.State.Destroy);
+        }
 
 
         // Grid
@@ -191,16 +187,17 @@ namespace Pladdra.MVC.Controllers
         {
             context.SetState(PlannerModel.State.Build);
         }
-        public void OnClickInvetoryItem(Pladdra.API.Types.Asset asset)
+
+        public void OnClickInvetoryItem(Pladdra.Core.Types.Asset asset)
         {
+            var input = new CreateBlockInput();
+            input.id = context.workspace.UUID();
+            input.workspaceID = context.workspace.id;
+            input.assetID = asset.id;
+            input.position = new Vect3Input { x = context.grid.position.X, y = context.grid.position.Y, z = context.grid.position.Z };
+            input.rotation = new QuatInput { x = context.grid.rotation.X, y = context.grid.rotation.Y, z = context.grid.rotation.Z, w = context.grid.rotation.W };
+            context.workspace.CreateBlock(input);
             context.SetState(PlannerModel.State.Build);
-        }
-
-
-        GameObject CreateView(string viewName)
-        {
-            // Loads the prefab with the view and instantiates it inside the View hierarchy
-            return GameObject.Find(viewName);
         }
     }
 }
