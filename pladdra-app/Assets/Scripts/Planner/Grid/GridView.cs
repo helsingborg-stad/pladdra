@@ -17,7 +17,7 @@ namespace Pladdra.MVC.Views
     using Lean.Common;
     using Lean.Touch;
 
-    [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer), typeof(LeanSelectable))]
+    [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
     public class GridView : View
     {
         public int xSize, ySize;
@@ -30,12 +30,9 @@ namespace Pladdra.MVC.Views
 
         bool isSelected;
 
-        private LeanSelectable leanSelectable;
-
         public override void Initialize()
         {
             meshRenderer = GetComponent<MeshRenderer>();
-            leanSelectable = GetComponent<LeanSelectable>();
             materials = meshRenderer.materials;
 
             for (int i = 0; i < materials.Length; i++)
@@ -54,11 +51,10 @@ namespace Pladdra.MVC.Views
                 return;
 
             isSelected = selected;
-            leanSelectable.enabled = isSelected;
 
             if (isSelected == true)
             {
-                backgroundMaterial.SetColor("_Color", new Color(1f, 0f, 0f, 0.16f));
+                backgroundMaterial.SetColor("_Color", new Color(1f, 0f, 0f, 0.12f));
                 backgroundMaterial.SetColor("_SolidOutline", new Color(1f, 0f, 0f, 0.66f));
             }
             else
@@ -72,7 +68,5 @@ namespace Pladdra.MVC.Views
         {
 
         }
-
-
     }
 }
