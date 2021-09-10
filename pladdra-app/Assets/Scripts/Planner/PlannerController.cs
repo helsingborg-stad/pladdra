@@ -82,7 +82,7 @@ namespace Pladdra.MVC.Controllers
                         context.ar.raycast = false;
                         context.ar.showMarker = false;
                         context.grid.visible = true;
-                        context.grid.isSelectable = false;
+                        context.grid.isSelectable = true;
                     }
                     break;
                 case PlannerModel.State.Build:
@@ -92,6 +92,7 @@ namespace Pladdra.MVC.Controllers
                         plannerGUI.buildGUI.Show();
                         plannerGUI.inventoryGUI.Hide();
 
+                        context.grid.isSelectable = false;
                         context.ar.planeDetection = false;
                     }
                     break;
