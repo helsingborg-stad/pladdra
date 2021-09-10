@@ -111,8 +111,13 @@ namespace Pladdra.MVC.Controllers
                         plannerGUI.inventoryGUI.Hide();
                     }
                     break;
-                case PlannerModel.State.Selection:
+                case PlannerModel.State.Destroy:
                     {
+                        context.hideTopAppBar = true;
+                        workspaceController.DestroyHandler();
+                        context.grid.visible = false;
+                        context.SetState(PlannerModel.State.Inactive);
+                        ViewManager.Show<MenuView>();
                     }
                     break;
             }
