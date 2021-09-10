@@ -28,7 +28,7 @@ namespace Pladdra.MVC.Views
             }
         }
 
-        private List<AssetModel.Asset> itemsToRender;
+        private List<Pladdra.Core.Types.Asset> itemsToRender;
         private List<GameObject> items;
 
         private Dictionary<string, Sprite> loadedPreviewCache = new Dictionary<string, Sprite>();
@@ -58,7 +58,7 @@ namespace Pladdra.MVC.Views
             }
 
             items = new List<GameObject>();
-            itemsToRender = new List<AssetModel.Asset>();
+            itemsToRender = new List<Pladdra.Core.Types.Asset>();
             itemsToRender = context.assets.List();
 
             if (itemsToRender.Count > 0)
@@ -70,7 +70,7 @@ namespace Pladdra.MVC.Views
             }
         }
 
-        private void InstantiateItem(AssetModel.Asset asset)
+        private void InstantiateItem(Pladdra.Core.Types.Asset asset)
         {
             GameObject newObj = (GameObject)Instantiate(inventoryItemPrefab, inventoryGrid.gameObject.transform);
             AssetGridItem item = newObj.GetComponent<AssetGridItem>();
@@ -121,12 +121,12 @@ namespace Pladdra.MVC.Views
             items.Add(newObj);
         }
 
-        protected void onClickItem(Pladdra.API.Types.Asset asset)
+        protected void onClickItem(Pladdra.Core.Types.Asset asset)
         {
             if (OnClickGridItem != null)
                 OnClickGridItem(asset);
         }
 
-        public delegate void OnClickGridItemEventHandler(Pladdra.API.Types.Asset asset);
+        public delegate void OnClickGridItemEventHandler(Pladdra.Core.Types.Asset asset);
     }
 }

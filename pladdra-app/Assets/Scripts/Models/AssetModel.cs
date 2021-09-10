@@ -16,10 +16,10 @@ namespace Pladdra.MVC.Models
 {
     public interface IAssetModel : IModel
     {
-        public List<AssetModel.Asset> items { get; set; }
+        public List<Pladdra.Core.Types.Asset> items { get; set; }
         public bool Exists(string id);
-        public AssetModel.Asset Get(string id);
-        public List<AssetModel.Asset> List();
+        public Pladdra.Core.Types.Asset Get(string id);
+        public List<Pladdra.Core.Types.Asset> List();
         public void Create(API.Types.Asset input);
         public void Update(API.Types.Asset input);
         public void Delete(string id);
@@ -28,28 +28,15 @@ namespace Pladdra.MVC.Models
     [System.Serializable]
     public class AssetModel : IAssetModel, ISaveable
     {
-        public class Asset : API.Types.Asset
-        {
-            [JsonProperty("previewTexturePath")]
-            public string previewTexturePath;
-
-            [JsonProperty("meshPath")]
-            public string meshPath;
-
-            [JsonProperty("prefabPath")]
-            public string prefabPath;
-        }
-
-
         private string downloadPath = "downloads/";
         private string dataJsonPath = "assets.json";
-        private List<AssetModel.Asset> _items;
-        public List<AssetModel.Asset> items
+        private List<Pladdra.Core.Types.Asset> _items;
+        public List<Pladdra.Core.Types.Asset> items
         {
             get
             {
                 if (_items == null)
-                    _items = new List<AssetModel.Asset>();
+                    _items = new List<Pladdra.Core.Types.Asset>();
 
                 return _items;
             }
@@ -63,22 +50,22 @@ namespace Pladdra.MVC.Models
 
         public bool Exists(string id)
         {
-            List<AssetModel.Asset> arr = items.Where(item => item.id == id).ToList();
+            List<Pladdra.Core.Types.Asset> arr = items.Where(item => item.id == id).ToList();
             return arr.Count > 0 ? true : false;
         }
 
-        public AssetModel.Asset Get(string id)
+        public Pladdra.Core.Types.Asset Get(string id)
         {
-            List<AssetModel.Asset> item = items.Where(item => item.id == id).ToList();
+            List<Pladdra.Core.Types.Asset> item = items.Where(item => item.id == id).ToList();
             return item[0];
         }
 
-        public List<AssetModel.Asset> List() => items;
+        public List<Pladdra.Core.Types.Asset> List() => items;
 
         public void Create(API.Types.Asset input)
         {
             string serializedJson = JsonConvert.SerializeObject(input);
-            AssetModel.Asset createdItem = (AssetModel.Asset)JsonConvert.DeserializeObject<AssetModel.Asset>(serializedJson);
+            Pladdra.Core.Types.Asset createdItem = (Pladdra.Core.Types.Asset)JsonConvert.DeserializeObject<Pladdra.Core.Types.Asset>(serializedJson);
 
             DownloadMesh(createdItem);
             GenerateThumbnail(createdItem);
@@ -91,8 +78,8 @@ namespace Pladdra.MVC.Models
         public void Update(API.Types.Asset input)
         {
             string serializedJson = JsonConvert.SerializeObject(input);
-            AssetModel.Asset updatedItem = JsonConvert.DeserializeObject<AssetModel.Asset>(serializedJson);
-            AssetModel.Asset match = items.Find(item => item.id.Contains(updatedItem.id));
+            Pladdra.Core.Types.Asset updatedItem = JsonConvert.DeserializeObject<Pladdra.Core.Types.Asset>(serializedJson);
+            Pladdra.Core.Types.Asset match = items.Find(item => item.id.Contains(updatedItem.id));
 
             DownloadMesh(updatedItem);
             GenerateThumbnail(updatedItem);
@@ -113,11 +100,11 @@ namespace Pladdra.MVC.Models
         {
             DeleteMesh(Get(id));
 
-            List<AssetModel.Asset> updatedItems = items.Where(item => item.id != id).ToList();
+            List<Pladdra.Core.Types.Asset> updatedItems = items.Where(item => item.id != id).ToList();
             items = updatedItems;
         }
 
-        private void DownloadMesh(AssetModel.Asset asset)
+        private void DownloadMesh(Pladdra.Core.Types.Asset asset)
         {
             string fileName = asset.id + "." + asset.fileFormat.ToString().ToLower();
             string path = Path.Combine(downloadPath, fileName);
@@ -133,7 +120,8 @@ namespace Pladdra.MVC.Models
             }
         }
 
-        private void GenerateThumbnail(AssetModel.Asset asset) {
+        private void GenerateThumbnail(Pladdra.Core.Types.Asset asset)
+        {
             string fullMeshPath = Path.Combine(Pladdra.App.CachePath, asset.meshPath);
 
             string fileName = asset.id + ".png";
@@ -142,13 +130,15 @@ namespace Pladdra.MVC.Models
 
             asset.previewTexturePath = File.Exists(assetPath) && asset.meshPath == null ? assetPath : asset.previewTexturePath;
 
-            if (asset.previewTexturePath == null || !File.Exists(fullPreviewPath)) {
-                PigletImporter.import(fullMeshPath, (GameObject importedModel) => {
+            if (asset.previewTexturePath == null || !File.Exists(fullPreviewPath))
+            {
+                PigletImporter.import(fullMeshPath, (GameObject importedModel) =>
+                {
                     //PigletImporter.onImportFinished.RemoveListener(onFinished);
                     RuntimePreviewGenerator.MarkTextureNonReadable = false;
                     RuntimePreviewGenerator.BackgroundColor = Color.white;
                     Texture2D thumbnail = RuntimePreviewGenerator.GenerateModelPreview(importedModel.transform);
-                    
+
                     byte[] pngBytes = thumbnail.EncodeToPNG();
 
                     FileManager.WriteToFile(fullPreviewPath, pngBytes);
@@ -158,7 +148,7 @@ namespace Pladdra.MVC.Models
             }
         }
 
-        private void DeleteMesh(AssetModel.Asset asset)
+        private void DeleteMesh(Pladdra.Core.Types.Asset asset)
         {
             if (asset.meshPath != null && File.Exists(asset.meshPath))
             {
