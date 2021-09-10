@@ -113,7 +113,8 @@ MonoBehaviour:
   onHitEvent:
     m_PersistentCalls:
       m_Calls: []
-  ARCamera: {fileID: 0}
+  ARCamera: {fileID: 8493868161715515477, guid: 01c3415a29bf1442080c5146b6503f41,
+    type: 3}
 --- !u!114 &5454917803541668544
 MonoBehaviour:
   m_ObjectHideFlags: 0
