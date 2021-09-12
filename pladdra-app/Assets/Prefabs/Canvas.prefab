@@ -147,9 +147,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d788ca7367db430f880781e2fde0de6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cognitoIdentityPoolID: eu-central-1:2e0727a6-6360-4deb-9f2a-eecd198a11af
-  cognitoAppClientID: 6as3gjgi3greboirnqhp6j2i73
-  cognitoUserPoolID: eu-central-1_gEj9n1ioW
+  cognitoIdentityPoolID: 
+  cognitoAppClientID: 
+  cognitoUserPoolID: 
 --- !u!114 &4863768643641681785
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -162,9 +162,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8f0de3c1fe7747d6a638daad74f7248, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  appSyncApiUrl: https://a3wjuyvzhfbjrjl7dot25wczim.appsync-api.eu-central-1.amazonaws.com/graphql
-  appSyncApiKey: da2-v5eozeobprfsbks7kjglldbiym
-  appSyncApiID: d3lwzn5gl5gp3o2mlk4n4gk2fq
+  appSyncApiUrl: 
+  appSyncApiKey: 
+  appSyncApiID: 
 --- !u!114 &4863768643641681786
 MonoBehaviour:
   m_ObjectHideFlags: 0
