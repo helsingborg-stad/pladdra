@@ -39,12 +39,14 @@ namespace Pladdra.MVC.Views
 
         public override void Initialize()
         {
-            RenderItems();
+
         }
 
         public override void Show()
         {
             base.Show();
+
+            RenderItems();
         }
 
         private void RenderItems()
