@@ -27,6 +27,8 @@ namespace Pladdra.Core
 
                 void OnError(System.Exception e)
                 {
+                    if (successor != null)
+                        successor.Handler(asset);
                     Debug.Log("PreloadAssetLoader.PigletImporter error: " + e.Message);
                 }
             }

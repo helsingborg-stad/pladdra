@@ -12,9 +12,15 @@ namespace Pladdra.Core
     {
         public AssetsLoaderThumbnailTask(AssetsLoader context) : base(context)
         { }
-
+        public override void Handler(Core.Types.Asset asset)
+        {
+            if (successor != null)
+                successor.Handler(asset);
+        }
         public override void Handler(Core.Types.Asset asset, GameObject gameObject)
         {
+            Debug.Log("Thumbnail!");
+            Debug.Log(successor);
             string fullMeshPath = Path.Combine(Pladdra.App.CachePath, asset.meshPath);
 
             string fileName = asset.id + ".png";
@@ -32,6 +38,9 @@ namespace Pladdra.Core
 
                 context.assets.Update(asset);
             }
+
+            if (successor != null)
+                successor.Handler(asset);
         }
     }
 }

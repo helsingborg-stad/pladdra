@@ -12,7 +12,12 @@ namespace Pladdra.Core
     {
         private Pladdra.Core.Types.Asset current;
 
+
+        AssetsLoaderTask thumbnailTask;
+        AssetsLoaderTask preloadTask;
+        AssetsLoaderTask downloadTask;
         AssetsLoaderTask chainedLoader;
+        AssetsLoaderTask completeTask;
 
         public AssetModel assets
         {
@@ -25,18 +30,26 @@ namespace Pladdra.Core
         public OnCompletedPreloadHandler OnCompletePreload;
         public delegate void OnCompletedPreloadHandler();
         private Queue<Pladdra.Core.Types.Asset> queue = new Queue<Pladdra.Core.Types.Asset>();
+        public int initialQueues;
+        public int completedQueues;
 
         public void Load(OnCompletedPreloadHandler callback)
         {
             OnCompletePreload = callback;
-            AssetsLoaderTask downloadTask = new AssetsLoaderDownloadTask(this);
-            AssetsLoaderTask preloadTask = new AssetsLoaderPreloadTask(this);
-            AssetsLoaderTask thumbnailTask = new AssetsLoaderThumbnailTask(this);
+
+            downloadTask = new AssetsLoaderDownloadTask(this);
+            preloadTask = new AssetsLoaderPreloadTask(this);
+            thumbnailTask = new AssetsLoaderThumbnailTask(this);
+            completeTask = new AssetsLoaderCompleteTask(this);
 
             downloadTask.SetSuccessor(preloadTask);
             preloadTask.SetSuccessor(thumbnailTask);
+            thumbnailTask.SetSuccessor(completeTask);
 
             chainedLoader = downloadTask;
+
+            initialQueues = queue.Count;
+            completedQueues = 0;
 
             ProcessQueue();
         }
@@ -57,13 +70,6 @@ namespace Pladdra.Core
             {
                 chainedLoader.Handler(queue.Dequeue());
             }
-
-            if (OnCompletePreload != null)
-                OnCompletePreload();
         }
     }
-
-
-
-
 }
