@@ -146,6 +146,7 @@ namespace Pladdra.MVC.Models
                 PigletImporter.import(fullMeshPath, (GameObject importedModel) => {
                     //PigletImporter.onImportFinished.RemoveListener(onFinished);
                     RuntimePreviewGenerator.MarkTextureNonReadable = false;
+                    RuntimePreviewGenerator.BackgroundColor = Color.white;
                     Texture2D thumbnail = RuntimePreviewGenerator.GenerateModelPreview(importedModel.transform);
                     
                     byte[] pngBytes = thumbnail.EncodeToPNG();
