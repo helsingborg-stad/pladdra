@@ -29,7 +29,7 @@ namespace Pladdra.MVC.Controllers
         }
         public void OnClickInventoryButton()
         {
-            ViewManager.Show<InventoryView>();
+            // ViewManager.Show<InventoryView>();
         }
     }
 }

@@ -8,10 +8,10 @@ namespace Pladdra.MVC.Models
     public class InventoryModel
     {
         [System.Serializable]
-        public struct InventoryCategory {
+        public struct InventoryCategory
+        {
             public string name;
-            public List<AssetModel.Asset> items;
+            public List<Pladdra.Core.Types.Asset> items;
         }
-        
     }
 }
