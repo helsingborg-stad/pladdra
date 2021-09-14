@@ -26,8 +26,8 @@ namespace Pladdra.MVC.Views
         public VerticalLayoutGroup workspaceList;
         public Button backButton;
         private List<GameObject> items;
-        private List<Pladdra.API.Types.Workspace> itemsToRender;
-        private WorkspaceModel workspaceModel;
+        private List<Pladdra.Core.Types.Workspace> itemsToRender;
+        private WorkspaceList workspaceModel;
 
         public override void Initialize()
         {
@@ -39,11 +39,11 @@ namespace Pladdra.MVC.Views
 
             backButton.onClick.AddListener(controller.OnClickBack);
 
-            App.GetModel<WorkspaceModel>(out var workspaceModelInstance);
+            App.GetModel<WorkspaceList>(out var workspaceModelInstance);
             workspaceModel = workspaceModelInstance;
         }
 
-        private void InstantiateItem(Pladdra.API.Types.Workspace workspace)
+        private void InstantiateItem(Pladdra.Core.Types.Workspace workspace)
         {
             GameObject newObj = (GameObject)Instantiate(itemPrefab, workspaceList.gameObject.transform);
             WorkspaceItem item = newObj.GetComponent<WorkspaceItem>();

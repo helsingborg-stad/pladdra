@@ -7,26 +7,59 @@ namespace Pladdra.MVC.Models
 {
     public class Grid : IModel
     {
-        public Vector3 size;
-        private bool _isLocked;
-        public delegate void IsLockedEvent();
-        public bool isLocked
+        public event GridEventHandler OnSizeChanged;
+        public event GridEventHandler OnIsSelectableChanged;
+        public event GridEventHandler OnVisibleChanged;
+        public event GridEventHandler OnPositionChanged;
+        public event GridEventHandler OnRotationChanged;
+        public event GridEventHandler OnScaleChanged;
+
+        private float _scale;
+        public float scale
         {
-            get { return _isLocked; }
+            get { return _scale; }
             set
             {
-                if (_isLocked != value)
+                if (_scale != value)
                 {
-                    _isLocked = value;
-                    if (OnIsLockedChanged != null)
-                        OnIsLockedChanged();
+                    _scale = value;
+                    if (OnScaleChanged != null)
+                        OnScaleChanged();
                 }
             }
         }
 
-        public event IsLockedEvent OnIsLockedChanged;
+        private Vector3 _size;
+        public Vector3 size
+        {
+            get { return _size; }
+            set
+            {
+                if (_size != value)
+                {
+                    _size = value;
+                    if (OnSizeChanged != null)
+                        OnSizeChanged();
+                }
+            }
+        }
+
+        private bool _isSelectable;
+        public bool isSelectable
+        {
+            get { return _isSelectable; }
+            set
+            {
+                if (_isSelectable != value)
+                {
+                    _isSelectable = value;
+                    if (OnIsSelectableChanged != null)
+                        OnIsSelectableChanged();
+                }
+            }
+        }
+
         private bool _visible;
-        public delegate void VisibleEvent();
         public bool visible
         {
             get { return _visible; }
@@ -41,11 +74,7 @@ namespace Pladdra.MVC.Models
             }
         }
 
-        public event VisibleEvent OnVisibleChanged;
-
-
         private Vector3 _position;
-        public delegate void PositionEvent();
         public Vector3 position
         {
             get { return _position; }
@@ -59,11 +88,8 @@ namespace Pladdra.MVC.Models
                 }
             }
         }
-        public event PositionEvent OnPositionChanged;
-
 
         private Quaternion _rotation;
-        public delegate void RotationEvent();
         public Quaternion rotation
         {
             get { return _rotation; }
@@ -77,6 +103,6 @@ namespace Pladdra.MVC.Models
                 }
             }
         }
-        public event PositionEvent OnRotationChanged;
+        public delegate void GridEventHandler();
     }
 }

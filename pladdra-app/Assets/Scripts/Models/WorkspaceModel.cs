@@ -7,112 +7,120 @@ using UnityEngine;
 
 using Newtonsoft.Json;
 
-using Pladdra;
-using Pladdra.Core;
-
 namespace Pladdra.MVC.Models
 {
     [System.Serializable]
-    public class WorkspaceModel : IModel, ISaveable
+    public class WorkspaceModel : Pladdra.Core.Types.Workspace
     {
-        private List<API.Types.Workspace> _items;
+        public event BlockEventHandler OnBlockCreated;
+        public event BlockEventHandler OnBlockDeleted;
+        public event BlockEventHandler OnBlockPositionChanged;
+        public event BlockEventHandler OnBlockRotationChanged;
+        public delegate void BlockEventHandler(string id);
 
-        public List<API.Types.Workspace> items
+        private Savable<WorkspaceModel> savable;
+
+        private List<Pladdra.Core.Types.Block> items
         {
             get
             {
-                if (_items == null)
+                if (blocks == null)
                 {
-                    _items = new List<API.Types.Workspace>();
+                    blocks = new Pladdra.Core.Types.ModelBlockConnection();
+                    blocks.items = new List<Pladdra.Core.Types.Block>();
                 }
 
-                return _items;
+                return blocks.items;
             }
 
-            set { _items = value; }
+            set { blocks.items = value; }
         }
 
-        public void SaveJson()
+        public Pladdra.Core.Types.Block GetBlock(string id)
         {
-            SaveDataManager.SaveJsonData(this);
-        }
-
-        public API.Types.Workspace Get(string id)
-        {
-            List<API.Types.Workspace> item = items.Where(item => item.id == id).ToList();
+            List<Pladdra.Core.Types.Block> item = items.Where(item => item.id == id).ToList();
             return item[0];
         }
 
-        public List<API.Types.Workspace> List() => items;
+        public List<Pladdra.Core.Types.Block> ListBlocks() => items;
 
-        public void Create(API.Types.CreateWorkspaceInput input, out API.Types.Workspace createdItem)
+        public void CreateBlock(Core.Types.CreateBlockInput input, out Pladdra.Core.Types.Block createdItem)
         {
             string serializedJson = JsonConvert.SerializeObject(input);
-
-            createdItem = (API.Types.Workspace)JsonConvert.DeserializeObject<API.Types.Workspace>(serializedJson);
+            createdItem = (Pladdra.Core.Types.Block)JsonConvert.DeserializeObject<Pladdra.Core.Types.Block>(serializedJson);
             items.Insert(0, createdItem);
-
-            SaveJson();
         }
-        public void Create(API.Types.CreateWorkspaceInput input)
+
+        public void CreateBlock(Core.Types.CreateBlockInput input)
         {
-            Create(input, out API.Types.Workspace createdItem);
+            CreateBlock(input, out Pladdra.Core.Types.Block createdItem);
+            if (OnBlockCreated != null)
+                OnBlockCreated(createdItem.id);
         }
 
-        public void Update(API.Types.UpdateWorkspaceInput input)
+        public void UpdateBlock(Core.Types.UpdateBlockInput input)
         {
             string serializedJson = JsonConvert.SerializeObject(input);
-            API.Types.Workspace updatedItem = JsonConvert.DeserializeObject<API.Types.Workspace>(serializedJson);
-            API.Types.Workspace match = items.Find(item => item.id.Contains(updatedItem.id));
+            Pladdra.Core.Types.Block updatedItem = JsonConvert.DeserializeObject<Pladdra.Core.Types.Block>(serializedJson);
+            Pladdra.Core.Types.Block match = items.Find(item => item.id.Contains(updatedItem.id));
 
             items.ForEach(item =>
             {
                 if (item.id == updatedItem.id)
                 {
-                    item = updatedItem;
+                    if (updatedItem.position != item.position)
+                    {
+                        item.position = updatedItem.position;
+                        if (OnBlockPositionChanged != null)
+                            OnBlockPositionChanged(item.id);
+                    }
+
+                    if (updatedItem.rotation != item.rotation)
+                    {
+                        item.rotation = updatedItem.rotation;
+                        if (OnBlockRotationChanged != null)
+                            OnBlockRotationChanged(item.id);
+                    }
+
+                    // Additional changes to notify
+                    // 
                 }
             });
-
-            SaveJson();
         }
 
-        public void Delete(API.Types.DeleteWorkspaceInput input)
+        public void DeleteBlock(string id)
         {
-            List<API.Types.Workspace> updatedItems = items.Where(item => item.id != input.id).ToList();
+            List<Core.Types.Block> updatedItems = items.Where(item => item.id != id).ToList();
             items = updatedItems;
 
-            SaveJson();
+            if (OnBlockDeleted != null)
+                OnBlockDeleted(id);
         }
 
-        public string ToJson()
+        public void Load()
         {
-            return JsonConvert.SerializeObject(this);
+            MakeSavable();
+            savable.Load();
         }
 
-        public void LoadFromJson(string jsonToLoadFrom)
+        public void Save()
         {
-            WorkspaceModel jsonData = JsonConvert.DeserializeObject<WorkspaceModel>(jsonToLoadFrom);
-
-            var fields = this.GetType().GetFields(BindingFlags.Public);
-            foreach (var field in jsonData.GetType().GetFields())
-            {
-                var value = field.GetValue(jsonData);
-                if (value != null)
-                    this.GetType().GetField(field.Name).SetValue(this, value);
-            }
-
-            var propeties = this.GetType().GetProperties(BindingFlags.Public);
-            foreach (var propety in jsonData.GetType().GetProperties())
-            {
-                var value = propety.GetValue(jsonData);
-                if (value != null)
-                    this.GetType().GetProperty(propety.Name).SetValue(this, value);
-            }
+            MakeSavable();
+            savable.Save();
         }
 
-        public string FileNameToUseForData()
+        private void MakeSavable()
         {
-            return "workspaces.json";
+            if (savable == null)
+                savable = new Savable<WorkspaceModel>();
+
+            savable.fileName = "workspaces/" + (id ?? "workspace") + ".json";
+            savable.instance = this;
+        }
+
+        public string UUID()
+        {
+            return System.Guid.NewGuid().ToString();
         }
     }
 }

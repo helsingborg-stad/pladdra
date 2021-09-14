@@ -9,18 +9,21 @@ using TMPro;
 
 using Pladdra.MVC.Models;
 using Pladdra.MVC.Controllers;
+using Pladdra.Components;
 
 namespace Pladdra.MVC.Views
 {
-    public class ExampleView : View
+    public class PlannerGUI : View
     {
-        private IExampleModel context;
-        private ExampleController controller;
+        public Button menuButton;
+        public GameObject topAppBar;
+        public PlannerPlaceGridGUI placeGridGUI;
+        public PlannerEditGridGUI editGridGUI;
+        public PlannerBuildGUI buildGUI;
+        public PlannerInventoryGUI inventoryGUI;
 
         public override void Initialize()
         {
-            context = new ExampleModel();
-            controller = new ExampleController(context);
         }
     }
 }

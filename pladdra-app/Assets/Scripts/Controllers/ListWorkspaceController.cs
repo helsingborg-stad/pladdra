@@ -13,9 +13,9 @@ namespace Pladdra.MVC.Controllers
         public ListWorkspaceModel model { get; }
 
         UnityEvent render;
-        private WorkspaceModel workspaceModel;
+        private WorkspaceList workspaceModel;
         private Grid grid;
-        private Planner planner;
+        private PlannerModel planner;
 
         public ListWorkspaceController(ListWorkspaceModel ListWorkspaceModel, UnityEvent renderEvent)
         {
@@ -23,9 +23,9 @@ namespace Pladdra.MVC.Controllers
             render = renderEvent;
 
 
-            App.GetModel<WorkspaceModel>(out workspaceModel);
+            App.GetModel<WorkspaceList>(out workspaceModel);
             App.GetModel<Grid>(out grid);
-            App.GetModel<Planner>(out planner);
+            App.GetModel<PlannerModel>(out planner);
         }
 
         public void OnClickBack()
@@ -36,9 +36,7 @@ namespace Pladdra.MVC.Controllers
         public void OnClickLoad(string workspaceId)
         {
             planner.workspaceID = workspaceId;
-            grid.size = new System.Numerics.Vector3(1f, 1f, 10f);
-
-            ViewManager.Show<DisposeGridView>();
+            planner.InitializeWorkspace(workspaceId);
         }
         public void OnClickDelete(string workspaceId)
         {

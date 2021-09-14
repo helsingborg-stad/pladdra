@@ -18,6 +18,7 @@ namespace Pladdra
 {
     using Pladdra.API;
     using Pladdra.Core;
+    using Pladdra.MVC.Controllers;
     using Pladdra.MVC.Models;
     [RequireComponent(typeof(Auth))]
     [RequireComponent(typeof(S3))]
@@ -59,7 +60,16 @@ namespace Pladdra
         void Start()
         {
             Models();
+            Controllers();
             Views();
+        }
+
+        private void Controllers()
+        {
+            object[] instances = {
+                new ARController(),
+                new PlannerController(),
+            };
         }
 
         private void Models()
@@ -67,8 +77,9 @@ namespace Pladdra
             // Init your global models here
             IModel[] instances = {
                 new AssetModel(),
-                new WorkspaceModel(),
-                new Planner(),
+                new WorkspaceList(),
+                new ARModel(),
+                new PlannerModel(),
                 new Grid(),
             };
 

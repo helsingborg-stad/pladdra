@@ -25,12 +25,11 @@ namespace Pladdra.MVC.Controllers
 
         public void OnClickGridButton()
         {
-            ARController.TogglePlaneDetection(true);
             ViewManager.Show<EditGridView>();
         }
         public void OnClickInventoryButton()
         {
-            ViewManager.Show<InventoryView>();
+            // ViewManager.Show<InventoryView>();
         }
     }
 }

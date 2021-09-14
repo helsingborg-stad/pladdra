@@ -13,12 +13,22 @@ using Pladdra;
 using Pladdra.API;
 using Pladdra.MVC.Models;
 using Pladdra.MVC.Views;
-
+using Pladdra.Core;
 
 namespace Pladdra.MVC.Controllers
 {
     public class AppLoadingController
     {
+
+        public AssetModel assets
+        {
+            get
+            {
+                App.GetModel<AssetModel>(out var instance);
+                return instance;
+            }
+        }
+
         public AppLoadingModel model { get; }
 
         UnityEvent render;
@@ -37,59 +47,61 @@ namespace Pladdra.MVC.Controllers
         public void InitializeApplication()
         {
             SetLoadingText("Laddar in objekt och arbetsytor ..");
-            LoadAssets();
-            LoadWorkspaces();
+            TryFetchAssetsAndLoad();
         }
+
 
         public void LoadAssets()
         {
-            App.GetModel<AssetModel>(out AssetModel assetsModel);
-            var items = assetsModel.items;
-            var fetchTask = GraphQLClient.SendQueryAsync<Pladdra.API.Types.Query>(Pladdra.API.ListAssetsGQL.Request()).ContinueWith(response =>
+            var assetsLoader = new AssetsLoader();
+            foreach (var asset in assets.List())
             {
-                try
-                {
-                    List<API.Types.Asset> remoteItems = response.Result.Data.listAssets.items;
-                    if (remoteItems.Count > 0)
-                    {
-                        remoteItems.ForEach(item =>
-                        {
-                            if (!assetsModel.Exists(item.id))
-                            {
-                                assetsModel.Create(item);
-                            }
-                            else
-                            {
-                                assetsModel.Update(item);
-                            }
-                        });
-                    }
+                assetsLoader.Enqueue(asset);
+            }
 
-                    model.assetsLoaded = true;
-                    render.Invoke();
-                }
-                catch (Exception e)
-                {
-                    Debug.Log("InitializeApplication: Failed import FetchAssets");
-                    Debug.Log(e);
-                }
-            });
+            assetsLoader.Load(OnComplete);
         }
 
-        public void LoadWorkspaces()
+        public void TryFetchAssetsAndLoad()
         {
-            // SetLoadingText("Laddar in arbetsytor..");
-            model.workspaceLoaded = true;
+            var refreshTokenTask = Auth.RefreshSession();
+            refreshTokenTask.ConfigureAwait(true).GetAwaiter().OnCompleted(() =>
+            {
+                bool successfulRefresh = refreshTokenTask.Result;
+                if (successfulRefresh)
+                {
+                    var fetchTask = GraphQLClient.SendQueryAsync<Pladdra.API.Types.Query>(Pladdra.API.ListAssetsGQL.Request());
+                    fetchTask.ConfigureAwait(true).GetAwaiter().OnCompleted(() =>
+                    {
+                        if (fetchTask.Result.Data.listAssets.items.Count > 0)
+                        {
+                            foreach (var item in fetchTask.Result.Data.listAssets.items)
+                            {
+                                if (!assets.Exists(item.id))
+                                {
+                                    assets.Create(item);
+                                }
+                                else
+                                {
+                                    assets.Update(item);
+
+                                }
+
+                            }
+                            LoadAssets();
+                        }
+                    });
+                }
+                else
+                {
+                    LoadAssets();
+                }
+            });
         }
 
         public void OnComplete()
         {
             ViewManager.Show<MenuView>();
-        }
-
-        public void OnLoaded()
-        {
-            // ViewManager.Show<MenuView>();
         }
 
         public void SetLoadingText(string text)

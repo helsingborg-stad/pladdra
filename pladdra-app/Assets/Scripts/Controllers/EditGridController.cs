@@ -42,7 +42,6 @@ namespace Pladdra.MVC.Controllers
         }
         public void OnClickPlace()
         {
-            ARController.TogglePlaneDetection(false);
             ViewManager.Show<BuildView>();
         }
         public void OnClickRemove()

@@ -62,7 +62,7 @@ namespace Pladdra.MVC.Views
             if (createdARMarker == null)
                 createdARMarker = Instantiate(arMarkerPrefab, context.raycastHitPosition, Quaternion.identity);
 
-            ARController.TogglePlaneDetection(true);
+            // ARController.TogglePlaneDetection(true);
 
             createdARMarker.SetActive(true);
         }

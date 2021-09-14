@@ -36,13 +36,5 @@ namespace Pladdra.MVC.Views
             listButton.onClick.AddListener(controller.OnClickListWorkspace);
             logoutButton.onClick.AddListener(controller.OnClickLogout);
         }
-
-        public override void Show()
-        {
-            gameObject.SetActive(true);
-
-            if (refreshTokenOnShow == true)
-                controller.RefreshToken();
-        }
     }
 }
