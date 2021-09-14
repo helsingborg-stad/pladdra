@@ -2069,6 +2069,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2548855752669977868, guid: 38bec9f5eb8f84ac09ba9af2b735d483,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3271538371216911373, guid: 38bec9f5eb8f84ac09ba9af2b735d483,
         type: 3}
       propertyPath: m_VerticalFit
@@ -2076,14 +2081,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3382886781465429734, guid: 38bec9f5eb8f84ac09ba9af2b735d483,
         type: 3}
+      propertyPath: m_Content
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3382886781465429734, guid: 38bec9f5eb8f84ac09ba9af2b735d483,
+        type: 3}
       propertyPath: m_Inertia
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3382886781465429734, guid: 38bec9f5eb8f84ac09ba9af2b735d483,
         type: 3}
       propertyPath: m_Vertical
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3382886781465429734, guid: 38bec9f5eb8f84ac09ba9af2b735d483,
+        type: 3}
+      propertyPath: m_Viewport
+      value: 
+      objectReference: {fileID: 8680177382373644976}
     - target: {fileID: 3382886781465429734, guid: 38bec9f5eb8f84ac09ba9af2b735d483,
         type: 3}
       propertyPath: m_Horizontal
@@ -2092,6 +2107,26 @@ PrefabInstance:
     - target: {fileID: 3382886781465429734, guid: 38bec9f5eb8f84ac09ba9af2b735d483,
         type: 3}
       propertyPath: m_MovementType
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3382886781465429734, guid: 38bec9f5eb8f84ac09ba9af2b735d483,
+        type: 3}
+      propertyPath: m_VerticalScrollbarSpacing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3382886781465429734, guid: 38bec9f5eb8f84ac09ba9af2b735d483,
+        type: 3}
+      propertyPath: m_HorizontalScrollbarSpacing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3382886781465429734, guid: 38bec9f5eb8f84ac09ba9af2b735d483,
+        type: 3}
+      propertyPath: m_VerticalScrollbarVisibility
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3382886781465429734, guid: 38bec9f5eb8f84ac09ba9af2b735d483,
+        type: 3}
+      propertyPath: m_HorizontalScrollbarVisibility
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3542989177660601775, guid: 38bec9f5eb8f84ac09ba9af2b735d483,
@@ -2131,6 +2166,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 38bec9f5eb8f84ac09ba9af2b735d483, type: 3}
+--- !u!224 &8680177382373644976 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5881473744858887055, guid: 38bec9f5eb8f84ac09ba9af2b735d483,
+    type: 3}
+  m_PrefabInstance: {fileID: 3019978437052557631}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2387538137674076928 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 633638835973634623, guid: 38bec9f5eb8f84ac09ba9af2b735d483,
@@ -2510,12 +2551,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 32a406eb34f3c44929ac49f4c22ae81f, type: 3}
---- !u!224 &93775254265891194 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5342665551506029116, guid: 32a406eb34f3c44929ac49f4c22ae81f,
-    type: 3}
-  m_PrefabInstance: {fileID: 5434118636703200070}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &5348697162897643135 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 95628515313018169, guid: 32a406eb34f3c44929ac49f4c22ae81f,
@@ -2528,6 +2563,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b798fdf652dd46cca9d8ed4f5ec1e2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &93775254265891194 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5342665551506029116, guid: 32a406eb34f3c44929ac49f4c22ae81f,
+    type: 3}
+  m_PrefabInstance: {fileID: 5434118636703200070}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7521741711324899874
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2687,12 +2728,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6cbc2f0971fb64186a10902afd7f789d, type: 3}
---- !u!224 &2387538137087238557 stripped
-RectTransform:
-  m_CorrespondingSourceObject: {fileID: 5278400686265600959, guid: 6cbc2f0971fb64186a10902afd7f789d,
-    type: 3}
-  m_PrefabInstance: {fileID: 7521741711324899874}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2387538137087238556 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 5278400686265600958, guid: 6cbc2f0971fb64186a10902afd7f789d,
@@ -2705,3 +2740,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d80d34c5999f423d93cd8bbbdb3c1e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!224 &2387538137087238557 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 5278400686265600959, guid: 6cbc2f0971fb64186a10902afd7f789d,
+    type: 3}
+  m_PrefabInstance: {fileID: 7521741711324899874}
+  m_PrefabAsset: {fileID: 0}
