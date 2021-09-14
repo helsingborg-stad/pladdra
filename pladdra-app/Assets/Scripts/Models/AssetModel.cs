@@ -62,29 +62,36 @@ namespace Pladdra.MVC.Models
 
         public List<Pladdra.Core.Types.Asset> List() => items;
 
-        public void Create(API.Types.Asset input)
+        public void Create(Pladdra.API.Types.Asset input)
         {
             string serializedJson = JsonConvert.SerializeObject(input);
             Pladdra.Core.Types.Asset createdItem = (Pladdra.Core.Types.Asset)JsonConvert.DeserializeObject<Pladdra.Core.Types.Asset>(serializedJson);
+            Create(createdItem);
+        }
 
-            DownloadMesh(createdItem);
-            GenerateThumbnail(createdItem);
-
-
-            items.Insert(0, createdItem);
+        public void Create(Pladdra.Core.Types.Asset input)
+        {
+            items.Insert(0, input);
             items = items;
         }
 
-        public void Update(API.Types.Asset input)
+        public void Update(Pladdra.API.Types.Asset input)
+        {
+            string serializedJson = JsonConvert.SerializeObject(input);
+
+            var existingAsset = Get(input.id);
+            var updatedAsset = JsonConvert.DeserializeObject<Pladdra.Core.Types.Asset>(serializedJson);
+            updatedAsset.meshPath = existingAsset.meshPath;
+            updatedAsset.previewTexturePath = existingAsset.previewTexturePath;
+
+            Update(updatedAsset);
+        }
+
+        public void Update(Pladdra.Core.Types.Asset input)
         {
             string serializedJson = JsonConvert.SerializeObject(input);
             Pladdra.Core.Types.Asset updatedItem = JsonConvert.DeserializeObject<Pladdra.Core.Types.Asset>(serializedJson);
             Pladdra.Core.Types.Asset match = items.Find(item => item.id.Contains(updatedItem.id));
-
-            DownloadMesh(updatedItem);
-            GenerateThumbnail(updatedItem);
-
-
 
             items.ForEach(item =>
             {
@@ -102,50 +109,6 @@ namespace Pladdra.MVC.Models
 
             List<Pladdra.Core.Types.Asset> updatedItems = items.Where(item => item.id != id).ToList();
             items = updatedItems;
-        }
-
-        private void DownloadMesh(Pladdra.Core.Types.Asset asset)
-        {
-            string fileName = asset.id + "." + asset.fileFormat.ToString().ToLower();
-            string path = Path.Combine(downloadPath, fileName);
-            string fullPath = Path.Combine(Pladdra.App.CachePath, path);
-            asset.meshPath = File.Exists(path) && asset.meshPath == null ? path : asset.meshPath;
-
-            if (asset.meshPath == null || !File.Exists(fullPath))
-            {
-                string bucketKey = "public/" + asset.file.key;
-                Task streamTask = S3.SaveObjectToFile(path, bucketKey, asset.file.bucket);
-                streamTask.Wait();
-                asset.meshPath = path;
-            }
-        }
-
-        private void GenerateThumbnail(Pladdra.Core.Types.Asset asset)
-        {
-            string fullMeshPath = Path.Combine(Pladdra.App.CachePath, asset.meshPath);
-
-            string fileName = asset.id + ".png";
-            string assetPath = Path.Combine(downloadPath, fileName);
-            string fullPreviewPath = Path.Combine(Pladdra.App.CachePath, assetPath);
-
-            asset.previewTexturePath = File.Exists(assetPath) && asset.meshPath == null ? assetPath : asset.previewTexturePath;
-
-            if (asset.previewTexturePath == null || !File.Exists(fullPreviewPath))
-            {
-                PigletImporter.import(fullMeshPath, (GameObject importedModel) =>
-                {
-                    //PigletImporter.onImportFinished.RemoveListener(onFinished);
-                    RuntimePreviewGenerator.MarkTextureNonReadable = false;
-                    RuntimePreviewGenerator.BackgroundColor = Color.white;
-                    Texture2D thumbnail = RuntimePreviewGenerator.GenerateModelPreview(importedModel.transform);
-
-                    byte[] pngBytes = thumbnail.EncodeToPNG();
-
-                    FileManager.WriteToFile(fullPreviewPath, pngBytes);
-
-                    asset.previewTexturePath = fullPreviewPath;
-                });
-            }
         }
 
         private void DeleteMesh(Pladdra.Core.Types.Asset asset)
