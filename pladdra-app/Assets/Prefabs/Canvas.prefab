@@ -1951,6 +1951,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2387538136797831105}
     m_Modifications:
+    - target: {fileID: 30166019, guid: 38bec9f5eb8f84ac09ba9af2b735d483, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: -168
+      objectReference: {fileID: 0}
+    - target: {fileID: 30166019, guid: 38bec9f5eb8f84ac09ba9af2b735d483, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -84
+      objectReference: {fileID: 0}
     - target: {fileID: 633638835973634621, guid: 38bec9f5eb8f84ac09ba9af2b735d483,
         type: 3}
       propertyPath: m_Name
@@ -2059,6 +2067,11 @@ PrefabInstance:
     - target: {fileID: 633638835973634622, guid: 38bec9f5eb8f84ac09ba9af2b735d483,
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2548855752669977868, guid: 38bec9f5eb8f84ac09ba9af2b735d483,
+        type: 3}
+      propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6688768042471237366, guid: 38bec9f5eb8f84ac09ba9af2b735d483,

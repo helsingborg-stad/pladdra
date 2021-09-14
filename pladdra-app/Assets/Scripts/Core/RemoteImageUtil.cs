@@ -18,6 +18,7 @@ public static class RemoteImageUtil {
 
 		if (request.isNetworkError || request.isHttpError) {
 			Debug.LogError(request.error);
+			callback(null);
 		} else {
 			Texture2D tex = ((DownloadHandlerTexture)request.downloadHandler).texture;
 			callback(tex);
