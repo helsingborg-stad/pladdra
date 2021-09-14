@@ -56,21 +56,15 @@ namespace Pladdra.Components
 
         private static void OnProgress(GltfImportStep step, int completed, int total)
         {
-            Debug.LogFormat("{0}: {1}/{2}", step, completed, total);
+            // Debug.LogFormat("{0}: {1}/{2}", step, completed, total);
         }
 
         void Update()
         {
             if (_importTasks.Count > 0)
             {
-                foreach (string key in _importTasks.Keys.ToList())
-                {
-                    Debug.Log(key);
-                }
                 foreach (GltfImportTask task in _importTasks.Values.ToList())
                 {
-
-                    Debug.Log("PigletImporter:Update ");
                     task.MoveNext();
                 }
 
