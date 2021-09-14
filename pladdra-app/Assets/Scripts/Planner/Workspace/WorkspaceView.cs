@@ -47,7 +47,10 @@ namespace Pladdra.MVC.Views
         public void InstantiateBlock(Block block, Asset asset)
         {
             createdBlock = block;
-            PigletImporter.import(App.CachePath + '/' + asset.meshPath, OnCompleteImport);
+            PigletImporter.import(App.CachePath + '/' + asset.meshPath, OnCompleteImport, (Exception e) =>
+            {
+                Debug.Log(e);
+            });
         }
 
         public void OnCompleteImport(GameObject importedBlock)
