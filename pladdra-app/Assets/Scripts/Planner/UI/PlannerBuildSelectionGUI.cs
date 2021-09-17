@@ -14,6 +14,8 @@ namespace Pladdra.MVC.Views
     using Pladdra.Components;
     public class PlannerBuildSelectionGUI : View
     {
+        public Button confirmSelectionButton;
+        public Button removeSelectionButton;
 
         public override void Initialize()
         {

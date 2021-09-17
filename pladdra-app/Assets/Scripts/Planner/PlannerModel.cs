@@ -20,7 +20,7 @@ namespace Pladdra.MVC.Models
             PlaceGrid,
             EditGrid,
             Build,
-            Selection,
+            BlockSelection,
             Inventory,
             Destroy,
             Inactive,
@@ -68,7 +68,6 @@ namespace Pladdra.MVC.Models
         }
 
         private Dictionary<string, Pladdra.API.Types.Block> blocks;
-        public string selectedBlockID;
 
         public void SetState(State newState)
         {

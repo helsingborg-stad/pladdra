@@ -12,6 +12,39 @@ namespace Pladdra.MVC.Models
     [System.Serializable]
     public class WorkspaceModel : Pladdra.Core.Types.Workspace
     {
+        private string _selectedBlockID;
+        public string selectedBlockID
+        {
+            get { return _selectedBlockID; }
+            set
+            {
+                if (_selectedBlockID != value)
+                {
+                    string previousID = null;
+
+                    if (value == null && _selectedBlockID != null)
+                    {
+                        previousID = _selectedBlockID;
+                    }
+
+                    _selectedBlockID = value;
+                    if (value == null & previousID != null)
+                    {
+                        if (OnBlockDeselected != null)
+                            OnBlockDeselected(previousID);
+                    }
+                    else if (value != null)
+                    {
+                        if (OnBlockSelected != null)
+                            OnBlockSelected(_selectedBlockID);
+                    }
+
+                }
+            }
+        }
+
+        public event BlockEventHandler OnBlockSelected;
+        public event BlockEventHandler OnBlockDeselected;
         public event BlockEventHandler OnBlockCreated;
         public event BlockEventHandler OnBlockDeleted;
         public event BlockEventHandler OnBlockPositionChanged;

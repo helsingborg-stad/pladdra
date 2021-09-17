@@ -19,6 +19,7 @@ namespace Pladdra.MVC.Views
         public GameObject topAppBar;
         public PlannerPlaceGridGUI placeGridGUI;
         public PlannerEditGridGUI editGridGUI;
+        public PlannerBuildSelectionGUI buildSelectionGUI;
         public PlannerBuildGUI buildGUI;
         public PlannerInventoryGUI inventoryGUI;
 

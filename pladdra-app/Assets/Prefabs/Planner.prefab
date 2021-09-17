@@ -46,7 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ignoreStartedOverGui: 1
   requiredButtons: -1
-  requiredSelectable: {fileID: 2002813146018747587}
+  requiredSelectable: {fileID: 0}
   onFinger:
     m_PersistentCalls:
       m_Calls:
@@ -92,9 +92,7 @@ MonoBehaviour:
   limit: 0
   maxSelectables: 0
   reselect: 3
-  selectables:
-  - {fileID: 0}
-  - {fileID: 0}
+  selectables: []
   onSelected:
     m_PersistentCalls:
       m_Calls: []
@@ -110,7 +108,7 @@ MonoBehaviour:
       serializedVersion: 2
       m_Bits: 4294967291
     Search: 1
-    RequiredTag: Selectable
+    RequiredTag: 
     Camera: {fileID: 0}
     Distance: 50
   deselectWithFingers: 1
@@ -344,15 +342,3 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 9139239644415556360}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2002813146018747587 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7286386561617260491, guid: 4241f220e908c44ce8670b7642c45575,
-    type: 3}
-  m_PrefabInstance: {fileID: 9139239644415556360}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83dcd8dace8b7fe449d796b980cb121d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

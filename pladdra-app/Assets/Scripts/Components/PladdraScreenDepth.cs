@@ -21,6 +21,7 @@ namespace Lean.Touch
             AutoDistance,
             HeightIntercept,
             ARPlane,
+            Workspace,
         }
 
         /// <summary>The method used to convert between screen coordinates, and world coordinates.

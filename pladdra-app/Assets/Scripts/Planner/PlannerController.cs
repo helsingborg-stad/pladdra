@@ -48,10 +48,14 @@ namespace Pladdra.MVC.Controllers
             plannerGUI.inventoryGUI.backButton.onClick.AddListener(OnClickExitInventory);
             plannerGUI.inventoryGUI.OnClickGridItem += OnClickInvetoryItem;
 
+            plannerGUI.buildSelectionGUI.confirmSelectionButton.onClick.AddListener(OnClickPlaceBlock);
+            plannerGUI.buildSelectionGUI.removeSelectionButton.onClick.AddListener(OnClickRemoveBlock);
+
             //Hide GUI partials
             plannerGUI.placeGridGUI.Hide();
             plannerGUI.editGridGUI.Hide();
             plannerGUI.buildGUI.Hide();
+            plannerGUI.buildSelectionGUI.Hide();
             plannerGUI.inventoryGUI.Hide();
         }
 
@@ -65,6 +69,7 @@ namespace Pladdra.MVC.Controllers
                         plannerGUI.editGridGUI.Hide();
                         plannerGUI.buildGUI.Hide();
                         plannerGUI.inventoryGUI.Hide();
+                        plannerGUI.buildSelectionGUI.Hide();
 
                         context.grid.visible = false;
                         context.ar.planeDetection = true;
@@ -78,6 +83,7 @@ namespace Pladdra.MVC.Controllers
                         plannerGUI.editGridGUI.Show();
                         plannerGUI.buildGUI.Hide();
                         plannerGUI.inventoryGUI.Hide();
+                        plannerGUI.buildSelectionGUI.Hide();
 
                         context.ar.planeDetection = true;
                         context.ar.raycast = false;
@@ -91,10 +97,20 @@ namespace Pladdra.MVC.Controllers
                         plannerGUI.placeGridGUI.Hide();
                         plannerGUI.editGridGUI.Hide();
                         plannerGUI.buildGUI.Show();
+                        plannerGUI.buildSelectionGUI.Hide();
                         plannerGUI.inventoryGUI.Hide();
 
                         context.grid.isSelectable = false;
                         context.ar.planeDetection = false;
+                    }
+                    break;
+                case PlannerModel.State.BlockSelection:
+                    {
+                        plannerGUI.placeGridGUI.Hide();
+                        plannerGUI.editGridGUI.Hide();
+                        plannerGUI.buildGUI.Hide();
+                        plannerGUI.buildSelectionGUI.Show();
+                        plannerGUI.inventoryGUI.Hide();
                     }
                     break;
                 case PlannerModel.State.Inventory:
@@ -102,6 +118,7 @@ namespace Pladdra.MVC.Controllers
                         plannerGUI.placeGridGUI.Hide();
                         plannerGUI.editGridGUI.Hide();
                         plannerGUI.buildGUI.Hide();
+                        plannerGUI.buildSelectionGUI.Hide();
                         plannerGUI.inventoryGUI.Show();
                     }
                     break;
@@ -110,6 +127,7 @@ namespace Pladdra.MVC.Controllers
                         plannerGUI.placeGridGUI.Hide();
                         plannerGUI.editGridGUI.Hide();
                         plannerGUI.buildGUI.Hide();
+                        plannerGUI.buildSelectionGUI.Hide();
                         plannerGUI.inventoryGUI.Hide();
                     }
                     break;
@@ -128,6 +146,8 @@ namespace Pladdra.MVC.Controllers
 
         private void Initialize()
         {
+            context.workspace.OnBlockSelected += OnSelectDeselectBlock;
+            context.workspace.OnBlockDeselected += OnSelectDeselectBlock;
             ViewManager.Show<PlannerGUI>();
             SetupGrid();
             context.SetState(PlannerModel.State.PlaceGrid);
@@ -136,7 +156,7 @@ namespace Pladdra.MVC.Controllers
 
         private void SetupGrid()
         {
-            var scaleFactor = 16f;
+            var scaleFactor = 10f;
             var scale = 1.0f / scaleFactor;
 
             context.grid.size = new System.Numerics.Vector3(1f, 1f, 10f);
@@ -152,6 +172,16 @@ namespace Pladdra.MVC.Controllers
             context.SetState(PlannerModel.State.Destroy);
         }
 
+        public void OnSelectDeselectBlock(string id)
+        {
+            if (context.workspace.selectedBlockID != null)
+            {
+                context.SetState(PlannerModel.State.BlockSelection);
+                return;
+            }
+
+            context.SetState(PlannerModel.State.Build);
+        }
 
         // Grid
         public void OnClickPlaceGrid()
@@ -178,8 +208,15 @@ namespace Pladdra.MVC.Controllers
         {
             context.SetState(PlannerModel.State.EditGrid);
         }
-        public void OnClickPlaceBlock() { }
-        public void OnClickRemoveBlock() { }
+        public void OnClickPlaceBlock()
+        {
+            workspaceController.DeselectAllBlocks();
+            context.workspace.selectedBlockID = null;
+        }
+        public void OnClickRemoveBlock()
+        {
+            context.workspace.DeleteBlock(context.workspace.selectedBlockID);
+        }
 
 
         // Inventory
@@ -197,7 +234,6 @@ namespace Pladdra.MVC.Controllers
             input.position = new Vect3Input { x = context.grid.position.X, y = context.grid.position.Y, z = context.grid.position.Z };
             input.rotation = new QuatInput { x = context.grid.rotation.X, y = context.grid.rotation.Y, z = context.grid.rotation.Z, w = context.grid.rotation.W };
             context.workspace.CreateBlock(input);
-            context.SetState(PlannerModel.State.Build);
         }
     }
 }

@@ -49,7 +49,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b0da9c9c0ff9423bb684e1cf48af55d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  leanPlane: {fileID: 0}
   blocksRootObject: {fileID: 7286386563194013185}
+  blockPrefab: {fileID: 0}
   leanSelectable: {fileID: 0}
   boxCollider: {fileID: 0}
 --- !u!114 &7286386561617260489

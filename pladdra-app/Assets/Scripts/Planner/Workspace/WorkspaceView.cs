@@ -18,17 +18,22 @@ namespace Pladdra.MVC.Views
     using Lean.Touch;
     using Pladdra.Core.Types;
 
-    [RequireComponent(typeof(LeanSelectable), typeof(BoxCollider))]
+    [RequireComponent(typeof(LeanSelectable))]
+    [RequireComponent(typeof(BoxCollider))]
     public class WorkspaceView : View
     {
         private Block createdBlock;
 
+        public LeanSelect leanSelect;
+        public LeanPlane leanPlane;
         public GameObject blocksRootObject;
-
+        public GameObject blockPrefab;
         public IDictionary<string, GameObject> blocks = new Dictionary<string, GameObject>();
-
         public LeanSelectable leanSelectable;
         public BoxCollider boxCollider;
+        public event WorkspaceViewHandler OnSelectBlockEvent;
+        public delegate void WorkspaceViewHandler();
+
 
         public override void Initialize()
         {
@@ -44,22 +49,17 @@ namespace Pladdra.MVC.Views
             }
         }
 
-        public void InstantiateBlock(Block block, Asset asset)
+
+
+        public void SelectBlockTrigger(string id)
         {
-            createdBlock = block;
-            PigletImporter.import(App.CachePath + '/' + asset.meshPath, OnCompleteImport, (Exception e) =>
-            {
-                Debug.Log(e);
-            });
+
+        }
+        public void DeselectBlockTrigger()
+        {
+
         }
 
-        public void OnCompleteImport(GameObject importedBlock)
-        {
-            blocks.Add(createdBlock.id, importedBlock);
-            importedBlock.transform.SetParent(blocksRootObject.transform, false);
-            importedBlock.SetActive(true);
-            createdBlock = null;
-        }
 
         public void RemoveBlock(string id)
         {

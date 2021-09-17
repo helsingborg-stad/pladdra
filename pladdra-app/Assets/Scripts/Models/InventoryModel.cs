@@ -12,6 +12,7 @@ namespace Pladdra.MVC.Models
         {
             public string name;
             public List<Pladdra.Core.Types.Asset> items;
+
         }
     }
 }
