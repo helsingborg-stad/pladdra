@@ -19,6 +19,7 @@ namespace Pladdra.MVC.Controllers
 
     public class WorkspaceController
     {
+        private PlannerController planner;
 
         private Block createdBlock;
 
@@ -34,8 +35,9 @@ namespace Pladdra.MVC.Controllers
         private GameObject workspaceObject;
         private WorkspaceView workspaceView;
 
-        public WorkspaceController()
+        public WorkspaceController(PlannerController plannerInstance)
         {
+            planner = plannerInstance;
             workspaceObject = GameObject.Find("Workspace");
             workspaceView = workspaceObject.GetComponent<WorkspaceView>();
             context.Init += OnPlannerInit;
@@ -70,7 +72,7 @@ namespace Pladdra.MVC.Controllers
 
             workspaceView.leanSelect.OnSelected.AddListener((LeanSelectable selectable) =>
             {
-                context.SetState(PlannerModel.State.BlockSelection);
+                planner.SetState(new BlockSelection());
                 Debug.Log("Selected!");
                 // context.workspace.selectedBlockID = selectable.gameObject.GetComponent<BlockView>().id;
             });
@@ -137,7 +139,7 @@ namespace Pladdra.MVC.Controllers
 
         public void DeselectAllBlocks()
         {
-            context.SetState(PlannerModel.State.Build);
+            planner.SetState(new Build());
             workspaceView.leanSelect.DeselectAll();
         }
 

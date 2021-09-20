@@ -12,6 +12,8 @@ namespace Pladdra.MVC.Controllers
 
     public class GridController
     {
+        private PlannerController planner;
+
         private PlannerModel context
         {
             get
@@ -26,8 +28,9 @@ namespace Pladdra.MVC.Controllers
         private GridView gridView { get; set; }
         private LeanPlane leanPlane { get; set; }
 
-        public GridController()
+        public GridController(PlannerController plannerInstance)
         {
+            planner = plannerInstance;
             gridObject = GameObject.Find("Grid");
             leanPlaneObject = GameObject.Find("GridLeanPlane");
             leanPlane = leanPlaneObject.GetComponent<LeanPlane>();
@@ -48,7 +51,6 @@ namespace Pladdra.MVC.Controllers
             }
 
             gridView.Hide();
-
         }
 
         public void ToggleGridSelection()

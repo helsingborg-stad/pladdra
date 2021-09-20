@@ -12,22 +12,6 @@ namespace Pladdra.MVC.Models
         public event PlannerEventHandler Init;
         public event PlannerEventHandler OnHideTopAppBarChanged;
 
-
-        public enum State
-        {
-            Initializing,
-            Grid,
-            PlaceGrid,
-            EditGrid,
-            Build,
-            BlockSelection,
-            Inventory,
-            Destroy,
-            Inactive,
-        }
-
-        public State state = State.Inactive;
-
         public Grid grid
         {
             get
@@ -68,15 +52,6 @@ namespace Pladdra.MVC.Models
         }
 
         private Dictionary<string, Pladdra.API.Types.Block> blocks;
-
-        public void SetState(State newState)
-        {
-            if (newState == state)
-                return;
-
-            state = newState;
-            UpdatedState();
-        }
 
         public void InitializeWorkspace(string workspaceId)
         {
