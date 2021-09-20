@@ -10,17 +10,14 @@ namespace Pladdra.MVC.Controllers
 
     public class CreateWorkspaceController
     {
-        public CreateWorkspaceModel model { get; }
-
         UnityEvent render;
 
         private WorkspaceList workspaceModel;
         private Grid grid;
         private PlannerModel planner;
 
-        public CreateWorkspaceController(CreateWorkspaceModel CreateWorkspaceModel, UnityEvent renderEvent)
+        public CreateWorkspaceController(UnityEvent renderEvent)
         {
-            model = CreateWorkspaceModel;
             render = renderEvent;
 
             App.GetModel<WorkspaceList>(out workspaceModel);

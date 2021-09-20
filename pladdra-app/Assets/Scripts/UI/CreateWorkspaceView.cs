@@ -16,7 +16,6 @@ namespace Pladdra.MVC.Views
     [RequireComponent(typeof(WithReRender))]
     public class CreateWorkspaceView : View
     {
-        private CreateWorkspaceModel context;
         private CreateWorkspaceController controller;
         public UnityEvent render;
         public WithReRender withReRender;
@@ -29,8 +28,7 @@ namespace Pladdra.MVC.Views
             withReRender = GetComponent<WithReRender>();
             render = withReRender.renderEvent;
 
-            context = new CreateWorkspaceModel();
-            controller = new CreateWorkspaceController(context, render);
+            controller = new CreateWorkspaceController(render);
 
             createButton.onClick.AddListener(() => controller.OnClickCreate(nameField.text));
             backButton.onClick.AddListener(controller.OnClickBack);

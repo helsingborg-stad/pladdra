@@ -15,10 +15,6 @@ namespace Pladdra.MVC.Models
         public event AREventHandler RaycastChanged;
         public event AREventHandler ShowMarkerChanged;
 
-
-
-
-
         public Vector3 _raycastHitPosition { get; set; }
         public Vector3 raycastHitPosition
         {
