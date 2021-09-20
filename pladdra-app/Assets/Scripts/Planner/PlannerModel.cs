@@ -28,11 +28,11 @@ namespace Pladdra.MVC.Models
                 return instance;
             }
         }
-        public WorkspaceList workspaceList
+        public WorkspaceListModel workspaceList
         {
             get
             {
-                App.GetModel<WorkspaceList>(out var instance);
+                App.GetModel<WorkspaceListModel>(out var instance);
                 return instance;
             }
         }

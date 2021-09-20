@@ -12,7 +12,7 @@ namespace Pladdra.MVC.Controllers
     {
         UnityEvent render;
 
-        private WorkspaceList workspaceModel;
+        private WorkspaceListModel workspaceModel;
         private Grid grid;
         private PlannerModel planner;
 
@@ -20,7 +20,7 @@ namespace Pladdra.MVC.Controllers
         {
             render = renderEvent;
 
-            App.GetModel<WorkspaceList>(out workspaceModel);
+            App.GetModel<WorkspaceListModel>(out workspaceModel);
             App.GetModel<Grid>(out grid);
             App.GetModel<PlannerModel>(out planner);
         }
