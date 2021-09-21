@@ -16,11 +16,11 @@ namespace Pladdra.MVC.Views
     {
         public Button removeGridButton;
         public Button lockGridButton;
+        public Button scaleGridButton;
+        public TMP_Text scaleGridButtonText;
 
         public override void Initialize()
         {
         }
     }
-
-
 }
