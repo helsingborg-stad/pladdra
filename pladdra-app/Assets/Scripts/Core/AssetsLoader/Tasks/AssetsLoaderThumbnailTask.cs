@@ -19,23 +19,26 @@ namespace Pladdra.Core
         }
         public override void Handler(Core.Types.Asset asset, GameObject gameObject)
         {
-            Debug.Log("Thumbnail!");
-            Debug.Log(successor);
-            string fullMeshPath = Path.Combine(Pladdra.App.CachePath, asset.meshPath);
-
             string fileName = asset.id + ".png";
-            string assetPath = Path.Combine(downloadPath, fileName);
-            string fullPreviewPath = Path.Combine(Pladdra.App.CachePath, assetPath);
+            string path = Path.Combine(downloadPath, fileName);
+            string fullPath = Path.Combine(Pladdra.App.CachePath, path);
+            bool pathIsNullButFileExists = asset.previewTexturePath == null && File.Exists(path);
+            asset.previewTexturePath = pathIsNullButFileExists ? path : asset.previewTexturePath;
+            asset.previewTexturePath = asset.previewTexturePath != null && asset.previewTexturePath != path ? null : asset.previewTexturePath;
 
-            asset.previewTexturePath = File.Exists(assetPath) && asset.meshPath == null ? assetPath : asset.previewTexturePath;
-            if (asset.previewTexturePath == null || !File.Exists(fullPreviewPath))
+            if (asset.previewTexturePath == null || !File.Exists(fullPath))
             {
                 RuntimePreviewGenerator.MarkTextureNonReadable = false;
                 Texture2D thumbnail = RuntimePreviewGenerator.GenerateModelPreview(gameObject.transform);
                 byte[] pngBytes = thumbnail.EncodeToPNG();
-                FileManager.WriteToFile(fullPreviewPath, pngBytes);
-                asset.previewTexturePath = fullPreviewPath;
+                FileManager.WriteToFile(fullPath, pngBytes);
+                asset.previewTexturePath = path;
 
+                context.assets.Update(asset);
+            }
+
+            if (pathIsNullButFileExists)
+            {
                 context.assets.Update(asset);
             }
 
