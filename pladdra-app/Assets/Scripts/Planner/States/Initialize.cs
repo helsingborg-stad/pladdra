@@ -25,6 +25,7 @@ namespace Pladdra
             var scaleFactor = 10f;
             var scale = 1.0f / scaleFactor;
             planner.context.grid.size = new System.Numerics.Vector3(1f, 1f, 10f);
+            planner.context.grid.minScale = scale;
             planner.context.grid.scale = scale;
             planner.context.grid.isSelectable = false;
             planner.context.grid.visible = false;

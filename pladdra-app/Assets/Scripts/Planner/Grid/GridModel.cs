@@ -28,6 +28,8 @@ namespace Pladdra.MVC.Models
                 }
             }
         }
+        public float minScale;
+        public float maxScale = 1.0f;
 
         private Vector3 _size;
         public Vector3 size
