@@ -47,7 +47,13 @@ namespace Pladdra
             planner.context.ar.planeDetection = true;
             planner.context.grid.isSelectable = true;
 
+
+            planner.workspaceController.workspaceView.leanSelect.DeselectWithNothing = false;
+            planner.workspaceController.workspaceView.leanSelect.DeselectAll();
+            planner.workspaceController.workspaceView.leanSelect.Select(planner.workspaceController.workspaceView.leanSelectable);
+
             SetScaleButtonText();
+
             planner.plannerGUI.editGridGUI.Show();
         }
 
@@ -65,6 +71,9 @@ namespace Pladdra
 
             planner.context.ar.planeDetection = false;
             planner.context.grid.isSelectable = false;
+
+            planner.workspaceController.workspaceView.leanSelect.DeselectWithNothing = true;
+            planner.workspaceController.workspaceView.leanSelect.DeselectAll();
 
             planner.plannerGUI.editGridGUI.Hide();
         }

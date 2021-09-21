@@ -33,7 +33,7 @@ namespace Pladdra.MVC.Controllers
         }
 
         private GameObject workspaceObject;
-        private WorkspaceView workspaceView;
+        public WorkspaceView workspaceView;
 
         public WorkspaceController(PlannerController plannerInstance)
         {
@@ -49,7 +49,6 @@ namespace Pladdra.MVC.Controllers
             context.grid.OnRotationChanged += RotateWorkspace;
             context.grid.OnIsSelectableChanged += () => workspaceView.leanSelectable.enabled = context.grid.isSelectable;
             workspaceView.Initialize();
-
         }
 
         public void ScaleWorkspace()
@@ -72,8 +71,11 @@ namespace Pladdra.MVC.Controllers
 
             workspaceView.leanSelect.OnSelected.AddListener((LeanSelectable selectable) =>
             {
-                planner.SetState(new BlockSelection());
-                Debug.Log("Selected!");
+                if (selectable.gameObject.TryGetComponent<BlockView>(out var blockView))
+                {
+                    planner.SetState(new BlockSelection());
+                }
+
                 // context.workspace.selectedBlockID = selectable.gameObject.GetComponent<BlockView>().id;
             });
 
