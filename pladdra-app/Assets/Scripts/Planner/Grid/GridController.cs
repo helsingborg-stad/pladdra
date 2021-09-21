@@ -23,6 +23,9 @@ namespace Pladdra.MVC.Controllers
             }
         }
 
+        private BoxCollider gridViewBoxCollider;
+
+        private GameObject workspaceObject { get; set; }
         private GameObject gridObject { get; set; }
         private GameObject leanPlaneObject { get; set; }
         private GridView gridView { get; set; }
@@ -31,7 +34,9 @@ namespace Pladdra.MVC.Controllers
         public GridController(PlannerController plannerInstance)
         {
             planner = plannerInstance;
+
             gridObject = GameObject.Find("Grid");
+            workspaceObject = gridObject.transform.parent.gameObject;
             leanPlaneObject = GameObject.Find("GridLeanPlane");
             leanPlane = leanPlaneObject.GetComponent<LeanPlane>();
             gridView = gridObject.GetComponent<GridView>();
@@ -46,11 +51,13 @@ namespace Pladdra.MVC.Controllers
         {
             if (context.grid.visible)
             {
+                workspaceObject.SetActive(true);
                 gridView.Show();
                 return;
             }
 
             gridView.Hide();
+            workspaceObject.SetActive(false);
         }
 
         public void ToggleGridSelection()
