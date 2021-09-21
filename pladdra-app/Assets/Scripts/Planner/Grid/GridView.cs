@@ -26,12 +26,16 @@ namespace Pladdra.MVC.Views
         private Material[] materials;
         private Material backgroundMaterial;
         private Material tileMaterial;
-        private MeshRenderer meshRenderer;
+        public MeshRenderer meshRenderer;
+        public MeshFilter filter;
+        public BoxCollider boxCollider;
 
         bool isSelected;
 
         public override void Initialize()
         {
+            boxCollider = GetComponent<BoxCollider>();
+            filter = GetComponent<MeshFilter>();
             meshRenderer = GetComponent<MeshRenderer>();
             materials = meshRenderer.materials;
 
