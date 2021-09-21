@@ -60,13 +60,9 @@ namespace Pladdra.MVC.Controllers
 
         public void GenerateGrid()
         {
-            var filter = gridObject.GetComponent<MeshFilter>();
-            var boxCollider = gridObject.GetComponent<BoxCollider>();
-
-            filter.mesh = PlaneMeshGenerator.GenerateHorizontal((int)context.grid.size.X, (int)context.grid.size.Y, context.grid.size.Z, true);
-            boxCollider.center = new Vector3(0f, 0f, 0f);
-            boxCollider.size = new Vector3(context.grid.size.X * context.grid.size.Z, 0.01f, context.grid.size.X * context.grid.size.Z);
-
+            gridView.filter.mesh = PlaneMeshGenerator.GenerateHorizontal((int)context.grid.size.X, (int)context.grid.size.Y, context.grid.size.Z, true);
+            gridView.boxCollider.center = new Vector3(0f, 0f, 0f);
+            gridView.boxCollider.size = new Vector3(context.grid.size.X * context.grid.size.Z, 0.01f, context.grid.size.X * context.grid.size.Z);
 
             leanPlane.ClampX = true;
             leanPlane.ClampY = true;
@@ -76,9 +72,6 @@ namespace Pladdra.MVC.Controllers
             leanPlane.MaxY = context.grid.size.Y * context.grid.size.Z;
 
             leanPlaneObject.transform.localPosition = new Vector3(-1 * leanPlane.MaxX / 2, 0.1f, -1 * leanPlane.MaxY / 2);
-
-            // var leanBoxCollider = leanPlaneObject.GetComponent<BoxCollider>();
-            // boxCollider.size = new Vector3(context.grid.size.X * context.grid.size.Z, context.grid.size.Y * context.grid.size.Z, 1.0f);
         }
     }
 }
