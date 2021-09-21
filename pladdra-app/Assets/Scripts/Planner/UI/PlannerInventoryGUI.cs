@@ -133,33 +133,46 @@ namespace Pladdra.MVC.Views
             }
 
 
-            if (loadedPreviewCache.ContainsKey(asset.previewTexturePath))
+            if (loadedPreviewCache.ContainsKey(asset.id))
             {
-                item.imageComponent.sprite = loadedPreviewCache[asset.previewTexturePath];
+                item.imageComponent.sprite = loadedPreviewCache[asset.id];
             }
             else
             {
-                StartCoroutine(RemoteImageUtil.loadRemoteImage("file://" + asset.previewTexturePath, (Texture2D texture) =>
+                if (TryGenerateTextureFromLocalImage(asset, out Texture2D texture))
                 {
-                    if (texture == null)
-                    {
-                        item.imageComponent.sprite = placeholderIcon;
-                        loadedPreviewCache[asset.previewTexturePath] = placeholderIcon;
-                    }
-                    else
-                    {
+                    Debug.Log("loaded remote item");
 
-                        Debug.Log("loaded remote item");
+                    Sprite sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
+                    item.imageComponent.sprite = sprite;
 
-                        Sprite sprite = Sprite.Create(texture, new Rect(0.0f, 0.0f, texture.width, texture.height), new Vector2(0.5f, 0.5f), 100.0f);
-                        item.imageComponent.sprite = sprite;
-
-                        loadedPreviewCache[asset.previewTexturePath] = sprite;
-                    }
-                }));
+                    loadedPreviewCache[asset.id] = sprite;
+                }
+                else
+                {
+                    item.imageComponent.sprite = placeholderIcon;
+                    loadedPreviewCache[asset.id] = placeholderIcon;
+                }
             }
 
             items.Add(newObj);
+        }
+
+
+        protected bool TryGenerateTextureFromLocalImage(Pladdra.Core.Types.Asset asset, out Texture2D texture)
+        {
+            texture = new Texture2D(2, 2);
+
+            try
+            {
+                var imageBytes = File.ReadAllBytes(Path.Combine(Pladdra.App.CachePath, asset.previewTexturePath));
+                return texture.LoadImage(imageBytes);
+            }
+            catch (System.Exception exception)
+            {
+                Debug.Log(exception.Message);
+                return false;
+            }
         }
 
         protected void onClickItem(Pladdra.Core.Types.Asset asset)
