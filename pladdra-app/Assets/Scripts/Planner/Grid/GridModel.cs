@@ -10,6 +10,7 @@ namespace Pladdra.MVC.Models
         public event GridEventHandler OnSizeChanged;
         public event GridEventHandler OnIsSelectableChanged;
         public event GridEventHandler OnVisibleChanged;
+        public event GridEventHandler OnPivotPositionChanged;
         public event GridEventHandler OnPositionChanged;
         public event GridEventHandler OnRotationChanged;
         public event GridEventHandler OnScaleChanged;
@@ -72,6 +73,34 @@ namespace Pladdra.MVC.Models
                     _visible = value;
                     if (OnVisibleChanged != null)
                         OnVisibleChanged();
+                }
+            }
+        }
+
+        private UnityEngine.Vector3 _pivotPoint;
+        public UnityEngine.Vector3 pivotPoint
+        {
+            get { return _pivotPoint; }
+            set
+            {
+                if (_pivotPoint != value)
+                {
+                    _pivotPoint = value;
+                }
+            }
+        }
+
+        private UnityEngine.Vector3 _pivotPosition;
+        public UnityEngine.Vector3 pivotPosition
+        {
+            get { return _pivotPosition; }
+            set
+            {
+                if (_pivotPosition != value)
+                {
+                    _pivotPosition = value;
+                    if (OnPivotPositionChanged != null)
+                        OnPivotPositionChanged();
                 }
             }
         }
