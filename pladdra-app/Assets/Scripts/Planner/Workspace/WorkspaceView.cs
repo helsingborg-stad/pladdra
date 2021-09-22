@@ -23,11 +23,11 @@ namespace Pladdra.MVC.Views
     public class WorkspaceView : View
     {
         private Block createdBlock;
-
         public LeanSelect leanSelect;
         public LeanPlane leanPlane;
         public GameObject blocksRootObject;
         public GameObject blockPrefab;
+        public GameObject workspacePivot;
         public IDictionary<string, GameObject> blocks = new Dictionary<string, GameObject>();
         public LeanSelectable leanSelectable;
         public BoxCollider boxCollider;
