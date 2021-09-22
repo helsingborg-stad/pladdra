@@ -44,6 +44,7 @@ namespace Pladdra.MVC.Controllers
 
             context.grid.OnVisibleChanged += () => workspaceView.blocksRootObject.SetActive(context.grid.visible);
             context.grid.OnSizeChanged += SetBoxCollider;
+            context.grid.OnPivotPositionChanged += TransformWorkspacePivot;
             context.grid.OnPositionChanged += TransformWorkspace;
             context.grid.OnScaleChanged += ScaleWorkspace;
             context.grid.OnRotationChanged += RotateWorkspace;
@@ -53,7 +54,20 @@ namespace Pladdra.MVC.Controllers
 
         public void ScaleWorkspace()
         {
+            if (context.grid.scale == context.grid.maxScale)
+            {
+                context.grid.pivotPosition = context.grid.pivotPoint - new Vector3(context.grid.pivotPoint.x * context.grid.minScale, 0f, context.grid.pivotPoint.z * context.grid.minScale);
+            }
+            else
+            {
+                context.grid.pivotPosition = Vector3.zero;
+            }
+
             workspaceObject.transform.localScale = new Vector3(context.grid.scale, context.grid.scale, context.grid.scale);
+        }
+        public void TransformWorkspacePivot()
+        {
+            workspaceView.workspacePivot.transform.localPosition = context.grid.pivotPosition;
         }
         public void TransformWorkspace()
         {
