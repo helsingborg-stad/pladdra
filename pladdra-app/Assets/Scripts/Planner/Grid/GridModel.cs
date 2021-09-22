@@ -41,6 +41,7 @@ namespace Pladdra.MVC.Models
                 if (_size != value)
                 {
                     _size = value;
+                    pivotPoint = new UnityEngine.Vector3((_size.X * _size.Z) / 2 * -1, 0f, (_size.Y * _size.Z) / 2);
                     if (OnSizeChanged != null)
                         OnSizeChanged();
                 }
