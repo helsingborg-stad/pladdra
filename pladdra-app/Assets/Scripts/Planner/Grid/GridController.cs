@@ -78,7 +78,7 @@ namespace Pladdra.MVC.Controllers
             leanPlane.MaxX = context.grid.size.X * context.grid.size.Z;
             leanPlane.MaxY = context.grid.size.Y * context.grid.size.Z;
 
-            leanPlaneObject.transform.localPosition = new Vector3(-1 * leanPlane.MaxX / 2, 0.1f, -1 * leanPlane.MaxY / 2);
+            leanPlaneObject.transform.localPosition = new Vector3(-1 * leanPlane.MaxX / 2, 0f, -1 * leanPlane.MaxY / 2);
         }
     }
 }

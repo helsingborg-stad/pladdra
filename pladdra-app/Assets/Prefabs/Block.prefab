@@ -90,7 +90,7 @@ MonoBehaviour:
     Layers:
       serializedVersion: 2
       m_Bits: 4294967291
-    Distance: 0.01
+    Distance: 0
   trackScreenPosition: 1
   damping: -1
   remainingDelta: {x: 0, y: 0, z: 0}
