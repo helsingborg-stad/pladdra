@@ -22,9 +22,9 @@ namespace Pladdra
             planner.context.workspace.OnBlockDeselected += planner.OnSelectDeselectBlock;
 
             // Generate Workspace
-            var scaleFactor = 10f;
+            var scaleFactor = 25f;
             var scale = 1.0f / scaleFactor;
-            planner.context.grid.size = new System.Numerics.Vector3(1f, 1f, 10f);
+            planner.context.grid.size = new System.Numerics.Vector3(2f, 2f, 10f);
             planner.context.grid.minScale = scale;
             planner.context.grid.scale = scale;
             planner.context.grid.isSelectable = false;
