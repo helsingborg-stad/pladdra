@@ -1,22 +1,24 @@
 using Lean.Common;
 using Lean.Touch;
-using UnityEngine;
-
 
 using Pladdra.Core.Types;
 using Pladdra.MVC.Models;
+using GLTF.Math;
 
 namespace Pladdra.MVC.Views
 {
+    using UnityEngine;
     [RequireComponent(typeof(LeanSelectableByFinger))]
+    [RequireComponent(typeof(LeanTwistRotate))]
     [RequireComponent(typeof(LeanSelectableRendererColor))]
     [RequireComponent(typeof(PladdraDragTranslateAlong))]
     public class BlockView : LeanSelectableByFingerBehaviour
     {
         public string id;
-        private LeanSelectableByFinger leanSelectableByFinger;
-        private LeanSelectableRendererColor leanSelectableRendererColor;
-        private PladdraDragTranslateAlong pladdraDragTranslateAlong;
+        public event DelegateBlockViewHandle OnPositionChanged;
+        public event DelegateBlockViewHandle OnRotationChanged;
+        public event DelegateBlockViewHandle OnSelectionChanged;
+
         private PlannerModel context
         {
             get
@@ -25,66 +27,73 @@ namespace Pladdra.MVC.Views
                 return instance;
             }
         }
+        private Vector3 previousPosition;
+        private Quaternion previousRotation;
+        private bool isSelected = false;
+        private LeanSelectableByFinger leanSelectableByFinger;
+        private LeanSelectableRendererColor leanSelectableRendererColor;
+        private PladdraDragTranslateAlong pladdraDragTranslateAlong;
+        private bool _DEBUG = false;
+        public delegate void DelegateBlockViewHandle();
 
         protected override void OnSelected()
         {
-            Debug.Log("OnSelected");
-            // Debug.Log(context.workspace.selectedBlockID);
+            if (_DEBUG)
+                Debug.Log("OnSelected");
+            isSelected = true;
             context.workspace.selectedBlockID = id;
+
+            if (OnSelectionChanged != null)
+                OnSelectionChanged();
         }
 
-        /// <summary>Called when this is deselected, if OnSelectUp hasn't been called yet, it will get called first.</summary>
         protected override void OnDeselected()
         {
-            Debug.Log("OnDeselected");
-            Debug.Log(context.workspace.selectedBlockID);
+            if (_DEBUG)
+                Debug.Log("OnDeselected");
+            isSelected = false;
             context.workspace.selectedBlockID = null;
+
+            if (OnSelectionChanged != null)
+                OnSelectionChanged();
         }
 
+        void Update()
+        {
+            if (transform.hasChanged == true)
+            {
+                if (_DEBUG)
+                {
+                    Debug.Log("HAS CHANGED!!!");
+                    Debug.Log("transform.rotation " + transform.rotation);
+                    Debug.Log("transform.rotation.eulerAngles " + transform.rotation.eulerAngles);
+                    Debug.Log("transform.position: " + transform.position);
+                    Debug.Log("previousPosition " + previousPosition);
+                    Debug.Log("previousRotation " + previousRotation);
+                }
 
-        // public void addBoundsToAllChildren()
-        // {
-        //     if (boxCol == null)
-        //     {
-        //         boxCol = gameObject.GetComponent(typeof(BoxCollider)) as BoxCollider;
-        //         if (boxCol == null)
-        //         {
-        //             boxCol = gameObject.AddComponent<BoxCollider>();
-        //         }
-        //     }
-        //     Bounds bounds = new Bounds(Vector3.zero, Vector3.zero);
-        //     Renderer thisRenderer = transform.GetComponent<Renderer>();
-        //     bounds.Encapsulate(thisRenderer.bounds);
-        //     boxCol.offset = bounds.center - transform.position;
-        //     boxCol.size = bounds.size;
+                if (previousPosition != null && !previousPosition.Equals(transform.position))
+                {
+                    if (OnPositionChanged != null)
+                        OnPositionChanged();
+                }
 
-        //     allDescendants = gameObject.GetComponentsInChildren<Transform>();
-        //     foreach (Transform desc in allDescendants)
-        //     {
-        //         Renderer childRenderer = desc.GetComponent<Renderer>();
-        //         if (childRenderer != null)
-        //         {
-        //             bounds.Encapsulate(childRenderer.bounds);
-        //         }
-        //         boxCol.offset = bounds.center - transform.position;
-        //         boxCol.size = bounds.size;
-        //     }
-        // }
+                if (previousRotation != null && !previousRotation.Equals(transform.rotation))
+                {
+                    if (OnRotationChanged != null)
+                        OnRotationChanged();
+                }
 
+                previousPosition = transform.position;
+                previousRotation = transform.rotation;
+                transform.hasChanged = false;
 
-        // private void Awake()
-        // {
-        //     leanSelectableByFinger = GetComponent<LeanSelectableByFinger>();
-        //     leanSelectableRendererColor = GetComponent<LeanSelectableRendererColor>();
-        //     pladdraDragTranslateAlong = GetComponent<PladdraDragTranslateAlong>();
-        // }
+            }
+        }
 
-        // private void Start()
-        // {
-        //     leanSelectableByFinger.OnSelectedFinger.AddListener((LeanFinger) =>
-        //     {
-        //         Debug.Log("Selected block ID: " + id);
-        //     });
-        // }
+        private void LateUpdate()
+        {
+
+        }
     }
 }
