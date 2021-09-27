@@ -160,7 +160,7 @@ GameObject:
   - component: {fileID: 8782746305268165532}
   - component: {fileID: 1820081384576071250}
   m_Layer: 0
-  m_Name: AssetsPreloader
+  m_Name: Preloaded
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
