@@ -2,12 +2,37 @@
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "Lambda resource stack creation using Amplify CLI",
   "Parameters": {
+    "modules": {
+      "Type": "String",
+      "Default": "",
+      "Description": "Comma-delimited list of modules to be executed by a lambda trigger. Sent to resource as an env variable."
+    },
+    "resourceName": {
+      "Type": "String",
+      "Default": ""
+    },
+    "trigger": {
+      "Type": "String",
+      "Default": "true"
+    },
+    "functionName": {
+      "Type": "String",
+      "Default": ""
+    },
+    "roleName": {
+      "Type": "String",
+      "Default": ""
+    },
+    "parentResource": {
+      "Type": "String",
+      "Default": ""
+    },
+    "parentStack": {
+      "Type": "String",
+      "Default": ""
+    },
     "env": {
       "Type": "String"
-    },
-    "authpladdraf1727651f1727651UserPoolId": {
-      "Type": "String",
-      "Default": "authpladdraf1727651f1727651UserPoolId"
     },
     "deploymentBucketName": {
       "Type": "String"
@@ -38,12 +63,12 @@
         "FunctionName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "AdminQueries789e6dc6",
+            "pladdraf1727651f1727651PostAuthentication",
             {
               "Fn::Join": [
                 "",
                 [
-                  "AdminQueries789e6dc6",
+                  "pladdraf1727651f1727651PostAuthentication",
                   "-",
                   {
                     "Ref": "env"
@@ -58,9 +83,11 @@
             "ENV": {
               "Ref": "env"
             },
-            "GROUP": "superadmin",
-            "USERPOOL": {
-              "Ref": "authpladdraf1727651f1727651UserPoolId"
+            "MODULES": {
+              "Ref": "modules"
+            },
+            "REGION": {
+              "Ref": "AWS::Region"
             }
           }
         },
@@ -88,12 +115,12 @@
         "RoleName": {
           "Fn::If": [
             "ShouldNotCreateEnvResources",
-            "AdminQueries789e6dc6LambdaRole",
+            "pladdraf1727651f1727651PostAuthentication",
             {
               "Fn::Join": [
                 "",
                 [
-                  "AdminQueries789e6dc6LambdaRole",
+                  "pladdraf1727651f1727651PostAuthentication",
                   "-",
                   {
                     "Ref": "env"
@@ -163,35 +190,25 @@
             {
               "Effect": "Allow",
               "Action": [
-                "cognito-idp:ListUsersInGroup",
-                "cognito-idp:AdminUserGlobalSignOut",
-                "cognito-idp:AdminEnableUser",
-                "cognito-idp:AdminDisableUser",
-                "cognito-idp:AdminRemoveUserFromGroup",
-                "cognito-idp:AdminAddUserToGroup",
-                "cognito-idp:AdminListGroupsForUser",
-                "cognito-idp:AdminGetUser",
-                "cognito-idp:AdminConfirmSignUp",
-                "cognito-idp:ListUsers",
-                "cognito-idp:ListGroups"
+                "lambda:InvokeFunction"
               ],
               "Resource": {
-                "Fn::Join": [
-                  "",
-                  [
-                    "arn:aws:cognito-idp:",
-                    {
+                "Fn::Sub": [
+                  "arn:aws:lambda:${region}:${account}:function:addUserToGroup-${env}",
+                  {
+                    "region": {
                       "Ref": "AWS::Region"
                     },
-                    ":",
-                    {
+                    "account": {
                       "Ref": "AWS::AccountId"
                     },
-                    ":userpool/",
-                    {
-                      "Ref": "authpladdraf1727651f1727651UserPoolId"
+                    "lambda": {
+                      "Ref": "LambdaFunction"
+                    },
+                    "env": {
+                      "Ref": "env"
                     }
-                  ]
+                  }
                 ]
               }
             }
@@ -214,14 +231,14 @@
         ]
       }
     },
-    "Region": {
-      "Value": {
-        "Ref": "AWS::Region"
-      }
-    },
     "LambdaExecutionRole": {
       "Value": {
         "Ref": "LambdaExecutionRole"
+      }
+    },
+    "Region": {
+      "Value": {
+        "Ref": "AWS::Region"
       }
     }
   }
