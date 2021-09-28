@@ -13,7 +13,7 @@ import awsExports from "aws-exports";
 
 // import Dashboard from './components/Dashboard/Dashboard'
 
-Amplify.configure(awsExports);
+Amplify.configure({...awsExports, Auth: {authenticationFlowType: 'USER_PASSWORD_AUTH'}});
 
 const App = (): React.ReactElement => (
   <AmplifyAdmin
