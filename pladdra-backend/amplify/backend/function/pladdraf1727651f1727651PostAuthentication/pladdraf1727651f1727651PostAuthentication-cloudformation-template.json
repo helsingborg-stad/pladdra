@@ -186,6 +186,31 @@
                   }
                 ]
               }
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "lambda:InvokeFunction"
+              ],
+              "Resource": {
+                "Fn::Sub": [
+                  "arn:aws:lambda:${region}:${account}:function:addUserToGroup-${env}",
+                  {
+                    "region": {
+                      "Ref": "AWS::Region"
+                    },
+                    "account": {
+                      "Ref": "AWS::AccountId"
+                    },
+                    "lambda": {
+                      "Ref": "LambdaFunction"
+                    },
+                    "env": {
+                      "Ref": "env"
+                    }
+                  }
+                ]
+              }
             }
           ]
         }
