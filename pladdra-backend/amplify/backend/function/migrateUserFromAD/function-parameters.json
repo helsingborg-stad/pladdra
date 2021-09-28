@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "auth": {
+      "pladdraf1727651f1727651": [
+        "create",
+        "read",
+        "update"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}
