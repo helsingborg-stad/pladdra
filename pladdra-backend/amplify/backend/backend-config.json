@@ -37,6 +37,20 @@
           ]
         }
       ]
+    },
+    "userMigrationFromAD": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": [
+        {
+          "category": "auth",
+          "resourceName": "pladdraf1727651f1727651",
+          "attributes": [
+            "UserPoolId"
+          ]
+        }
+      ]
     }
   },
   "api": {
