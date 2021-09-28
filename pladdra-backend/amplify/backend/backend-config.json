@@ -19,17 +19,7 @@
     "pladdraf1727651f1727651": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
-      "dependsOn": [
-        {
-          "category": "function",
-          "resourceName": "pladdraf1727651f1727651PostAuthentication",
-          "triggerProvider": "Cognito",
-          "attributes": [
-            "Arn",
-            "Name"
-          ]
-        }
-      ],
+      "dependsOn": [],
       "customAuth": false
     }
   },
@@ -47,39 +37,6 @@
           ]
         }
       ]
-    },
-    "migrateUserFromAD": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "pladdraf1727651f1727651",
-          "attributes": [
-            "UserPoolId"
-          ]
-        }
-      ]
-    },
-    "addUserToGroup": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda",
-      "dependsOn": [
-        {
-          "category": "auth",
-          "resourceName": "pladdraf1727651f1727651",
-          "attributes": [
-            "UserPoolId"
-          ]
-        }
-      ]
-    },
-    "pladdraf1727651f1727651PostAuthentication": {
-      "build": true,
-      "providerPlugin": "awscloudformation",
-      "service": "Lambda"
     }
   },
   "api": {

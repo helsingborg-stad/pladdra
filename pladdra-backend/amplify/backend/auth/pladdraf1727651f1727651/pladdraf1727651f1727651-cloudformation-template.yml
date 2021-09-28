@@ -1,4 +1,3 @@
-
 AWSTemplateFormatVersion: 2010-09-09
 
 Parameters:
@@ -9,18 +8,6 @@ Parameters:
   unauthRoleArn:
     Type: String
 
-  
-  
-  
-  functionpladdraf1727651f1727651PostAuthenticationArn:
-    Type: String
-    Default: functionpladdraf1727651f1727651PostAuthenticationArn
-  
-  functionpladdraf1727651f1727651PostAuthenticationName:
-    Type: String
-    Default: functionpladdraf1727651f1727651PostAuthenticationName
-  
-  
   
 
     
@@ -82,10 +69,6 @@ Parameters:
       
         
   requiredAttributes:
-    Type: CommaDelimitedList
-      
-        
-  aliasAttributes:
     Type: CommaDelimitedList
       
   
@@ -182,14 +165,6 @@ Parameters:
   dependsOn:
     Type: CommaDelimitedList
       
-        
-  authProviders:
-    Type: CommaDelimitedList
-      
-  authTriggerConnections:
-    Type: String
-  
-            
 Conditions:
   ShouldNotCreateEnvResources: !Equals [ !Ref env, NONE ]
   
@@ -251,10 +226,7 @@ Resources:
       
       
       
-      AutoVerifiedAttributes:
-      
-        - email
-      
+      AutoVerifiedAttributes: !Ref autoVerifiedAttributes
       
       
       EmailVerificationMessage: !Ref emailVerificationMessage
@@ -267,7 +239,6 @@ Resources:
           RequireNumbers: false
           RequireSymbols: false
           RequireUppercase: false
-      
       
       MfaConfiguration: !Ref mfaConfiguration
       SmsVerificationMessage: !Ref smsVerificationMessage
@@ -284,9 +255,6 @@ Resources:
     Properties:
       ClientName: pladdrf1727651_app_clientWeb
       
-      ReadAttributes: !Ref userpoolClientReadAttributes
-      WriteAttributes: !Ref userpoolClientWriteAttributes
-      
       RefreshTokenValidity: !Ref userpoolClientRefreshTokenValidity
       UserPoolId: !Ref UserPool
     DependsOn: UserPool
@@ -296,9 +264,6 @@ Resources:
     Type: "AWS::Cognito::UserPoolClient"
     Properties:
       ClientName: pladdrf1727651_app_client
-      
-      ReadAttributes: !Ref userpoolClientReadAttributes
-      WriteAttributes: !Ref userpoolClientWriteAttributes
       
       GenerateSecret: !Ref userpoolClientGenerateSecret
       RefreshTokenValidity: !Ref userpoolClientRefreshTokenValidity
@@ -352,7 +317,7 @@ Resources:
             - '};'
       Handler: index.handler
       Runtime: nodejs12.x
-      Timeout: 300
+      Timeout: '300'
       Role: !GetAtt
         - UserPoolClientRole
         - Arn
@@ -478,7 +443,6 @@ Outputs :
   AppClientSecret:
     Value: !GetAtt UserPoolClientInputs.appSecret
     Condition: ShouldOutputAppClientSecrets
-  
   
   
   
