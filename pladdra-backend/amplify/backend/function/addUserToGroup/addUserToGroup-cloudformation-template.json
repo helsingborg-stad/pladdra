@@ -16,12 +16,12 @@
     "s3Key": {
       "Type": "String"
     },
-    "group": {
-      "Type": "String"
-    },
     "authpladdraf1727651f1727651UserPoolId": {
       "Type": "String",
       "Default": "authpladdraf1727651f1727651UserPoolId"
+    },
+    "group": {
+      "Type": "String"
     }
   },
   "Conditions": {
