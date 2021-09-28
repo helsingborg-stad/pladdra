@@ -1,0 +1,17 @@
+{
+  "trigger": true,
+  "modules": [
+    "custom"
+  ],
+  "parentResource": "pladdraf1727651f1727651",
+  "functionName": "pladdraf1727651f1727651PostAuthentication",
+  "resourceName": "pladdraf1727651f1727651PostAuthentication",
+  "parentStack": "auth",
+  "triggerEnvs": [],
+  "triggerDir": "/Users/nikolas/.nvm/versions/node/v14.17.0/lib/node_modules/@aws-amplify/cli/node_modules/amplify-category-auth/provider-utils/awscloudformation/triggers/PostAuthentication",
+  "triggerTemplate": "PostAuthentication.json.ejs",
+  "triggerEventPath": "PostAuthentication.event.json",
+  "roleName": "pladdraf1727651f1727651PostAuthentication",
+  "skipEdit": true,
+  "enableCors": false
+}
