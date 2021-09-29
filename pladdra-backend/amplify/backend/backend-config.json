@@ -147,6 +147,13 @@
           "attributes": [
             "superadminGroupRole"
           ]
+        },
+        {
+          "category": "auth",
+          "resourceName": "userPoolGroups",
+          "attributes": [
+            "adminGroupRole"
+          ]
         }
       ]
     }
