@@ -15,8 +15,8 @@ namespace Pladdra.MVC.Views
     public class BlockView : LeanSelectableByFingerBehaviour
     {
         public string id;
-        public event DelegateBlockViewHandle OnPositionChanged;
-        public event DelegateBlockViewHandle OnRotationChanged;
+        public event OnPositionChangedHandler OnPositionChanged;
+        public event OnRotationChangedHandler OnRotationChanged;
         public event DelegateBlockViewHandle OnSelectionChanged;
 
         private PlannerModel context
@@ -33,7 +33,9 @@ namespace Pladdra.MVC.Views
         private LeanSelectableByFinger leanSelectableByFinger;
         private LeanSelectableRendererColor leanSelectableRendererColor;
         private PladdraDragTranslateAlong pladdraDragTranslateAlong;
-        private bool _DEBUG = false;
+        private bool _DEBUG = true;
+        public delegate void OnPositionChangedHandler(Vector3 position);
+        public delegate void OnRotationChangedHandler(Quaternion rotation);
         public delegate void DelegateBlockViewHandle();
 
         protected override void OnSelected()
@@ -60,34 +62,25 @@ namespace Pladdra.MVC.Views
 
         void Update()
         {
-            if (transform.hasChanged == true)
+            if (isSelected && transform.hasChanged == true)
             {
-                if (_DEBUG)
-                {
-                    Debug.Log("HAS CHANGED!!!");
-                    Debug.Log("transform.rotation " + transform.rotation);
-                    Debug.Log("transform.rotation.eulerAngles " + transform.rotation.eulerAngles);
-                    Debug.Log("transform.position: " + transform.position);
-                    Debug.Log("previousPosition " + previousPosition);
-                    Debug.Log("previousRotation " + previousRotation);
-                }
-
-                if (previousPosition != null && !previousPosition.Equals(transform.position))
+                if (previousPosition == null
+               || previousPosition != transform.localPosition)
                 {
                     if (OnPositionChanged != null)
-                        OnPositionChanged();
+                        OnPositionChanged(transform.localPosition);
                 }
 
-                if (previousRotation != null && !previousRotation.Equals(transform.rotation))
+                if (previousPosition == null
+                || previousRotation != transform.localRotation)
                 {
                     if (OnRotationChanged != null)
-                        OnRotationChanged();
+                        OnRotationChanged(transform.localRotation);
                 }
 
-                previousPosition = transform.position;
-                previousRotation = transform.rotation;
+                previousPosition = transform.localPosition;
+                previousRotation = transform.localRotation;
                 transform.hasChanged = false;
-
             }
         }
 

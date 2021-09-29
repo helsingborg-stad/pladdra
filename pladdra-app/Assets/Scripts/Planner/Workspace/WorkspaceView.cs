@@ -50,23 +50,12 @@ namespace Pladdra.MVC.Views
         }
 
 
-
-        public void SelectBlockTrigger(string id)
-        {
-
-        }
-        public void DeselectBlockTrigger()
-        {
-
-        }
-
-
-        public void RemoveBlock(string id)
-        {
-            if (!blocks.ContainsKey(id))
-                return;
-            Destroy(blocks[id]);
-            blocks.Remove(id);
-        }
+        // public void RemoveBlock(string id)
+        // {
+        //     if (!blocks.ContainsKey(id))
+        //         return;
+        //     Destroy(blocks[id]);
+        //     blocks.Remove(id);
+        // 
     }
 }

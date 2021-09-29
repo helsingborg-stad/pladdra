@@ -44,8 +44,7 @@ namespace Pladdra.MVC.Models
 
         public Core.Types.Workspace Get(string id)
         {
-            List<Core.Types.Workspace> item = items.Where(item => item.id == id).ToList();
-            return item[0];
+            return Get<Core.Types.Workspace>(id);
         }
 
         public List<Core.Types.Workspace> List() => items;
@@ -93,6 +92,7 @@ namespace Pladdra.MVC.Models
         public string ToJson()
         {
             // var jsonString = JsonConvert.SerializeObject(this);
+            // WorkspaceListModel jsonData = JsonConvert.DeserializeObject<WorkspaceListModel>(jsonString);
 
 
             // WorkspaceList jsonData = JsonConvert.DeserializeObject<WorkspaceList>(jsonString);

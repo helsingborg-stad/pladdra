@@ -30,6 +30,7 @@ namespace Pladdra
             planner.context.grid.isSelectable = false;
             planner.context.grid.visible = false;
             planner.gridController.GenerateGrid();
+            planner.workspaceController.RenderAllBlocks();
 
             planner.SetState(new PlaneDetection());
         }

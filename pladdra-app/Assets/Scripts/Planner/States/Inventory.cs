@@ -39,8 +39,8 @@ namespace Pladdra
             input.id = planner.context.workspace.UUID();
             input.workspaceID = planner.context.workspace.id;
             input.assetID = asset.id;
-            input.position = new Vect3Input { x = planner.context.grid.position.X, y = planner.context.grid.position.Y, z = planner.context.grid.position.Z };
-            input.rotation = new QuatInput { x = planner.context.grid.rotation.X, y = planner.context.grid.rotation.Y, z = planner.context.grid.rotation.Z, w = planner.context.grid.rotation.W };
+            input.position = new Vector3 { x = planner.context.grid.position.X, y = planner.context.grid.position.Y, z = planner.context.grid.position.Z };
+            input.rotation = new Quaternion { x = planner.context.grid.rotation.X, y = planner.context.grid.rotation.Y, z = planner.context.grid.rotation.Z, w = planner.context.grid.rotation.W };
             planner.context.workspace.CreateBlock(input);
         }
     }

@@ -16,6 +16,7 @@ namespace Pladdra.MVC.Controllers
     using Pladdra.MVC.Models;
     using Pladdra.MVC.Views;
     using Pladdra.Core.Types;
+    using UnityEngine.UIElements;
 
     public class WorkspaceController
     {
@@ -33,11 +34,15 @@ namespace Pladdra.MVC.Controllers
         }
 
         private GameObject workspaceObject;
+
+        private GameObject preloadParent;
+
         public WorkspaceView workspaceView;
 
         public WorkspaceController(PlannerController plannerInstance)
         {
             planner = plannerInstance;
+            preloadParent = GameObject.Find("Preloaded");
             workspaceObject = GameObject.Find("Workspace");
             workspaceView = workspaceObject.GetComponent<WorkspaceView>();
             context.Init += OnPlannerInit;
@@ -50,6 +55,22 @@ namespace Pladdra.MVC.Controllers
             context.grid.OnRotationChanged += RotateWorkspace;
             context.grid.OnIsSelectableChanged += () => workspaceView.leanSelectable.enabled = context.grid.isSelectable;
             workspaceView.Initialize();
+        }
+
+        private void OnPlannerInit()
+        {
+            context.workspace.OnBlockCreated += RenderBlock;
+            context.workspace.OnBlockDeleted += HandleBlockDeleted;
+            context.workspace.OnBlockPositionChanged += TransformBlock;
+            context.workspace.OnBlockRotationChanged += RotateBlock;
+
+            workspaceView.leanSelect.OnSelected.AddListener((LeanSelectable selectable) =>
+            {
+                if (selectable.gameObject.TryGetComponent<BlockView>(out var blockView))
+                {
+                    planner.SetState(new BlockSelection());
+                }
+            });
         }
 
         public void ScaleWorkspace()
@@ -78,32 +99,6 @@ namespace Pladdra.MVC.Controllers
             // To be continued
         }
 
-        private void OnPlannerInit()
-        {
-            context.workspace.OnBlockCreated += HandleBlockCreated;
-            context.workspace.OnBlockDeleted += HandleBlockDeleted;
-
-            workspaceView.leanSelect.OnSelected.AddListener((LeanSelectable selectable) =>
-            {
-                if (selectable.gameObject.TryGetComponent<BlockView>(out var blockView))
-                {
-                    planner.SetState(new BlockSelection());
-                }
-
-                // context.workspace.selectedBlockID = selectable.gameObject.GetComponent<BlockView>().id;
-            });
-
-            // workspaceView.leanSelect.OnDeselected.AddListener((LeanSelectable selectable) =>
-            // {
-            //     Debug.Log("Deselected!!!!");
-
-            //     context.SetState(PlannerModel.State.Build);
-            //     context.workspace.selectedBlockID = null;
-            // });
-        }
-
-
-
         private void HandleBlockDeleted(string id)
         {
             if (!workspaceView.blocks.ContainsKey(id))
@@ -114,17 +109,6 @@ namespace Pladdra.MVC.Controllers
             workspaceView.blocks.Remove(id);
         }
 
-        private void HandleBlockCreated(string id)
-        {
-            Debug.Log("HandleBlockCreated");
-            createdBlock = context.workspace.GetBlock(id);
-            var asset = context.assets.Get(createdBlock.assetID);
-
-            PigletImporter.import(App.CachePath + '/' + asset.meshPath, OnCompleteImport, (Exception e) =>
-            {
-                Debug.Log(e);
-            });
-        }
 
         public void DestroyHandler()
         {
@@ -142,25 +126,152 @@ namespace Pladdra.MVC.Controllers
         {
             workspaceView.boxCollider.size = new Vector3(context.grid.size.X * context.grid.size.Z, 0.1f, context.grid.size.X * context.grid.size.Z);
         }
-
-
-        public void InstantiateBlock(Block block, Asset asset)
-        {
-            createdBlock = block;
-            PigletImporter.import(App.CachePath + '/' + asset.meshPath, OnCompleteImport, (Exception e) =>
-            {
-                Debug.Log(e);
-            });
-        }
-
         public void DeselectAllBlocks()
         {
             planner.SetState(new Build());
             workspaceView.leanSelect.DeselectAll();
         }
 
+        public void TransformBlock(string id)
+        {
+            if (context.workspace.selectedBlockID == id)
+            {
+                return;
+            }
 
-        public void OnCompleteImport(GameObject assetObject)
+            Debug.Log("TransformBlock Trigger! Block ID: " + id);
+            if (context.workspace.GetBlock(id, out var block))
+            {
+                if (block.position != workspaceView.blocks[id].transform.localPosition)
+                {
+                    Debug.Log("TransformBlock Trigger! Block ID: " + id);
+                    workspaceView.blocks[id].transform.localPosition = block.position;
+                }
+            }
+        }
+
+        public void RotateBlock(string id)
+        {
+            if (context.workspace.selectedBlockID == id)
+            {
+                return;
+            }
+
+            Debug.Log("RotateBlock Trigger! Block ID: " + id);
+            if (context.workspace.GetBlock(id, out var block))
+            {
+                if (block.rotation != workspaceView.blocks[id].transform.localRotation)
+                {
+                    Debug.Log("RotateBlock Trigger! Block ID: " + id);
+                    workspaceView.blocks[id].transform.localRotation = block.rotation;
+                }
+            }
+        }
+
+        public void HandleBlockTransform(Vector3 position)
+        {
+            Debug.Log("Trigger HandleBlockTransform with postion: " + position);
+            if (context.workspace.selectedBlockID != null
+            && context.workspace.GetBlock(context.workspace.selectedBlockID, out var block))
+            {
+                Debug.Log("Trigger HandleBlockTransform with position: " + position);
+                if (block.position != position)
+                {
+                    Debug.Log("Trigger HandleBlockTransform with position: " + position);
+                    block.position = position;
+                    context.workspace.UpdateBlock(block);
+                }
+            }
+        }
+
+        public void HandleBlockRotation(Quaternion rotation)
+        {
+            Debug.Log("Trigger HandleBlockRotation with rotation: " + rotation);
+            if (context.workspace.selectedBlockID != null
+                && context.workspace.GetBlock(context.workspace.selectedBlockID, out var block))
+            {
+                Debug.Log("Trigger HandleBlockRotation with rotation: " + rotation + "  , former rotation: " + block.rotation + " (ID: " + block.id + ")");
+                if (block.rotation != rotation)
+                {
+                    Debug.Log("Trigger HandleBlockRotation with rotation: " + rotation + "  , former rotation: " + block.rotation + " (ID: " + block.id + ")");
+                    block.rotation = rotation;
+                    context.workspace.UpdateBlock(block);
+                }
+            }
+        }
+
+        public void RenderAllBlocks()
+        {
+            var blocks = context.workspace.ListBlocks();
+            if (blocks.Count > 0)
+            {
+                Debug.Log("RenderAllBlocks TOTAL COUNT: " + blocks.Count);
+                Debug.Log(blocks.Count);
+                foreach (var block in blocks)
+                {
+                    RenderBlock(block.id, true);
+                }
+            }
+        }
+
+        private void RenderBlock(string id, bool shouldTransform)
+        {
+            Debug.Log("RenderBlock");
+            var block = context.workspace.GetBlock(id);
+            var preloadedAsset = preloadParent.transform.Find(block.assetID);
+            var preloadedAssetClone = UnityEngine.Object.Instantiate(preloadedAsset);
+
+
+            Debug.Log(block.assetID);
+            Debug.Log(preloadedAsset);
+            if (preloadedAsset != null)
+            {
+                Debug.Log("RenderBlock");
+                if (!shouldTransform)
+                {
+                    Debug.Log("RenderBlock");
+                    OnCompleteImport(preloadedAssetClone.gameObject, block);
+                    return;
+                }
+
+                Debug.Log("RenderBlock");
+                Debug.Log("RenderBlock");
+                OnCompleteImport(preloadedAssetClone.gameObject, block, false);
+                TransformBlock(block.id);
+                RotateBlock(block.id);
+            }
+
+
+            // var asset = context.assets.Get(block.assetID);
+
+            // PigletImporter.import(App.CachePath + '/' + asset.meshPath, OnCompleteImport, (Exception e) =>
+            // {
+            //     Debug.Log(e);
+            // });
+        }
+
+        private void RenderBlock(string id)
+        {
+            Debug.Log("HandleBlockCreated");
+            var block = context.workspace.GetBlock(id);
+            var preloadedAsset = preloadParent.transform.Find(block.assetID);
+            var preloadedAssetClone = UnityEngine.Object.Instantiate(preloadedAsset);
+
+            if (preloadedAsset != null)
+            {
+                OnCompleteImport(preloadedAssetClone.gameObject, block);
+            }
+
+
+            // var asset = context.assets.Get(block.assetID);
+
+            // PigletImporter.import(App.CachePath + '/' + asset.meshPath, OnCompleteImport, (Exception e) =>
+            // {
+            //     Debug.Log(e);
+            // });
+        }
+
+        public void OnCompleteImport(GameObject assetObject, Block block, bool selectAfterImport = true)
         {
             // Init parent
             var parentObject = UnityEngine.Object.Instantiate(workspaceView.blockPrefab);
@@ -172,10 +283,12 @@ namespace Pladdra.MVC.Controllers
             assetObject.transform.SetParent(parentObject.transform, false);
             assetObject.SetActive(true);
 
-
             // BlockView props
             var blockView = parentObject.GetComponent<BlockView>();
-            blockView.id = createdBlock.id;
+            blockView.id = block.id;
+
+            blockView.OnPositionChanged += HandleBlockTransform;
+            blockView.OnRotationChanged += HandleBlockRotation;
 
             // TranslateAlong Props
             var pladdraDragTranslateAlong = parentObject.GetComponent<PladdraDragTranslateAlong>();
@@ -206,12 +319,13 @@ namespace Pladdra.MVC.Controllers
             parentObject.transform.SetParent(workspaceView.blocksRootObject.transform, false);
             parentObject.SetActive(true);
 
-            workspaceView.blocks.Add(createdBlock.id, parentObject);
+            workspaceView.blocks.Add(block.id, parentObject);
 
-            var selectable = parentObject.GetComponent<LeanSelectable>();
-            workspaceView.leanSelect.Select(selectable);
-
-            createdBlock = null;
+            if (selectAfterImport)
+            {
+                var selectable = parentObject.GetComponent<LeanSelectable>();
+                workspaceView.leanSelect.Select(selectable);
+            }
         }
 
         public void RemoveBlock(string id)
