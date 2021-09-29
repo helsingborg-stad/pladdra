@@ -19,6 +19,9 @@ namespace Pladdra
             planner.context.hideTopAppBar = true;
             planner.workspaceController.DestroyHandler();
             planner.context.grid.visible = false;
+
+            SaveDataManager.SaveJsonData(planner.context.workspace);
+
             planner.SetState(new Inactive());
         }
 

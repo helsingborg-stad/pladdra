@@ -46,7 +46,7 @@ public interface ISaveable
 
 
 [System.Serializable]
-public class Savable<T> : ISaveable
+public class Savable<T> : ISaveable where T : class
 {
     public string fileName;
     public T instance;

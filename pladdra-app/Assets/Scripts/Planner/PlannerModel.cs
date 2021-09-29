@@ -55,8 +55,10 @@ namespace Pladdra.MVC.Models
 
         public void InitializeWorkspace(string workspaceId)
         {
-            workspace = workspaceList.Get<WorkspaceModel>(workspaceId);
-            workspace.Load();
+            workspace = new WorkspaceModel();
+            workspace.id = workspaceId;
+            SaveDataManager.LoadJsonData(workspace, true);
+
 
             Init();
         }
