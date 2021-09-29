@@ -10,8 +10,12 @@ namespace Pladdra.Core
 
     public class AssetsLoaderPreloadTask : AssetsLoaderTask
     {
+        private GameObject preloadParent;
+
         public AssetsLoaderPreloadTask(AssetsLoader context) : base(context)
-        { }
+        {
+            preloadParent = GameObject.Find("Preloaded");
+        }
 
         public override void Handler(Core.Types.Asset asset)
         {
@@ -21,6 +25,11 @@ namespace Pladdra.Core
 
                 void OnCompleted(GameObject gameObject)
                 {
+                    if (preloadParent != null)
+                    {
+                        gameObject.transform.SetParent(preloadParent.transform, false);
+                    }
+
                     if (successor != null)
                         successor.Handler(asset, gameObject);
                 }
