@@ -33,6 +33,10 @@ public class ViewManager : MonoBehaviour
         if (s_instance._startingView != null)
         {
             Show(s_instance._startingView, true);
+            if (s_instance._startingView is AppLoadingView 
+                || s_instance._startingView is LoginView) {
+                return;
+            }
             s_instance.RefreshSession();
         }
     }
