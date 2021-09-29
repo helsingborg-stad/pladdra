@@ -4,6 +4,8 @@ using UnityEngine;
 
 using Pladdra;
 using Pladdra.MVC.Views;
+using System.Threading.Tasks;
+using System.IO;
 
 public class ViewManager : MonoBehaviour
 {
@@ -110,10 +112,10 @@ public class ViewManager : MonoBehaviour
 
     private void RefreshSession()
     {
-        Auth.RefreshSession().ContinueWith(response =>
+        Task<bool> task = Auth.RefreshSession();
+        task.ConfigureAwait(true).GetAwaiter().OnCompleted(() =>
         {
-            bool successfulRefresh = response.Result;
-
+            bool successfulRefresh = task.Result;
             if (!successfulRefresh)
             {
                 ViewManager.Show<LoginView>();
