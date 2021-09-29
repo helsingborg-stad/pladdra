@@ -9,7 +9,7 @@ namespace Pladdra.MVC.Views
 {
     using UnityEngine;
     [RequireComponent(typeof(LeanSelectableByFinger))]
-    [RequireComponent(typeof(LeanTwistRotate))]
+    [RequireComponent(typeof(LeanTwistRotateAxis))]
     [RequireComponent(typeof(LeanSelectableRendererColor))]
     [RequireComponent(typeof(PladdraDragTranslateAlong))]
     public class BlockView : LeanSelectableByFingerBehaviour
@@ -31,6 +31,7 @@ namespace Pladdra.MVC.Views
         private Quaternion previousRotation;
         private bool isSelected = false;
         private LeanSelectableByFinger leanSelectableByFinger;
+        private LeanTwistRotateAxis leanTwistRotateAxis;
         private LeanSelectableRendererColor leanSelectableRendererColor;
         private PladdraDragTranslateAlong pladdraDragTranslateAlong;
         private bool _DEBUG = true;
