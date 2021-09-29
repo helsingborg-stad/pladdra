@@ -20,6 +20,7 @@ namespace Pladdra.Core.Types
     public class Block : Pladdra.API.Types.Block
     {
         [JsonProperty("position")]
+        // [JsonConverter(typeof(Newtonsoft.Json.VectorConverter))]
         public new Vector3 position { get; set; }
 
         [JsonProperty("rotation")]
@@ -29,28 +30,55 @@ namespace Pladdra.Core.Types
     public class CreateBlockInput : Pladdra.API.Types.CreateBlockInput
     {
         [JsonRequired]
-        public new Vect3Input position { get; set; }
+        public new Vector3 position { get; set; }
 
         [JsonRequired]
-        public new QuatInput rotation { get; set; }
+        public new Quaternion rotation { get; set; }
     }
 
     public class UpdateBlockInput : Pladdra.API.Types.CreateBlockInput
     {
-        public new Vect3 position { get; set; }
+        public new Vector3 position { get; set; }
 
-        public new Quat rotation { get; set; }
+        public new Quaternion rotation { get; set; }
     }
 
     public class Workspace : Pladdra.API.Types.Workspace
     {
+        private ModelBlockConnection _blocks { get; set; }
+
         [JsonProperty("blocks")]
-        public new ModelBlockConnection blocks { get; set; }
+        public new ModelBlockConnection blocks
+        {
+            get
+            {
+                if (_blocks == null)
+                    _blocks = new Pladdra.Core.Types.ModelBlockConnection();
+
+                return _blocks;
+            }
+
+            set { _blocks = value; }
+        }
     }
 
     public class ModelBlockConnection : Pladdra.API.Types.ModelBlockConnection
     {
-        public new List<Block> items { get; set; }
+        private List<Pladdra.Core.Types.Block> _items { get; set; }
+
+        [JsonProperty("items")]
+        public new List<Pladdra.Core.Types.Block> items
+        {
+            get
+            {
+                if (_items == null)
+                    _items = new List<Pladdra.Core.Types.Block>();
+
+                return _items;
+            }
+
+            set { _items = value; }
+        }
     }
     public class Quat : Pladdra.API.Types.Quat
     {
