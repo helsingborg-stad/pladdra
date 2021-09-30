@@ -94,7 +94,7 @@ namespace Pladdra.MVC.Controllers
                 }
                 else
                 {
-                    LoadAssets();
+                    ViewManager.Show<LoginView>();
                 }
             });
         }
