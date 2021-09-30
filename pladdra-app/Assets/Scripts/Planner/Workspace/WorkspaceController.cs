@@ -47,7 +47,13 @@ namespace Pladdra.MVC.Controllers
             workspaceView = workspaceObject.GetComponent<WorkspaceView>();
             context.Init += OnPlannerInit;
 
-            context.grid.OnVisibleChanged += () => workspaceView.blocksRootObject.SetActive(context.grid.visible);
+            context.grid.OnVisibleChanged += () => {
+                workspaceView.blocksRootObject.SetActive(context.grid.visible);
+
+                if (!context.grid.visible) {
+                    TransformAwayWorkspace();
+                }
+            };
             context.grid.OnSizeChanged += SetBoxCollider;
             context.grid.OnPivotPositionChanged += TransformWorkspacePivot;
             context.grid.OnPositionChanged += TransformWorkspace;
@@ -89,6 +95,10 @@ namespace Pladdra.MVC.Controllers
         public void TransformWorkspacePivot()
         {
             workspaceView.workspacePivot.transform.localPosition = context.grid.pivotPosition;
+        }
+        public void TransformAwayWorkspace()
+        {
+            workspaceObject.transform.position = new Vector3(context.grid.position.X, context.grid.position.Y, -999f);
         }
         public void TransformWorkspace()
         {
