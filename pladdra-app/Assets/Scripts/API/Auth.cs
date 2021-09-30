@@ -38,7 +38,7 @@ namespace Pladdra
 
             DateTime issued = DateTime.Now;
             UserSessionCache userSessionCache = new UserSessionCache();
-            SaveDataManager.LoadJsonData(userSessionCache);
+            SaveDataManager.LoadJsonData(userSessionCache, true);
 
             try
             {
@@ -189,7 +189,7 @@ namespace Pladdra
             {
                 // load userid from cached session 
                 UserSessionCache userSessionCache = new UserSessionCache();
-                SaveDataManager.LoadJsonData(userSessionCache);
+                SaveDataManager.LoadJsonData(userSessionCache, true);
                 _userid = userSessionCache.getUserId();
             }
             return _userid;
@@ -246,7 +246,7 @@ namespace Pladdra
         public static string GetAccessToken()
         {
             UserSessionCache userSessionCache = new UserSessionCache();
-            SaveDataManager.LoadJsonData(userSessionCache);
+            SaveDataManager.LoadJsonData(userSessionCache, true);
             return userSessionCache.getAccessToken();
         }
 
