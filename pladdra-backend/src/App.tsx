@@ -34,4 +34,4 @@ const App = (): React.ReactElement => (
   </AmplifyAdmin>
 );
 
-export default withAuthenticator(App);
+export default App;
