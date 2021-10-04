@@ -3255,6 +3255,13 @@
     "@types/yargs" "^15.0.0"
     chalk "^4.0.0"
 
+"@kolben/ra-language-swedish@^3.14.4":
+  version "3.14.4"
+  resolved "https://registry.yarnpkg.com/@kolben/ra-language-swedish/-/ra-language-swedish-3.14.4.tgz#d9600b6ab14d9459254d6c89aa5559803a21f5b9"
+  integrity sha512-EHRY+xzvkJVytXQrmbAUUYTQxekaChI8lULJQvtYyxSO/BXiI7atK12SdRQLBAzGa7wGnLhtP7IfmtmC2i31fA==
+  dependencies:
+    ra-core "^3.14.2"
+
 "@material-ui/core@^4.11.2":
   version "4.11.4"
   resolved "https://registry.yarnpkg.com/@material-ui/core/-/core-4.11.4.tgz#4fb9fe5dec5dcf780b687e3a40cff78b2b9640a4"
@@ -3822,6 +3829,11 @@
   integrity sha512-4L8msWK31oXwdtC81RmRBAULd0ShnAHjBuKT9MRQpjP0piNrZdXyTRcKY9/UIfhGeKIT4PvF5amOOUbbT/9Wpg==
   dependencies:
     "@types/node" "*"
+
+"@types/lodash@^4.14.175":
+  version "4.14.175"
+  resolved "https://registry.yarnpkg.com/@types/lodash/-/lodash-4.14.175.tgz#b78dfa959192b01fae0ad90e166478769b215f45"
+  integrity sha512-XmdEOrKQ8a1Y/yxQFOMbC47G/V2VDO1GvMRnl4O75M4GW/abC5tnfzadQYkqEveqRM1dEJGFFegfPNA2vvx2iw==
 
 "@types/minimatch@*":
   version "3.0.4"
@@ -12629,6 +12641,20 @@ queue-microtask@^1.2.2:
   resolved "https://registry.yarnpkg.com/queue-microtask/-/queue-microtask-1.2.2.tgz#abf64491e6ecf0f38a6502403d4cda04f372dfd3"
   integrity sha512-dB15eXv3p2jDlbOiNLyMabYg1/sXvppd8DP2J3EOCQ0AkuSXCW2tP7mnVouVLJKgUMY6yP0kcQDVpLCN13h4Xg==
 
+ra-core@^3.14.2, ra-core@^3.18.3:
+  version "3.18.3"
+  resolved "https://registry.yarnpkg.com/ra-core/-/ra-core-3.18.3.tgz#9a581de5d564895f06718d4d94f3a6a216c58abb"
+  integrity sha512-DRIsbf1G7Zvvzs55TiMJvZ56psDk5Syj/PxPBhmMmhVoSavZ/i23J+ObKrGUKWNk4cwNg3IZR8IxZCGyMEe1Qg==
+  dependencies:
+    classnames "~2.2.5"
+    date-fns "^1.29.0"
+    eventemitter3 "^3.0.0"
+    inflection "~1.12.0"
+    lodash "~4.17.5"
+    prop-types "^15.6.1"
+    query-string "^5.1.1"
+    reselect "~3.0.0"
+
 ra-core@^3.16.2:
   version "3.16.2"
   resolved "https://registry.yarnpkg.com/ra-core/-/ra-core-3.16.2.tgz#e961b9ac9868164d3813c578e82fce8bee06551f"
@@ -12651,12 +12677,27 @@ ra-i18n-polyglot@^3.16.2:
     node-polyglot "^2.2.2"
     ra-core "^3.16.2"
 
+ra-i18n-polyglot@^3.18.3:
+  version "3.18.3"
+  resolved "https://registry.yarnpkg.com/ra-i18n-polyglot/-/ra-i18n-polyglot-3.18.3.tgz#b4d9ba02fc0bc8b707b942f1acf6761ae10f8449"
+  integrity sha512-nUMtFguhMzy6iYw1MlKcVYkTFHces/tEhEgOi6SAGsBgcQ652g7G0UDVdJh6kWDYUiu4UvoREfmZhIorihuoDA==
+  dependencies:
+    node-polyglot "^2.2.2"
+    ra-core "^3.18.3"
+
 ra-language-english@^3.16.2:
   version "3.16.2"
   resolved "https://registry.yarnpkg.com/ra-language-english/-/ra-language-english-3.16.2.tgz#87db4504ae3b60ca3a2fc98e356d85fcf93ecc88"
   integrity sha512-f93kQ3+fxmt9oz06LGvGeBmU0zomiMMxtLTF38fci8n7YfpNO16qrkXeAur9mH/jg6N1gD/40prVZsJ3B/pyrA==
   dependencies:
     ra-core "^3.16.2"
+
+ra-language-english@^3.18.3:
+  version "3.18.3"
+  resolved "https://registry.yarnpkg.com/ra-language-english/-/ra-language-english-3.18.3.tgz#83dfb204abc32c4cf9ff80406f22045616838c0e"
+  integrity sha512-w3020CLLmiammZOSKI4CsIWyD9ZFs/oNFWKSnPzvN6EqQI2dtSxxiycKjaxnwjKN7jmzNWe/5uzna0FIND4wgA==
+  dependencies:
+    ra-core "^3.18.3"
 
 ra-ui-materialui@^3.16.2:
   version "3.16.2"
