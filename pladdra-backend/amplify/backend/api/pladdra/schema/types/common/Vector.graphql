@@ -1,0 +1,21 @@
+type Vect2 {
+  x: Int!
+  y: Int!
+}
+
+type Vect3 {
+  x: Int!
+  y: Int!
+  z: Int!
+}
+
+# type Vector2 {
+#   x: Int!
+#   y: Int!
+# }
+
+# type Vector3 {
+#   x: Int!
+#   y: Int!
+#   z: Int!
+# }

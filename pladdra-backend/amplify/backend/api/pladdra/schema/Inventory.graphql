@@ -1,0 +1,8 @@
+type Inventory
+  @model
+  @auth(rules: [{ allow: owner }, { allow: public, provider: apiKey }]) {
+  id: ID!
+  name: String!
+  dialougeID: ID!
+  order: Int!
+}

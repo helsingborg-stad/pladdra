@@ -1,0 +1,15 @@
+type Block
+  @model
+  @auth(rules: [{ allow: owner }, { allow: public, provider: apiKey }])
+  @key(
+    name: "blocksByWorkspace"
+    fields: ["workspaceID", "updatedAt", "createdAt"]
+  ) {
+  id: ID!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  workspaceID: ID!
+  assetID: ID!
+  position: Vect3!
+  rotation: Quat!
+}

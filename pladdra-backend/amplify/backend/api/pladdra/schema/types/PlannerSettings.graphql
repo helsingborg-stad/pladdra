@@ -1,0 +1,29 @@
+enum InventoryLimit {
+  NO_LIMIT,
+  MAX_COUNT,
+  MAX_BUDGET
+}
+
+type InventorySettings {
+  categories: Boolean!,
+  limitBy: InventoryLimit!,
+  limitValue: Int,
+}
+
+type BlockSettings {
+  collision: Boolean!,
+}
+
+type WorkspaceSettings {
+  dimensions: Vect2!,
+  initialScale: Int!,
+  minScale: Int,
+  maxScale: Int,
+  pinchToScale: Boolean!,
+}
+
+type PlannerSettings {
+  workspace: WorkspaceSettings,
+  block: BlockSettings,
+  inventory: InventorySettings
+}
