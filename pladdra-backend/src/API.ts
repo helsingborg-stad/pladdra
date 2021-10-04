@@ -151,6 +151,112 @@ export type DeleteAssetInput = {
   id: string,
 };
 
+export type CreateWorkspaceInput = {
+  id?: string | null,
+  name: string,
+  createdAt?: string | null,
+  updatedAt?: string | null,
+  description?: string | null,
+  dialougeID: string,
+  usersCanWrite: Array< string | null >,
+  usersCanAccess: Array< string | null >,
+  groupsCanWrite: Array< string | null >,
+  groupsCanAccess: Array< string | null >,
+};
+
+export type ModelWorkspaceConditionInput = {
+  name?: ModelStringInput | null,
+  createdAt?: ModelStringInput | null,
+  updatedAt?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  dialougeID?: ModelIDInput | null,
+  and?: Array< ModelWorkspaceConditionInput | null > | null,
+  or?: Array< ModelWorkspaceConditionInput | null > | null,
+  not?: ModelWorkspaceConditionInput | null,
+};
+
+export type ModelIDInput = {
+  ne?: string | null,
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  contains?: string | null,
+  notContains?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+  size?: ModelSizeInput | null,
+};
+
+export type Workspace = {
+  __typename: "Workspace",
+  id: string,
+  name: string,
+  createdAt: string,
+  updatedAt: string,
+  description?: string | null,
+  dialougeID: string,
+  usersCanWrite: Array< string | null >,
+  usersCanAccess: Array< string | null >,
+  groupsCanWrite: Array< string | null >,
+  groupsCanAccess: Array< string | null >,
+  blocks?: ModelBlockConnection | null,
+  owner?: string | null,
+};
+
+export type ModelBlockConnection = {
+  __typename: "ModelBlockConnection",
+  items?:  Array<Block | null > | null,
+  nextToken?: string | null,
+};
+
+export type Block = {
+  __typename: "Block",
+  id: string,
+  createdAt: string,
+  updatedAt: string,
+  workspaceID: string,
+  assetID: string,
+  position: Vect3,
+  rotation: Quat,
+  owner?: string | null,
+};
+
+export type Vect3 = {
+  __typename: "Vect3",
+  x: number,
+  y: number,
+  z: number,
+};
+
+export type Quat = {
+  __typename: "Quat",
+  x: number,
+  y: number,
+  z: number,
+  w: number,
+};
+
+export type UpdateWorkspaceInput = {
+  id: string,
+  name?: string | null,
+  createdAt?: string | null,
+  updatedAt?: string | null,
+  description?: string | null,
+  dialougeID?: string | null,
+  usersCanWrite?: Array< string | null > | null,
+  usersCanAccess?: Array< string | null > | null,
+  groupsCanWrite?: Array< string | null > | null,
+  groupsCanAccess?: Array< string | null > | null,
+};
+
+export type DeleteWorkspaceInput = {
+  id: string,
+};
+
 export type CreateBlockInput = {
   id?: string | null,
   createdAt?: string | null,
@@ -184,49 +290,6 @@ export type ModelBlockConditionInput = {
   not?: ModelBlockConditionInput | null,
 };
 
-export type ModelIDInput = {
-  ne?: string | null,
-  eq?: string | null,
-  le?: string | null,
-  lt?: string | null,
-  ge?: string | null,
-  gt?: string | null,
-  contains?: string | null,
-  notContains?: string | null,
-  between?: Array< string | null > | null,
-  beginsWith?: string | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-  size?: ModelSizeInput | null,
-};
-
-export type Block = {
-  __typename: "Block",
-  id: string,
-  createdAt: string,
-  updatedAt: string,
-  workspaceID: string,
-  assetID: string,
-  position: Vect3,
-  rotation: Quat,
-  owner?: string | null,
-};
-
-export type Vect3 = {
-  __typename: "Vect3",
-  x: number,
-  y: number,
-  z: number,
-};
-
-export type Quat = {
-  __typename: "Quat",
-  x: number,
-  y: number,
-  z: number,
-  w: number,
-};
-
 export type UpdateBlockInput = {
   id: string,
   createdAt?: string | null,
@@ -241,51 +304,200 @@ export type DeleteBlockInput = {
   id: string,
 };
 
-export type CreateWorkspaceInput = {
+export type CreateDialogueInput = {
   id?: string | null,
   name: string,
-  createdAt?: string | null,
-  updatedAt?: string | null,
-  description?: string | null,
+  description: string,
+  status: DialogueStatus,
+  plannerArgs?: PlannerSettingsInput | null,
+  usersCanWrite: Array< string | null >,
+  usersCanAccess: Array< string | null >,
+  groupsCanWrite: Array< string | null >,
+  groupsCanAccess: Array< string | null >,
 };
 
-export type ModelWorkspaceConditionInput = {
+export enum DialogueStatus {
+  DRAFT = "DRAFT",
+  PUBLIC = "PUBLIC",
+  PRIVATE = "PRIVATE",
+  TRASH = "TRASH",
+}
+
+
+export type PlannerSettingsInput = {
+  workspace?: WorkspaceSettingsInput | null,
+  block?: BlockSettingsInput | null,
+  inventory?: InventorySettingsInput | null,
+};
+
+export type WorkspaceSettingsInput = {
+  dimensions: Vect2Input,
+  initialScale: number,
+  minScale?: number | null,
+  maxScale?: number | null,
+  pinchToScale: boolean,
+};
+
+export type Vect2Input = {
+  x: number,
+  y: number,
+};
+
+export type BlockSettingsInput = {
+  collision: boolean,
+};
+
+export type InventorySettingsInput = {
+  categories: boolean,
+  limitBy: InventoryLimit,
+  limitValue?: number | null,
+};
+
+export enum InventoryLimit {
+  NO_LIMIT = "NO_LIMIT",
+  MAX_COUNT = "MAX_COUNT",
+  MAX_BUDGET = "MAX_BUDGET",
+}
+
+
+export type ModelDialogueConditionInput = {
+  name?: ModelStringInput | null,
+  description?: ModelStringInput | null,
+  status?: ModelDialogueStatusInput | null,
+  and?: Array< ModelDialogueConditionInput | null > | null,
+  or?: Array< ModelDialogueConditionInput | null > | null,
+  not?: ModelDialogueConditionInput | null,
+};
+
+export type ModelDialogueStatusInput = {
+  eq?: DialogueStatus | null,
+  ne?: DialogueStatus | null,
+};
+
+export type Dialogue = {
+  __typename: "Dialogue",
+  id: string,
+  name: string,
+  description: string,
+  status: DialogueStatus,
+  plannerArgs?: PlannerSettings | null,
+  usersCanWrite: Array< string | null >,
+  usersCanAccess: Array< string | null >,
+  groupsCanWrite: Array< string | null >,
+  groupsCanAccess: Array< string | null >,
+  createdAt: string,
+  updatedAt: string,
+  owner?: string | null,
+};
+
+export type PlannerSettings = {
+  __typename: "PlannerSettings",
+  workspace?: WorkspaceSettings | null,
+  block?: BlockSettings | null,
+  inventory?: InventorySettings | null,
+};
+
+export type WorkspaceSettings = {
+  __typename: "WorkspaceSettings",
+  dimensions: Vect2,
+  initialScale: number,
+  minScale?: number | null,
+  maxScale?: number | null,
+  pinchToScale: boolean,
+};
+
+export type Vect2 = {
+  __typename: "Vect2",
+  x: number,
+  y: number,
+};
+
+export type BlockSettings = {
+  __typename: "BlockSettings",
+  collision: boolean,
+};
+
+export type InventorySettings = {
+  __typename: "InventorySettings",
+  categories: boolean,
+  limitBy: InventoryLimit,
+  limitValue?: number | null,
+};
+
+export type UpdateDialogueInput = {
+  id: string,
+  name?: string | null,
+  description?: string | null,
+  status?: DialogueStatus | null,
+  plannerArgs?: PlannerSettingsInput | null,
+  usersCanWrite?: Array< string | null > | null,
+  usersCanAccess?: Array< string | null > | null,
+  groupsCanWrite?: Array< string | null > | null,
+  groupsCanAccess?: Array< string | null > | null,
+};
+
+export type DeleteDialogueInput = {
+  id: string,
+};
+
+export type CreateInventoryInput = {
+  id?: string | null,
+  name: string,
+  dialougeID: string,
+  order: number,
+};
+
+export type ModelInventoryConditionInput = {
+  name?: ModelStringInput | null,
+  dialougeID?: ModelIDInput | null,
+  order?: ModelIntInput | null,
+  and?: Array< ModelInventoryConditionInput | null > | null,
+  or?: Array< ModelInventoryConditionInput | null > | null,
+  not?: ModelInventoryConditionInput | null,
+};
+
+export type Inventory = {
+  __typename: "Inventory",
+  id: string,
+  name: string,
+  dialougeID: string,
+  order: number,
+  createdAt: string,
+  updatedAt: string,
+  owner?: string | null,
+};
+
+export type UpdateInventoryInput = {
+  id: string,
+  name?: string | null,
+  dialougeID?: string | null,
+  order?: number | null,
+};
+
+export type DeleteInventoryInput = {
+  id: string,
+};
+
+export type ModelWorkspaceFilterInput = {
+  id?: ModelIDInput | null,
   name?: ModelStringInput | null,
   createdAt?: ModelStringInput | null,
   updatedAt?: ModelStringInput | null,
   description?: ModelStringInput | null,
-  and?: Array< ModelWorkspaceConditionInput | null > | null,
-  or?: Array< ModelWorkspaceConditionInput | null > | null,
-  not?: ModelWorkspaceConditionInput | null,
+  dialougeID?: ModelIDInput | null,
+  usersCanWrite?: ModelStringInput | null,
+  usersCanAccess?: ModelStringInput | null,
+  groupsCanWrite?: ModelStringInput | null,
+  groupsCanAccess?: ModelStringInput | null,
+  and?: Array< ModelWorkspaceFilterInput | null > | null,
+  or?: Array< ModelWorkspaceFilterInput | null > | null,
+  not?: ModelWorkspaceFilterInput | null,
 };
 
-export type Workspace = {
-  __typename: "Workspace",
-  id: string,
-  name: string,
-  createdAt: string,
-  updatedAt: string,
-  description?: string | null,
-  blocks?: ModelBlockConnection | null,
-  owner?: string | null,
-};
-
-export type ModelBlockConnection = {
-  __typename: "ModelBlockConnection",
-  items?:  Array<Block | null > | null,
+export type ModelWorkspaceConnection = {
+  __typename: "ModelWorkspaceConnection",
+  items?:  Array<Workspace | null > | null,
   nextToken?: string | null,
-};
-
-export type UpdateWorkspaceInput = {
-  id: string,
-  name?: string | null,
-  createdAt?: string | null,
-  updatedAt?: string | null,
-  description?: string | null,
-};
-
-export type DeleteWorkspaceInput = {
-  id: string,
 };
 
 export type ModelAssetFilterInput = {
@@ -341,20 +553,39 @@ export type ModelBlockFilterInput = {
   not?: ModelBlockFilterInput | null,
 };
 
-export type ModelWorkspaceFilterInput = {
+export type ModelDialogueFilterInput = {
   id?: ModelIDInput | null,
   name?: ModelStringInput | null,
-  createdAt?: ModelStringInput | null,
-  updatedAt?: ModelStringInput | null,
   description?: ModelStringInput | null,
-  and?: Array< ModelWorkspaceFilterInput | null > | null,
-  or?: Array< ModelWorkspaceFilterInput | null > | null,
-  not?: ModelWorkspaceFilterInput | null,
+  status?: ModelDialogueStatusInput | null,
+  usersCanWrite?: ModelStringInput | null,
+  usersCanAccess?: ModelStringInput | null,
+  groupsCanWrite?: ModelStringInput | null,
+  groupsCanAccess?: ModelStringInput | null,
+  and?: Array< ModelDialogueFilterInput | null > | null,
+  or?: Array< ModelDialogueFilterInput | null > | null,
+  not?: ModelDialogueFilterInput | null,
 };
 
-export type ModelWorkspaceConnection = {
-  __typename: "ModelWorkspaceConnection",
-  items?:  Array<Workspace | null > | null,
+export type ModelDialogueConnection = {
+  __typename: "ModelDialogueConnection",
+  items?:  Array<Dialogue | null > | null,
+  nextToken?: string | null,
+};
+
+export type ModelInventoryFilterInput = {
+  id?: ModelIDInput | null,
+  name?: ModelStringInput | null,
+  dialougeID?: ModelIDInput | null,
+  order?: ModelIntInput | null,
+  and?: Array< ModelInventoryFilterInput | null > | null,
+  or?: Array< ModelInventoryFilterInput | null > | null,
+  not?: ModelInventoryFilterInput | null,
+};
+
+export type ModelInventoryConnection = {
+  __typename: "ModelInventoryConnection",
+  items?:  Array<Inventory | null > | null,
   nextToken?: string | null,
 };
 
@@ -433,6 +664,111 @@ export type DeleteAssetMutation = {
     description?: string | null,
     createdAt: string,
     updatedAt: string,
+  } | null,
+};
+
+export type CreateWorkspaceMutationVariables = {
+  input: CreateWorkspaceInput,
+  condition?: ModelWorkspaceConditionInput | null,
+};
+
+export type CreateWorkspaceMutation = {
+  createWorkspace?:  {
+    __typename: "Workspace",
+    id: string,
+    name: string,
+    createdAt: string,
+    updatedAt: string,
+    description?: string | null,
+    dialougeID: string,
+    usersCanWrite: Array< string | null >,
+    usersCanAccess: Array< string | null >,
+    groupsCanWrite: Array< string | null >,
+    groupsCanAccess: Array< string | null >,
+    blocks?:  {
+      __typename: "ModelBlockConnection",
+      items?:  Array< {
+        __typename: "Block",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        workspaceID: string,
+        assetID: string,
+        owner?: string | null,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type UpdateWorkspaceMutationVariables = {
+  input: UpdateWorkspaceInput,
+  condition?: ModelWorkspaceConditionInput | null,
+};
+
+export type UpdateWorkspaceMutation = {
+  updateWorkspace?:  {
+    __typename: "Workspace",
+    id: string,
+    name: string,
+    createdAt: string,
+    updatedAt: string,
+    description?: string | null,
+    dialougeID: string,
+    usersCanWrite: Array< string | null >,
+    usersCanAccess: Array< string | null >,
+    groupsCanWrite: Array< string | null >,
+    groupsCanAccess: Array< string | null >,
+    blocks?:  {
+      __typename: "ModelBlockConnection",
+      items?:  Array< {
+        __typename: "Block",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        workspaceID: string,
+        assetID: string,
+        owner?: string | null,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type DeleteWorkspaceMutationVariables = {
+  input: DeleteWorkspaceInput,
+  condition?: ModelWorkspaceConditionInput | null,
+};
+
+export type DeleteWorkspaceMutation = {
+  deleteWorkspace?:  {
+    __typename: "Workspace",
+    id: string,
+    name: string,
+    createdAt: string,
+    updatedAt: string,
+    description?: string | null,
+    dialougeID: string,
+    usersCanWrite: Array< string | null >,
+    usersCanAccess: Array< string | null >,
+    groupsCanWrite: Array< string | null >,
+    groupsCanAccess: Array< string | null >,
+    blocks?:  {
+      __typename: "ModelBlockConnection",
+      items?:  Array< {
+        __typename: "Block",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        workspaceID: string,
+        assetID: string,
+        owner?: string | null,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    owner?: string | null,
   } | null,
 };
 
@@ -526,19 +862,203 @@ export type DeleteBlockMutation = {
   } | null,
 };
 
-export type CreateWorkspaceMutationVariables = {
-  input: CreateWorkspaceInput,
-  condition?: ModelWorkspaceConditionInput | null,
+export type CreateDialogueMutationVariables = {
+  input: CreateDialogueInput,
+  condition?: ModelDialogueConditionInput | null,
 };
 
-export type CreateWorkspaceMutation = {
-  createWorkspace?:  {
+export type CreateDialogueMutation = {
+  createDialogue?:  {
+    __typename: "Dialogue",
+    id: string,
+    name: string,
+    description: string,
+    status: DialogueStatus,
+    plannerArgs?:  {
+      __typename: "PlannerSettings",
+      workspace?:  {
+        __typename: "WorkspaceSettings",
+        initialScale: number,
+        minScale?: number | null,
+        maxScale?: number | null,
+        pinchToScale: boolean,
+      } | null,
+      block?:  {
+        __typename: "BlockSettings",
+        collision: boolean,
+      } | null,
+      inventory?:  {
+        __typename: "InventorySettings",
+        categories: boolean,
+        limitBy: InventoryLimit,
+        limitValue?: number | null,
+      } | null,
+    } | null,
+    usersCanWrite: Array< string | null >,
+    usersCanAccess: Array< string | null >,
+    groupsCanWrite: Array< string | null >,
+    groupsCanAccess: Array< string | null >,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type UpdateDialogueMutationVariables = {
+  input: UpdateDialogueInput,
+  condition?: ModelDialogueConditionInput | null,
+};
+
+export type UpdateDialogueMutation = {
+  updateDialogue?:  {
+    __typename: "Dialogue",
+    id: string,
+    name: string,
+    description: string,
+    status: DialogueStatus,
+    plannerArgs?:  {
+      __typename: "PlannerSettings",
+      workspace?:  {
+        __typename: "WorkspaceSettings",
+        initialScale: number,
+        minScale?: number | null,
+        maxScale?: number | null,
+        pinchToScale: boolean,
+      } | null,
+      block?:  {
+        __typename: "BlockSettings",
+        collision: boolean,
+      } | null,
+      inventory?:  {
+        __typename: "InventorySettings",
+        categories: boolean,
+        limitBy: InventoryLimit,
+        limitValue?: number | null,
+      } | null,
+    } | null,
+    usersCanWrite: Array< string | null >,
+    usersCanAccess: Array< string | null >,
+    groupsCanWrite: Array< string | null >,
+    groupsCanAccess: Array< string | null >,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type DeleteDialogueMutationVariables = {
+  input: DeleteDialogueInput,
+  condition?: ModelDialogueConditionInput | null,
+};
+
+export type DeleteDialogueMutation = {
+  deleteDialogue?:  {
+    __typename: "Dialogue",
+    id: string,
+    name: string,
+    description: string,
+    status: DialogueStatus,
+    plannerArgs?:  {
+      __typename: "PlannerSettings",
+      workspace?:  {
+        __typename: "WorkspaceSettings",
+        initialScale: number,
+        minScale?: number | null,
+        maxScale?: number | null,
+        pinchToScale: boolean,
+      } | null,
+      block?:  {
+        __typename: "BlockSettings",
+        collision: boolean,
+      } | null,
+      inventory?:  {
+        __typename: "InventorySettings",
+        categories: boolean,
+        limitBy: InventoryLimit,
+        limitValue?: number | null,
+      } | null,
+    } | null,
+    usersCanWrite: Array< string | null >,
+    usersCanAccess: Array< string | null >,
+    groupsCanWrite: Array< string | null >,
+    groupsCanAccess: Array< string | null >,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type CreateInventoryMutationVariables = {
+  input: CreateInventoryInput,
+  condition?: ModelInventoryConditionInput | null,
+};
+
+export type CreateInventoryMutation = {
+  createInventory?:  {
+    __typename: "Inventory",
+    id: string,
+    name: string,
+    dialougeID: string,
+    order: number,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type UpdateInventoryMutationVariables = {
+  input: UpdateInventoryInput,
+  condition?: ModelInventoryConditionInput | null,
+};
+
+export type UpdateInventoryMutation = {
+  updateInventory?:  {
+    __typename: "Inventory",
+    id: string,
+    name: string,
+    dialougeID: string,
+    order: number,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type DeleteInventoryMutationVariables = {
+  input: DeleteInventoryInput,
+  condition?: ModelInventoryConditionInput | null,
+};
+
+export type DeleteInventoryMutation = {
+  deleteInventory?:  {
+    __typename: "Inventory",
+    id: string,
+    name: string,
+    dialougeID: string,
+    order: number,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type GetWorkspaceQueryVariables = {
+  id: string,
+};
+
+export type GetWorkspaceQuery = {
+  getWorkspace?:  {
     __typename: "Workspace",
     id: string,
     name: string,
     createdAt: string,
     updatedAt: string,
     description?: string | null,
+    dialougeID: string,
+    usersCanWrite: Array< string | null >,
+    usersCanAccess: Array< string | null >,
+    groupsCanWrite: Array< string | null >,
+    groupsCanAccess: Array< string | null >,
     blocks?:  {
       __typename: "ModelBlockConnection",
       items?:  Array< {
@@ -556,63 +1076,34 @@ export type CreateWorkspaceMutation = {
   } | null,
 };
 
-export type UpdateWorkspaceMutationVariables = {
-  input: UpdateWorkspaceInput,
-  condition?: ModelWorkspaceConditionInput | null,
+export type ListWorkspacesQueryVariables = {
+  filter?: ModelWorkspaceFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
 };
 
-export type UpdateWorkspaceMutation = {
-  updateWorkspace?:  {
-    __typename: "Workspace",
-    id: string,
-    name: string,
-    createdAt: string,
-    updatedAt: string,
-    description?: string | null,
-    blocks?:  {
-      __typename: "ModelBlockConnection",
-      items?:  Array< {
-        __typename: "Block",
-        id: string,
-        createdAt: string,
-        updatedAt: string,
-        workspaceID: string,
-        assetID: string,
-        owner?: string | null,
-      } | null > | null,
-      nextToken?: string | null,
-    } | null,
-    owner?: string | null,
-  } | null,
-};
-
-export type DeleteWorkspaceMutationVariables = {
-  input: DeleteWorkspaceInput,
-  condition?: ModelWorkspaceConditionInput | null,
-};
-
-export type DeleteWorkspaceMutation = {
-  deleteWorkspace?:  {
-    __typename: "Workspace",
-    id: string,
-    name: string,
-    createdAt: string,
-    updatedAt: string,
-    description?: string | null,
-    blocks?:  {
-      __typename: "ModelBlockConnection",
-      items?:  Array< {
-        __typename: "Block",
-        id: string,
-        createdAt: string,
-        updatedAt: string,
-        workspaceID: string,
-        assetID: string,
-        owner?: string | null,
-      } | null > | null,
-      nextToken?: string | null,
-    } | null,
-    owner?: string | null,
+export type ListWorkspacesQuery = {
+  listWorkspaces?:  {
+    __typename: "ModelWorkspaceConnection",
+    items?:  Array< {
+      __typename: "Workspace",
+      id: string,
+      name: string,
+      createdAt: string,
+      updatedAt: string,
+      description?: string | null,
+      dialougeID: string,
+      usersCanWrite: Array< string | null >,
+      usersCanAccess: Array< string | null >,
+      groupsCanWrite: Array< string | null >,
+      groupsCanAccess: Array< string | null >,
+      blocks?:  {
+        __typename: "ModelBlockConnection",
+        nextToken?: string | null,
+      } | null,
+      owner?: string | null,
+    } | null > | null,
+    nextToken?: string | null,
   } | null,
 };
 
@@ -770,18 +1261,132 @@ export type ListBlocksQuery = {
   } | null,
 };
 
-export type GetWorkspaceQueryVariables = {
+export type GetDialogueQueryVariables = {
   id: string,
 };
 
-export type GetWorkspaceQuery = {
-  getWorkspace?:  {
+export type GetDialogueQuery = {
+  getDialogue?:  {
+    __typename: "Dialogue",
+    id: string,
+    name: string,
+    description: string,
+    status: DialogueStatus,
+    plannerArgs?:  {
+      __typename: "PlannerSettings",
+      workspace?:  {
+        __typename: "WorkspaceSettings",
+        initialScale: number,
+        minScale?: number | null,
+        maxScale?: number | null,
+        pinchToScale: boolean,
+      } | null,
+      block?:  {
+        __typename: "BlockSettings",
+        collision: boolean,
+      } | null,
+      inventory?:  {
+        __typename: "InventorySettings",
+        categories: boolean,
+        limitBy: InventoryLimit,
+        limitValue?: number | null,
+      } | null,
+    } | null,
+    usersCanWrite: Array< string | null >,
+    usersCanAccess: Array< string | null >,
+    groupsCanWrite: Array< string | null >,
+    groupsCanAccess: Array< string | null >,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type ListDialoguesQueryVariables = {
+  filter?: ModelDialogueFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListDialoguesQuery = {
+  listDialogues?:  {
+    __typename: "ModelDialogueConnection",
+    items?:  Array< {
+      __typename: "Dialogue",
+      id: string,
+      name: string,
+      description: string,
+      status: DialogueStatus,
+      usersCanWrite: Array< string | null >,
+      usersCanAccess: Array< string | null >,
+      groupsCanWrite: Array< string | null >,
+      groupsCanAccess: Array< string | null >,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type GetInventoryQueryVariables = {
+  id: string,
+};
+
+export type GetInventoryQuery = {
+  getInventory?:  {
+    __typename: "Inventory",
+    id: string,
+    name: string,
+    dialougeID: string,
+    order: number,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type ListInventorysQueryVariables = {
+  filter?: ModelInventoryFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListInventorysQuery = {
+  listInventorys?:  {
+    __typename: "ModelInventoryConnection",
+    items?:  Array< {
+      __typename: "Inventory",
+      id: string,
+      name: string,
+      dialougeID: string,
+      order: number,
+      createdAt: string,
+      updatedAt: string,
+      owner?: string | null,
+    } | null > | null,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type OnCreateWorkspaceSubscriptionVariables = {
+  owner?: string | null,
+  usersCanAccess?: string | null,
+};
+
+export type OnCreateWorkspaceSubscription = {
+  onCreateWorkspace?:  {
     __typename: "Workspace",
     id: string,
     name: string,
     createdAt: string,
     updatedAt: string,
     description?: string | null,
+    dialougeID: string,
+    usersCanWrite: Array< string | null >,
+    usersCanAccess: Array< string | null >,
+    groupsCanWrite: Array< string | null >,
+    groupsCanAccess: Array< string | null >,
     blocks?:  {
       __typename: "ModelBlockConnection",
       items?:  Array< {
@@ -799,29 +1404,73 @@ export type GetWorkspaceQuery = {
   } | null,
 };
 
-export type ListWorkspacesQueryVariables = {
-  filter?: ModelWorkspaceFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
+export type OnUpdateWorkspaceSubscriptionVariables = {
+  owner?: string | null,
+  usersCanAccess?: string | null,
 };
 
-export type ListWorkspacesQuery = {
-  listWorkspaces?:  {
-    __typename: "ModelWorkspaceConnection",
-    items?:  Array< {
-      __typename: "Workspace",
-      id: string,
-      name: string,
-      createdAt: string,
-      updatedAt: string,
-      description?: string | null,
-      blocks?:  {
-        __typename: "ModelBlockConnection",
-        nextToken?: string | null,
-      } | null,
-      owner?: string | null,
-    } | null > | null,
-    nextToken?: string | null,
+export type OnUpdateWorkspaceSubscription = {
+  onUpdateWorkspace?:  {
+    __typename: "Workspace",
+    id: string,
+    name: string,
+    createdAt: string,
+    updatedAt: string,
+    description?: string | null,
+    dialougeID: string,
+    usersCanWrite: Array< string | null >,
+    usersCanAccess: Array< string | null >,
+    groupsCanWrite: Array< string | null >,
+    groupsCanAccess: Array< string | null >,
+    blocks?:  {
+      __typename: "ModelBlockConnection",
+      items?:  Array< {
+        __typename: "Block",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        workspaceID: string,
+        assetID: string,
+        owner?: string | null,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnDeleteWorkspaceSubscriptionVariables = {
+  owner?: string | null,
+  usersCanAccess?: string | null,
+};
+
+export type OnDeleteWorkspaceSubscription = {
+  onDeleteWorkspace?:  {
+    __typename: "Workspace",
+    id: string,
+    name: string,
+    createdAt: string,
+    updatedAt: string,
+    description?: string | null,
+    dialougeID: string,
+    usersCanWrite: Array< string | null >,
+    usersCanAccess: Array< string | null >,
+    groupsCanWrite: Array< string | null >,
+    groupsCanAccess: Array< string | null >,
+    blocks?:  {
+      __typename: "ModelBlockConnection",
+      items?:  Array< {
+        __typename: "Block",
+        id: string,
+        createdAt: string,
+        updatedAt: string,
+        workspaceID: string,
+        assetID: string,
+        owner?: string | null,
+      } | null > | null,
+      nextToken?: string | null,
+    } | null,
+    owner?: string | null,
   } | null,
 };
 
@@ -975,89 +1624,179 @@ export type OnDeleteBlockSubscription = {
   } | null,
 };
 
-export type OnCreateWorkspaceSubscriptionVariables = {
+export type OnCreateDialogueSubscriptionVariables = {
   owner?: string | null,
+  usersCanAccess?: string | null,
 };
 
-export type OnCreateWorkspaceSubscription = {
-  onCreateWorkspace?:  {
-    __typename: "Workspace",
+export type OnCreateDialogueSubscription = {
+  onCreateDialogue?:  {
+    __typename: "Dialogue",
     id: string,
     name: string,
+    description: string,
+    status: DialogueStatus,
+    plannerArgs?:  {
+      __typename: "PlannerSettings",
+      workspace?:  {
+        __typename: "WorkspaceSettings",
+        initialScale: number,
+        minScale?: number | null,
+        maxScale?: number | null,
+        pinchToScale: boolean,
+      } | null,
+      block?:  {
+        __typename: "BlockSettings",
+        collision: boolean,
+      } | null,
+      inventory?:  {
+        __typename: "InventorySettings",
+        categories: boolean,
+        limitBy: InventoryLimit,
+        limitValue?: number | null,
+      } | null,
+    } | null,
+    usersCanWrite: Array< string | null >,
+    usersCanAccess: Array< string | null >,
+    groupsCanWrite: Array< string | null >,
+    groupsCanAccess: Array< string | null >,
     createdAt: string,
     updatedAt: string,
-    description?: string | null,
-    blocks?:  {
-      __typename: "ModelBlockConnection",
-      items?:  Array< {
-        __typename: "Block",
-        id: string,
-        createdAt: string,
-        updatedAt: string,
-        workspaceID: string,
-        assetID: string,
-        owner?: string | null,
-      } | null > | null,
-      nextToken?: string | null,
-    } | null,
     owner?: string | null,
   } | null,
 };
 
-export type OnUpdateWorkspaceSubscriptionVariables = {
+export type OnUpdateDialogueSubscriptionVariables = {
   owner?: string | null,
+  usersCanAccess?: string | null,
 };
 
-export type OnUpdateWorkspaceSubscription = {
-  onUpdateWorkspace?:  {
-    __typename: "Workspace",
+export type OnUpdateDialogueSubscription = {
+  onUpdateDialogue?:  {
+    __typename: "Dialogue",
     id: string,
     name: string,
+    description: string,
+    status: DialogueStatus,
+    plannerArgs?:  {
+      __typename: "PlannerSettings",
+      workspace?:  {
+        __typename: "WorkspaceSettings",
+        initialScale: number,
+        minScale?: number | null,
+        maxScale?: number | null,
+        pinchToScale: boolean,
+      } | null,
+      block?:  {
+        __typename: "BlockSettings",
+        collision: boolean,
+      } | null,
+      inventory?:  {
+        __typename: "InventorySettings",
+        categories: boolean,
+        limitBy: InventoryLimit,
+        limitValue?: number | null,
+      } | null,
+    } | null,
+    usersCanWrite: Array< string | null >,
+    usersCanAccess: Array< string | null >,
+    groupsCanWrite: Array< string | null >,
+    groupsCanAccess: Array< string | null >,
     createdAt: string,
     updatedAt: string,
-    description?: string | null,
-    blocks?:  {
-      __typename: "ModelBlockConnection",
-      items?:  Array< {
-        __typename: "Block",
-        id: string,
-        createdAt: string,
-        updatedAt: string,
-        workspaceID: string,
-        assetID: string,
-        owner?: string | null,
-      } | null > | null,
-      nextToken?: string | null,
-    } | null,
     owner?: string | null,
   } | null,
 };
 
-export type OnDeleteWorkspaceSubscriptionVariables = {
+export type OnDeleteDialogueSubscriptionVariables = {
+  owner?: string | null,
+  usersCanAccess?: string | null,
+};
+
+export type OnDeleteDialogueSubscription = {
+  onDeleteDialogue?:  {
+    __typename: "Dialogue",
+    id: string,
+    name: string,
+    description: string,
+    status: DialogueStatus,
+    plannerArgs?:  {
+      __typename: "PlannerSettings",
+      workspace?:  {
+        __typename: "WorkspaceSettings",
+        initialScale: number,
+        minScale?: number | null,
+        maxScale?: number | null,
+        pinchToScale: boolean,
+      } | null,
+      block?:  {
+        __typename: "BlockSettings",
+        collision: boolean,
+      } | null,
+      inventory?:  {
+        __typename: "InventorySettings",
+        categories: boolean,
+        limitBy: InventoryLimit,
+        limitValue?: number | null,
+      } | null,
+    } | null,
+    usersCanWrite: Array< string | null >,
+    usersCanAccess: Array< string | null >,
+    groupsCanWrite: Array< string | null >,
+    groupsCanAccess: Array< string | null >,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnCreateInventorySubscriptionVariables = {
   owner?: string | null,
 };
 
-export type OnDeleteWorkspaceSubscription = {
-  onDeleteWorkspace?:  {
-    __typename: "Workspace",
+export type OnCreateInventorySubscription = {
+  onCreateInventory?:  {
+    __typename: "Inventory",
     id: string,
     name: string,
+    dialougeID: string,
+    order: number,
     createdAt: string,
     updatedAt: string,
-    description?: string | null,
-    blocks?:  {
-      __typename: "ModelBlockConnection",
-      items?:  Array< {
-        __typename: "Block",
-        id: string,
-        createdAt: string,
-        updatedAt: string,
-        workspaceID: string,
-        assetID: string,
-        owner?: string | null,
-      } | null > | null,
-      nextToken?: string | null,
-    } | null,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnUpdateInventorySubscriptionVariables = {
+  owner?: string | null,
+};
+
+export type OnUpdateInventorySubscription = {
+  onUpdateInventory?:  {
+    __typename: "Inventory",
+    id: string,
+    name: string,
+    dialougeID: string,
+    order: number,
+    createdAt: string,
+    updatedAt: string,
+    owner?: string | null,
+  } | null,
+};
+
+export type OnDeleteInventorySubscriptionVariables = {
+  owner?: string | null,
+};
+
+export type OnDeleteInventorySubscription = {
+  onDeleteInventory?:  {
+    __typename: "Inventory",
+    id: string,
+    name: string,
+    dialougeID: string,
+    order: number,
+    createdAt: string,
+    updatedAt: string,
     owner?: string | null,
   } | null,
 };
