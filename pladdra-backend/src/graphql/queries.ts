@@ -2,6 +2,61 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
+export const getWorkspace = /* GraphQL */ `
+  query GetWorkspace($id: ID!) {
+    getWorkspace(id: $id) {
+      id
+      name
+      createdAt
+      updatedAt
+      description
+      dialougeID
+      usersCanWrite
+      usersCanAccess
+      groupsCanWrite
+      groupsCanAccess
+      blocks {
+        items {
+          id
+          createdAt
+          updatedAt
+          workspaceID
+          assetID
+          owner
+        }
+        nextToken
+      }
+      owner
+    }
+  }
+`;
+export const listWorkspaces = /* GraphQL */ `
+  query ListWorkspaces(
+    $filter: ModelWorkspaceFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listWorkspaces(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        createdAt
+        updatedAt
+        description
+        dialougeID
+        usersCanWrite
+        usersCanAccess
+        groupsCanWrite
+        groupsCanAccess
+        blocks {
+          nextToken
+        }
+        owner
+      }
+      nextToken
+    }
+  }
+`;
 export const getAsset = /* GraphQL */ `
   query GetAsset($id: ID!) {
     getAsset(id: $id) {
@@ -139,45 +194,90 @@ export const listBlocks = /* GraphQL */ `
     }
   }
 `;
-export const getWorkspace = /* GraphQL */ `
-  query GetWorkspace($id: ID!) {
-    getWorkspace(id: $id) {
+export const getDialogue = /* GraphQL */ `
+  query GetDialogue($id: ID!) {
+    getDialogue(id: $id) {
       id
       name
+      description
+      status
+      plannerArgs {
+        workspace {
+          initialScale
+          minScale
+          maxScale
+          pinchToScale
+        }
+        block {
+          collision
+        }
+        inventory {
+          categories
+          limitBy
+          limitValue
+        }
+      }
+      usersCanWrite
+      usersCanAccess
+      groupsCanWrite
+      groupsCanAccess
       createdAt
       updatedAt
-      description
-      blocks {
-        items {
-          id
-          createdAt
-          updatedAt
-          workspaceID
-          assetID
-          owner
-        }
-        nextToken
-      }
       owner
     }
   }
 `;
-export const listWorkspaces = /* GraphQL */ `
-  query ListWorkspaces(
-    $filter: ModelWorkspaceFilterInput
+export const listDialogues = /* GraphQL */ `
+  query ListDialogues(
+    $filter: ModelDialogueFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listWorkspaces(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listDialogues(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         name
+        description
+        status
+        usersCanWrite
+        usersCanAccess
+        groupsCanWrite
+        groupsCanAccess
         createdAt
         updatedAt
-        description
-        blocks {
-          nextToken
-        }
+        owner
+      }
+      nextToken
+    }
+  }
+`;
+export const getInventory = /* GraphQL */ `
+  query GetInventory($id: ID!) {
+    getInventory(id: $id) {
+      id
+      name
+      dialougeID
+      order
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const listInventorys = /* GraphQL */ `
+  query ListInventorys(
+    $filter: ModelInventoryFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listInventorys(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        name
+        dialougeID
+        order
+        createdAt
+        updatedAt
         owner
       }
       nextToken

@@ -22,11 +22,21 @@ const config = {
     react: {
       version: "detect",
     },
-
     "import/resolver": {
       node: {
         paths: ["src"],
         extensions: [".js", ".jsx", ".ts", ".tsx"],
+      },
+      alias: {
+        map: [
+          // And all your import aliases
+          ["@app", "./src"],
+          ["@components", "./src/components"],
+          ["@theme", "./src/theme"],
+          ["@assets", "./src/assets"],
+          ["@utils", "./src/utils"],
+        ],
+        extensions: [".ts", ".tsx", ".js", ".jsx", ".json"],
       },
     },
   },
@@ -38,6 +48,8 @@ const config = {
     "plugin:jest/style",
     "plugin:react/recommended",
     "prettier",
+    "plugin:import/recommended",
+    "plugin:import/typescript",
   ],
   rules: {
     "react/jsx-filename-extension": [

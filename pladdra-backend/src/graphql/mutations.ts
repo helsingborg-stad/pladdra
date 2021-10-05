@@ -71,6 +71,99 @@ export const deleteAsset = /* GraphQL */ `
     }
   }
 `;
+export const createWorkspace = /* GraphQL */ `
+  mutation CreateWorkspace(
+    $input: CreateWorkspaceInput!
+    $condition: ModelWorkspaceConditionInput
+  ) {
+    createWorkspace(input: $input, condition: $condition) {
+      id
+      name
+      createdAt
+      updatedAt
+      description
+      dialougeID
+      usersCanWrite
+      usersCanAccess
+      groupsCanWrite
+      groupsCanAccess
+      blocks {
+        items {
+          id
+          createdAt
+          updatedAt
+          workspaceID
+          assetID
+          owner
+        }
+        nextToken
+      }
+      owner
+    }
+  }
+`;
+export const updateWorkspace = /* GraphQL */ `
+  mutation UpdateWorkspace(
+    $input: UpdateWorkspaceInput!
+    $condition: ModelWorkspaceConditionInput
+  ) {
+    updateWorkspace(input: $input, condition: $condition) {
+      id
+      name
+      createdAt
+      updatedAt
+      description
+      dialougeID
+      usersCanWrite
+      usersCanAccess
+      groupsCanWrite
+      groupsCanAccess
+      blocks {
+        items {
+          id
+          createdAt
+          updatedAt
+          workspaceID
+          assetID
+          owner
+        }
+        nextToken
+      }
+      owner
+    }
+  }
+`;
+export const deleteWorkspace = /* GraphQL */ `
+  mutation DeleteWorkspace(
+    $input: DeleteWorkspaceInput!
+    $condition: ModelWorkspaceConditionInput
+  ) {
+    deleteWorkspace(input: $input, condition: $condition) {
+      id
+      name
+      createdAt
+      updatedAt
+      description
+      dialougeID
+      usersCanWrite
+      usersCanAccess
+      groupsCanWrite
+      groupsCanAccess
+      blocks {
+        items {
+          id
+          createdAt
+          updatedAt
+          workspaceID
+          assetID
+          owner
+        }
+        nextToken
+      }
+      owner
+    }
+  }
+`;
 export const createBlock = /* GraphQL */ `
   mutation CreateBlock(
     $input: CreateBlockInput!
@@ -149,80 +242,158 @@ export const deleteBlock = /* GraphQL */ `
     }
   }
 `;
-export const createWorkspace = /* GraphQL */ `
-  mutation CreateWorkspace(
-    $input: CreateWorkspaceInput!
-    $condition: ModelWorkspaceConditionInput
+export const createDialogue = /* GraphQL */ `
+  mutation CreateDialogue(
+    $input: CreateDialogueInput!
+    $condition: ModelDialogueConditionInput
   ) {
-    createWorkspace(input: $input, condition: $condition) {
+    createDialogue(input: $input, condition: $condition) {
       id
       name
+      description
+      status
+      plannerArgs {
+        workspace {
+          initialScale
+          minScale
+          maxScale
+          pinchToScale
+        }
+        block {
+          collision
+        }
+        inventory {
+          categories
+          limitBy
+          limitValue
+        }
+      }
+      usersCanWrite
+      usersCanAccess
+      groupsCanWrite
+      groupsCanAccess
       createdAt
       updatedAt
-      description
-      blocks {
-        items {
-          id
-          createdAt
-          updatedAt
-          workspaceID
-          assetID
-          owner
-        }
-        nextToken
-      }
       owner
     }
   }
 `;
-export const updateWorkspace = /* GraphQL */ `
-  mutation UpdateWorkspace(
-    $input: UpdateWorkspaceInput!
-    $condition: ModelWorkspaceConditionInput
+export const updateDialogue = /* GraphQL */ `
+  mutation UpdateDialogue(
+    $input: UpdateDialogueInput!
+    $condition: ModelDialogueConditionInput
   ) {
-    updateWorkspace(input: $input, condition: $condition) {
+    updateDialogue(input: $input, condition: $condition) {
       id
       name
+      description
+      status
+      plannerArgs {
+        workspace {
+          initialScale
+          minScale
+          maxScale
+          pinchToScale
+        }
+        block {
+          collision
+        }
+        inventory {
+          categories
+          limitBy
+          limitValue
+        }
+      }
+      usersCanWrite
+      usersCanAccess
+      groupsCanWrite
+      groupsCanAccess
       createdAt
       updatedAt
-      description
-      blocks {
-        items {
-          id
-          createdAt
-          updatedAt
-          workspaceID
-          assetID
-          owner
-        }
-        nextToken
-      }
       owner
     }
   }
 `;
-export const deleteWorkspace = /* GraphQL */ `
-  mutation DeleteWorkspace(
-    $input: DeleteWorkspaceInput!
-    $condition: ModelWorkspaceConditionInput
+export const deleteDialogue = /* GraphQL */ `
+  mutation DeleteDialogue(
+    $input: DeleteDialogueInput!
+    $condition: ModelDialogueConditionInput
   ) {
-    deleteWorkspace(input: $input, condition: $condition) {
+    deleteDialogue(input: $input, condition: $condition) {
       id
       name
+      description
+      status
+      plannerArgs {
+        workspace {
+          initialScale
+          minScale
+          maxScale
+          pinchToScale
+        }
+        block {
+          collision
+        }
+        inventory {
+          categories
+          limitBy
+          limitValue
+        }
+      }
+      usersCanWrite
+      usersCanAccess
+      groupsCanWrite
+      groupsCanAccess
       createdAt
       updatedAt
-      description
-      blocks {
-        items {
-          id
-          createdAt
-          updatedAt
-          workspaceID
-          assetID
-          owner
-        }
-        nextToken
-      }
+      owner
+    }
+  }
+`;
+export const createInventory = /* GraphQL */ `
+  mutation CreateInventory(
+    $input: CreateInventoryInput!
+    $condition: ModelInventoryConditionInput
+  ) {
+    createInventory(input: $input, condition: $condition) {
+      id
+      name
+      dialougeID
+      order
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const updateInventory = /* GraphQL */ `
+  mutation UpdateInventory(
+    $input: UpdateInventoryInput!
+    $condition: ModelInventoryConditionInput
+  ) {
+    updateInventory(input: $input, condition: $condition) {
+      id
+      name
+      dialougeID
+      order
+      createdAt
+      updatedAt
+      owner
+    }
+  }
+`;
+export const deleteInventory = /* GraphQL */ `
+  mutation DeleteInventory(
+    $input: DeleteInventoryInput!
+    $condition: ModelInventoryConditionInput
+  ) {
+    deleteInventory(input: $input, condition: $condition) {
+      id
+      name
+      dialougeID
+      order
+      createdAt
+      updatedAt
       owner
     }
   }

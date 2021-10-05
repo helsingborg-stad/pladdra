@@ -1,0 +1,13 @@
+type Quat {
+  x: Int!
+  y: Int!
+  z: Int!
+  w: Int!
+}
+
+# type Quaternion {
+#   x: Int!
+#   y: Int!
+#   z: Int!
+#   w: Int!
+# }

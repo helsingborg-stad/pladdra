@@ -1,0 +1,61 @@
+type Asset
+  @model
+  @auth(
+    rules: [
+      { allow: private },
+      { allow: groups, groups: ["admin", "superadmin"] },
+
+      # { allow: owner, ownerField: "usersCanWrite", operations: [update] },
+      # { allow: groups, groupsField: "groupsCanWrite", operations: [update] },
+      
+      # { allow: owner, ownerField: "usersCanAccess", operations: [read] },
+      # { allow: groups, groupsField: "groupsCanAccess", operations: [read] },
+
+      { allow: public, provider: apiKey, operations: [read] }
+    ]
+  )
+  @key(
+    name: "byFileFormat"
+    fields: ["fileFormat", "createdAt", "updatedAt"]
+    queryField: "assetsByFileFormat"
+  ) {
+  id: ID!
+  name: String!
+  type: AssetType!
+  fileFormat: AssetFileFormat!
+  fileName: String!
+  fileSize: Int!
+  file: S3Object!
+  description: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+
+
+  # usersCanWrite: [String]!
+  # usersCanAccess: [String]!
+  # groupsCanWrite: [String]!
+  # groupsCanAccess: [String]!
+}
+
+enum AssetType {
+  MESH
+}
+
+enum AssetFileFormat {
+  GLTF
+  GLB
+  OBJ
+  FBX
+  DWG
+}
+
+input CreateAssetInput {
+  id: ID
+  name: String!
+  type: AssetType!
+  fileFormat: AssetFileFormat!
+  fileName: String!
+  fileSize: Int!
+  file: S3ObjectInput!
+  description: String
+}

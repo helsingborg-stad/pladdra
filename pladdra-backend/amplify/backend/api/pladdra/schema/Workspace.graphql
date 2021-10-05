@@ -1,0 +1,27 @@
+type Workspace
+  @model
+  @auth(
+    rules: [
+    { allow: owner },
+    { allow: groups, groups: ["admin", "superadmin"] },
+
+    { allow: owner, ownerField: "usersCanWrite", operations: [update] },
+    { allow: groups, groupsField: "groupsCanWrite", operations: [update] },
+    
+    { allow: owner, ownerField: "usersCanAccess", operations: [read] },
+    { allow: groups, groupsField: "groupsCanAccess", operations: [read] },
+    { allow: groups, groupsField: "groupsCanAccess", operations: [read] },
+      ]) {
+  id: ID!
+  name: String!
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+  description: String
+  dialougeID: ID!
+  blocks: [Block!]! @connection(keyName: "blocksByWorkspace", fields: ["id"])
+
+  usersCanWrite: [String]!
+  usersCanAccess: [String]!
+  groupsCanWrite: [String]!
+  groupsCanAccess: [String]!
+}
