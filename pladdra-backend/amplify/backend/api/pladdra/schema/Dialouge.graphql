@@ -1,24 +1,23 @@
 type Dialogue
   @model
-  @auth(rules: [
-    { allow: owner },
-    { allow: groups, groups: ["admin", "superadmin"] },
-
-    { allow: owner, ownerField: "usersCanWrite", operations: [update] },
-    { allow: groups, groupsField: "groupsCanWrite", operations: [update] },
-    
-    { allow: owner, ownerField: "usersCanAccess", operations: [read] },
-    { allow: groups, groupsField: "groupsCanAccess", operations: [read] },
-
-    # TODO: Remove
-    { allow: public, provider: apiKey }
-    ]) {
+  @auth(
+    rules: [
+      { allow: owner }
+      { allow: groups, groups: ["admin", "superadmin"] }
+      { allow: owner, ownerField: "usersCanWrite", operations: [update] }
+      { allow: groups, groupsField: "groupsCanWrite", operations: [update] }
+      { allow: owner, ownerField: "usersCanAccess", operations: [read] }
+      { allow: groups, groupsField: "groupsCanAccess", operations: [read] }
+      # TODO: Remove
+      { allow: public, provider: apiKey }
+    ]
+  ) {
   id: ID!
   name: String!
   description: String!
   status: DialogueStatus!
   # state: DialogueState!
-  
+
   plannerArgs: PlannerSettings
 
   usersCanWrite: [String]!
