@@ -19,7 +19,7 @@ import awsExports from "@app/aws-exports";
 import i18nProvider from "@app/i18n/i18nProvider";
 // import customRoutes from "@app/customRoutes";
 import theme from "@theme";
-import { Asset, Dialogue, LoginPage } from "@components";
+import { Asset, Dialogue } from "@components";
 // import Dashboard from './components/Dashboard/Dashboard'
 
 Amplify.configure({
@@ -40,7 +40,6 @@ const App = (): React.ReactElement => (
           enableAdminQueries: true,
         }
       )}
-      loginPage={LoginPage}
       theme={theme}
       i18nProvider={i18nProvider}
     >
