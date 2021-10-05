@@ -8,9 +8,10 @@ using GLTF.Math;
 namespace Pladdra.MVC.Views
 {
     using UnityEngine;
+    [RequireComponent(typeof(MeshFilter))]
+    [RequireComponent(typeof(MeshRenderer))]
     [RequireComponent(typeof(LeanSelectableByFinger))]
     [RequireComponent(typeof(LeanTwistRotateAxis))]
-    [RequireComponent(typeof(LeanSelectableRendererColor))]
     [RequireComponent(typeof(PladdraDragTranslateAlong))]
     public class BlockView : LeanSelectableByFingerBehaviour
     {
@@ -29,7 +30,9 @@ namespace Pladdra.MVC.Views
         }
         private Vector3 previousPosition;
         private Quaternion previousRotation;
-        private bool isSelected = false;
+        public bool isSelected = false;
+        private MeshRenderer meshRenderer;
+        private MeshFilter meshFilter;
         private LeanSelectableByFinger leanSelectableByFinger;
         private LeanTwistRotateAxis leanTwistRotateAxis;
         private LeanSelectableRendererColor leanSelectableRendererColor;
@@ -39,8 +42,24 @@ namespace Pladdra.MVC.Views
         public delegate void OnRotationChangedHandler(Quaternion rotation);
         public delegate void DelegateBlockViewHandle();
 
+        private void Awake()
+        {
+            meshRenderer = GetComponent<MeshRenderer>();
+            meshFilter = GetComponent<MeshFilter>();
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            if (meshRenderer != null)
+                meshRenderer.enabled = isSelected;
+        }
+
         protected override void OnSelected()
         {
+            if (meshRenderer != null)
+                meshRenderer.enabled = true;
+
             if (_DEBUG)
                 Debug.Log("OnSelected");
             isSelected = true;
@@ -52,6 +71,9 @@ namespace Pladdra.MVC.Views
 
         protected override void OnDeselected()
         {
+            if (meshRenderer != null)
+                meshRenderer.enabled = false;
+
             if (_DEBUG)
                 Debug.Log("OnDeselected");
             isSelected = false;
