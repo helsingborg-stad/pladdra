@@ -1,7 +1,13 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React, { useState } from "react";
-import { Edit, TextInput, SimpleForm, FormDataConsumer } from "react-admin";
-import { AmplifyFileInput } from "react-admin-amplify";
+import {
+  Edit,
+  TextInput,
+  SimpleForm,
+  FormDataConsumer,
+  TextField,
+} from "react-admin";
+import { AmplifyFileField, AmplifyFileInput } from "react-admin-amplify";
 
 import { AssetFileFormat, AssetType } from "API";
 import { parseExtension } from "utils/file";
@@ -45,46 +51,26 @@ export const EditAsset = (props: any): React.ReactElement => {
   return (
     <Edit {...props}>
       <SimpleForm validate={validateAssetCreation}>
-        <FormDataConsumer>
-          {({ formData, ...rest }) => (
-            <>
-              {true && (
-                <>
-                  <TextInput source="id" fullWidth disabled />
-                  <TextInput source="type" fullWidth disabled />
-                  <TextInput source="name" fullWidth />
+        <TextInput variant="standard" source="name" />
+        <TextField source="fileName" />
+        <TextField source="id" />
+        <TextField source="type" />
+        <TextField source="fileFormat" />
 
-                  <TextInput source="fileName" disabled fullWidth />
-
-                  <TextInput source="fileFormat" disabled fullWidth />
-
-                  {/* <TextInput
-										source="fileSize"
-										// parse={humanReadableToBytes}
-										format={bytesToHumanReadable}
-										disabled
-										fullWidth
-									/> */}
-                </>
-              )}
-
-              <AmplifyFileInput
-                source="file"
-                onDropAccepted={handleDropFile}
-                options={{
-                  onDrop: handleDropFile,
-                }}
-                accept=".glb, .gltf, .fbx, .obj, .dwg"
-                storageOptions={{
-                  download: true,
-                  onDropAccepted: handleDropFile,
-                  level: "public",
-                }}
-                // validate={() => {}}
-              />
-            </>
-          )}
-        </FormDataConsumer>
+        <AmplifyFileField
+          source="file"
+          // onDropAccepted={handleDropFile}
+          // options={{
+          //   onDrop: handleDropFile,
+          // }}
+          // accept=".glb, .gltf, .fbx, .obj, .dwg"
+          // storageOptions={{
+          //   download: true,
+          //   onDropAccepted: handleDropFile,
+          //   level: "public",
+          // }}
+          // validate={() => {}}
+        />
       </SimpleForm>
     </Edit>
   );
