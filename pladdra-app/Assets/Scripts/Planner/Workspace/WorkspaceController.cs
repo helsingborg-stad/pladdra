@@ -306,24 +306,16 @@ namespace Pladdra.MVC.Controllers
             pladdraDragTranslateAlong.ScreenDepth.Camera = Camera.main;
 
             // Draw bounds based on children
+            Bounds bounds = Pladdra.Core.Utils.CalculateBoundsFromChildren(parentObject);
+
+            // Draw BoxCollider based on Bounds
             BoxCollider parentBoxCollider = parentObject.GetComponent<BoxCollider>();
-            Renderer[] allChildren = parentObject.GetComponentsInChildren<Renderer>();
-
-            Vector3 center = parentObject.transform.position;
-            foreach (Renderer child in allChildren)
-            {
-                center += child.bounds.center;
-            }
-            center /= parentObject.transform.childCount;
-
-            Bounds bounds = new Bounds(center, Vector3.zero);
-            foreach (Renderer child in allChildren)
-            {
-                bounds.Encapsulate(child.bounds);
-            }
-
             parentBoxCollider.center = bounds.center;
             parentBoxCollider.size = bounds.size;
+
+            // Draw Cube Mesh based on Bounds
+            MeshFilter parentMeshFilter = parentObject.GetComponent<MeshFilter>();
+            parentMeshFilter.mesh = Pladdra.Core.MeshGenerator.GenerateCube(bounds.size, bounds.center);
 
             // Move to workspace & enable
             parentObject.transform.SetParent(workspaceView.blocksRootObject.transform, false);
