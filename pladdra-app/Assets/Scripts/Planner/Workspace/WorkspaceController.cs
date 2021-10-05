@@ -1,8 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-
 using UnityEngine;
 
 using Lean.Common;
@@ -10,13 +5,9 @@ using Lean.Touch;
 
 namespace Pladdra.MVC.Controllers
 {
-
-    using Pladdra.Core;
-    using Pladdra.Components;
     using Pladdra.MVC.Models;
     using Pladdra.MVC.Views;
     using Pladdra.Core.Types;
-    using UnityEngine.UIElements;
 
     public class WorkspaceController
     {
@@ -47,10 +38,12 @@ namespace Pladdra.MVC.Controllers
             workspaceView = workspaceObject.GetComponent<WorkspaceView>();
             context.Init += OnPlannerInit;
 
-            context.grid.OnVisibleChanged += () => {
+            context.grid.OnVisibleChanged += () =>
+            {
                 workspaceView.blocksRootObject.SetActive(context.grid.visible);
 
-                if (!context.grid.visible) {
+                if (!context.grid.visible)
+                {
                     TransformAwayWorkspace();
                 }
             };
