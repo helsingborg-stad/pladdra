@@ -13,10 +13,9 @@ GameObject:
   - component: {fileID: 8633289719944161892}
   - component: {fileID: 6743447246466665604}
   - component: {fileID: 794931896938326483}
-  - component: {fileID: 6057526874358083378}
-  - component: {fileID: 8139147630116379592}
   - component: {fileID: 3010134688385139277}
-  - component: {fileID: 6977587476986571755}
+  - component: {fileID: 4164310923016254620}
+  - component: {fileID: 7484585833221806933}
   m_Layer: 0
   m_Name: Block
   m_TagString: Untagged
@@ -128,7 +127,29 @@ MonoBehaviour:
   axis: {x: 0, y: -1, z: 0}
   space: 1
   sensitivity: 1
---- !u!23 &6057526874358083378
+--- !u!114 &3010134688385139277
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217522866861505386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eb5d44633283d48729251ee78c1251ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 
+  isSelected: 0
+--- !u!33 &4164310923016254620
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 217522866861505386}
+  m_Mesh: {fileID: 0}
+--- !u!23 &7484585833221806933
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,7 +168,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: ec2041ff8a382438e9178e8d1f967d10, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -169,48 +190,3 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &8139147630116379592
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 217522866861505386}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2baa936f016a9a14e86ac8ea42211f4a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultColor: {r: 1, g: 1, b: 1, a: 1}
-  selectedColor: {r: 0, g: 1, b: 0, a: 1}
---- !u!114 &3010134688385139277
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 217522866861505386}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb5d44633283d48729251ee78c1251ac, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  id: 
---- !u!114 &6977587476986571755
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 217522866861505386}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 1, g: 0, b: 0, a: 1}
-  outlineWidth: 2
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
