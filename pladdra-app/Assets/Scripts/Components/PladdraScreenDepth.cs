@@ -186,7 +186,6 @@ namespace Lean.Touch
 
                                 if (armanager.Raycast(screenPoint, arHits, TrackableType.PlaneWithinPolygon))
                                 {
-                                    Debug.Log("Hit!");
                                     // ARRaycastHit hit = arHits[0];
                                     Pose hitPose = arHits[0].pose;
 
