@@ -37,7 +37,9 @@ namespace Pladdra.MVC.Controllers
             // Subscribe
             context.Init += () => SetState(new Initialize());
             context.OnHideTopAppBarChanged += () => plannerGUI.topAppBar.SetActive(!context.hideTopAppBar);
+            context.OnShowZenButton += () => plannerGUI.zenButton.gameObject.SetActive(context.showZenButton ? true : false);
             plannerGUI.menuButton.onClick.AddListener(OnClickMenu);
+            plannerGUI.zenButton.onClick.AddListener(OnClickZen);
 
             SetState(new Inactive());
         }
@@ -55,6 +57,20 @@ namespace Pladdra.MVC.Controllers
         public void OnClickMenu()
         {
             SetState(new Destroy());
+        }
+
+        public void OnClickZen()
+        {
+            context.zenMode = context.zenMode ? false : true;
+
+            if (context.zenMode)
+            {
+                SetState(new Zen());
+            }
+            else
+            {
+                SetState(new Build());
+            }
         }
 
         public void OnSelectDeselectBlock(string id)
