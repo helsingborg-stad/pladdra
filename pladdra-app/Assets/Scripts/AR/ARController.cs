@@ -38,9 +38,11 @@ namespace Pladdra.MVC.Controllers
             arMarkerView.Initialize();
         }
 
-        public void SetRaycastPosition(RaycastHit hit)
+        public void SetRaycastPosition(ARRaycastHit hit)
         {
-            context.raycastHitPosition = new System.Numerics.Vector3(hit.point.x, hit.point.y, hit.point.z) + new System.Numerics.Vector3(0, 0.003f, 0);
+            var pose = hit.pose;
+
+            context.raycastHitPosition = new System.Numerics.Vector3(pose.position.x, pose.position.y, pose.position.z) + new System.Numerics.Vector3(0, 0.003f, 0);
         }
 
         public void ToggleRaycast()
@@ -84,8 +86,37 @@ namespace Pladdra.MVC.Controllers
         public void SetAllPlanesActive(bool value)
         {
             foreach (var plane in planeManager.trackables)
+            {
+                // switch (plane.classification)
+                // {
+                //     case PlaneClassification.None:
+                //         Debug.Log(PlaneClassification.None);
+                //         break;
+                //     case PlaneClassification.Wall:
+                //         Debug.Log(PlaneClassification.Wall);
+                //         break;
+                //     case PlaneClassification.Floor:
+                //         Debug.Log(PlaneClassification.Floor);
+                //         break;
+                //     case PlaneClassification.Ceiling:
+                //         Debug.Log(PlaneClassification.Ceiling);
+                //         break;
+                //     case PlaneClassification.Table:
+                //         Debug.Log(PlaneClassification.Table);
+                //         break;
+                //     case PlaneClassification.Seat:
+                //         Debug.Log(PlaneClassification.Seat);
+                //         break;
+                //     case PlaneClassification.Door:
+                //         Debug.Log(PlaneClassification.Door);
+                //         break;
+                //     case PlaneClassification.Window:
+                //         Debug.Log(PlaneClassification.Window);
+                //         break;
+                // }
+
                 plane.gameObject.SetActive(value);
+            }
         }
     }
-
 }

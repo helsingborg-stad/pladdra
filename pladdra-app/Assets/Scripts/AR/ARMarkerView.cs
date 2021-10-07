@@ -2,6 +2,7 @@ using UnityEngine;
 using Lean.Common;
 using Lean.Touch;
 using UnityEngine.XR.ARFoundation;
+using UnityEngine.XR.ARSubsystems;
 
 namespace Pladdra.MVC.Views
 {
@@ -17,11 +18,12 @@ namespace Pladdra.MVC.Views
         private bool transformMarker;
         private CameraRaycast raycaster;
         public event OnRaycastHitARPlaneHandler OnRaycastHitARPlane;
-        public delegate void OnRaycastHitARPlaneHandler(RaycastHit hit);
+        public delegate void OnRaycastHitARPlaneHandler(ARRaycastHit hit);
 
         public override void Initialize()
         {
             raycaster = GetComponent<CameraRaycast>();
+            raycaster.raycastTargetAR = true;
             raycaster.enabled = false;
             Hide();
         }
@@ -35,11 +37,11 @@ namespace Pladdra.MVC.Views
 
             if (raycaster.enabled)
             {
-                raycaster.onHitEvent.AddListener(HandleCameraRaycast);
+                raycaster.onARHitEvent.AddListener(HandleCameraRaycast);
                 return;
             }
 
-            raycaster.onHitEvent.RemoveListener(HandleCameraRaycast);
+            raycaster.onARHitEvent.RemoveListener(HandleCameraRaycast);
         }
 
         public void TransformMarker(Vector3 position)
@@ -48,11 +50,12 @@ namespace Pladdra.MVC.Views
             transformMarker = true;
         }
 
-        private void HandleCameraRaycast(RaycastHit hit)
+        private void HandleCameraRaycast(ARRaycastHit hit)
         {
-            ARPlane plane = hit.transform.gameObject.GetComponent<ARPlane>();
-            if (plane == null)
+            if (hit.hitType != TrackableType.PlaneWithinPolygon)
+            {
                 return;
+            }
 
             if (OnRaycastHitARPlane != null)
                 OnRaycastHitARPlane(hit);
