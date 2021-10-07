@@ -16,6 +16,7 @@ namespace Pladdra
 
         public void OnMount()
         {
+            planner.context.showZenButton = true;
             planner.plannerGUI.buildGUI.editGridButton.onClick.AddListener(OnClickEditGrid);
             planner.plannerGUI.buildGUI.showInventoryButton.onClick.AddListener(OnClickShowInventory);
             planner.plannerGUI.buildGUI.Show();
@@ -23,6 +24,7 @@ namespace Pladdra
 
         public void OnUnmount()
         {
+            planner.context.showZenButton = false;
             planner.plannerGUI.buildGUI.editGridButton.onClick.RemoveListener(OnClickEditGrid);
             planner.plannerGUI.buildGUI.showInventoryButton.onClick.RemoveListener(OnClickShowInventory);
             planner.plannerGUI.buildGUI.Hide();
@@ -32,6 +34,7 @@ namespace Pladdra
         {
             planner.SetState(new Inventory());
         }
+
         public void OnClickEditGrid()
         {
             planner.SetState(new WorkspaceSelection());
