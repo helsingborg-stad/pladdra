@@ -87,11 +87,7 @@ namespace Pladdra.MVC.Models
             createdItem = (Pladdra.Core.Types.Block)JsonConvert.DeserializeObject<Pladdra.Core.Types.Block>(serializedJson);
             blocks.items.Insert(0, createdItem);
 
-            Debug.Log("Created block! Total blocks in workspace: " + blocks.items.Count);
-            blocks.items.ForEach(item =>
-            {
-                Debug.Log("ID: " + item.id + ". " + "POS: " + item.position + ". " + "ROT: " + item.rotation + ".");
-            });
+            // Debug.Log("Created block! Total blocks in workspace: " + blocks.items.Count);
         }
 
         public void CreateBlock(Core.Types.CreateBlockInput input)
@@ -116,22 +112,17 @@ namespace Pladdra.MVC.Models
             var index = blocks.items.IndexOf(existingBlock);
             blocks.items[index] = block;
 
-            Debug.Log("positionChanged" + positionChanged);
-            Debug.Log("block.position = " + block.position + ", existingBlock.postion = " + existingBlock.position);
-            Debug.Log("rotationChanged" + rotationChanged);
-            Debug.Log("block.rotation = " + block.rotation + ", existingBlock.rotation = " + existingBlock.rotation);
-
             if (positionChanged
                 && OnBlockPositionChanged != null)
             {
-                Debug.Log("Updating block position to: " + block.position);
+                // Debug.Log("Updating block position to: " + block.position);
                 OnBlockPositionChanged(block.id);
             }
 
             if (rotationChanged
                 && OnBlockRotationChanged != null)
             {
-                Debug.Log("Updating block rotation to: " + block.rotation);
+                // Debug.Log("Updating block rotation to: " + block.rotation);
                 OnBlockRotationChanged(block.id);
             }
 
@@ -156,7 +147,7 @@ namespace Pladdra.MVC.Models
             if (OnBlockDeleted != null)
                 OnBlockDeleted(id);
 
-            Debug.Log("Delted block! Total blocks in workspace: " + blocks.items.Count);
+            // Debug.Log("Delted block! Total blocks in workspace: " + blocks.items.Count);
             blocks.items.ForEach(item =>
             {
                 Debug.Log("ID: " + item.id + ". " + "POS: " + item.position + ". " + "ROT: " + item.rotation + ".");
@@ -168,14 +159,14 @@ namespace Pladdra.MVC.Models
             MakeSavable(true);
             savable.Load();
 
-            Debug.Log("ITEMS COUNT ON LOAD: " + blocks.items.Count);
+            // Debug.Log("ITEMS COUNT ON LOAD: " + blocks.items.Count);
         }
 
         public void Save()
         {
             MakeSavable();
             savable.Save();
-            Debug.Log("ITEMS COUNT ON SAVE: " + blocks.items.Count);
+            // Debug.Log("ITEMS COUNT ON SAVE: " + blocks.items.Count);
         }
 
         private void MakeSavable(bool alwaysMakeNew = false)
@@ -197,7 +188,7 @@ namespace Pladdra.MVC.Models
 
         public string ToJson()
         {
-            Debug.Log("ITEMS COUNT ON SAVE: " + blocks.items.Count);
+            // Debug.Log("ITEMS COUNT ON SAVE: " + blocks.items.Count);
             return JsonConvert.SerializeObject(this);
         }
 
@@ -237,7 +228,7 @@ namespace Pladdra.MVC.Models
                 }
             }
 
-            Debug.Log("ITEMS COUNT ON LOAD: " + blocks.items.Count);
+            // Debug.Log("ITEMS COUNT ON LOAD: " + blocks.items.Count);
         }
 
         public string FileNameToUseForData()
