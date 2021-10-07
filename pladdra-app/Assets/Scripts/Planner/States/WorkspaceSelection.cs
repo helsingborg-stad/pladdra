@@ -93,6 +93,8 @@ namespace Pladdra
 
         public void OnClickRemoveGrid()
         {
+            if (!isMinScale)
+                planner.context.grid.scale = planner.context.grid.minScale;
             planner.SetState(new PlaneDetection());
         }
     }
