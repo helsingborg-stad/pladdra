@@ -36,7 +36,7 @@ namespace Pladdra.MVC.Controllers
             planner = plannerInstance;
 
             gridObject = GameObject.Find("Grid");
-            workspaceObject = gridObject.transform.parent.gameObject;
+            workspaceObject = GameObject.Find("Workspace");
             leanPlaneObject = GameObject.Find("GridLeanPlane");
             leanPlane = leanPlaneObject.GetComponent<LeanPlane>();
             gridView = gridObject.GetComponent<GridView>();
