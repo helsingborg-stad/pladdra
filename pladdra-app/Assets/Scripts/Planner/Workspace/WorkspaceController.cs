@@ -52,7 +52,14 @@ namespace Pladdra.MVC.Controllers
             context.grid.OnPositionChanged += TransformWorkspace;
             context.grid.OnScaleChanged += ScaleWorkspace;
             context.grid.OnRotationChanged += RotateWorkspace;
-            context.grid.OnIsSelectableChanged += () => workspaceView.leanSelectable.enabled = context.grid.isSelectable;
+            context.grid.OnIsSelectableChanged += () =>
+            {
+                workspaceView.leanSelectable.enabled = context.grid.isSelectable;
+                workspaceView.findClosestPivot = context.grid.isSelectable;
+
+            };
+
+
             workspaceView.Initialize();
         }
 
@@ -76,7 +83,11 @@ namespace Pladdra.MVC.Controllers
         {
             if (context.grid.scale == context.grid.maxScale)
             {
-                context.grid.pivotPosition = context.grid.pivotPoint - new Vector3(context.grid.pivotPoint.x * context.grid.minScale, 0f, context.grid.pivotPoint.z * context.grid.minScale);
+                Vector3 pivotPointLocal = workspaceView.pivotPoint - workspaceView.transform.position;
+                bool initialScaleIsLessThenOne = true;
+                pivotPointLocal = initialScaleIsLessThenOne ? (pivotPointLocal * (1 / context.grid.minScale)) : pivotPointLocal;
+                Vector3 pivotPosition = (new Vector3(workspaceView.transform.position.x, 0f, workspaceView.transform.position.z) - pivotPointLocal);
+                context.grid.pivotPosition = pivotPosition - workspaceView.transform.position + (pivotPointLocal * (context.grid.minScale / context.grid.maxScale));
             }
             else
             {
@@ -85,9 +96,16 @@ namespace Pladdra.MVC.Controllers
 
             workspaceObject.transform.localScale = new Vector3(context.grid.scale, context.grid.scale, context.grid.scale);
         }
+
         public void TransformWorkspacePivot()
         {
-            workspaceView.workspacePivot.transform.localPosition = context.grid.pivotPosition;
+            if (context.grid.scale != context.grid.maxScale)
+            {
+                workspaceView.workspacePivot.transform.localPosition = Vector3.zero;
+                return;
+            }
+
+            workspaceView.workspacePivot.transform.position = new Vector3(context.grid.pivotPosition.x * context.grid.minScale, 0, context.grid.pivotPosition.z * context.grid.minScale) + workspaceView.transform.position;
         }
         public void TransformAwayWorkspace()
         {
