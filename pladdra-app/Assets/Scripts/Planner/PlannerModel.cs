@@ -11,6 +11,8 @@ namespace Pladdra.MVC.Models
         public event PlannerEventHandler UpdatedState;
         public event PlannerEventHandler Init;
         public event PlannerEventHandler OnHideTopAppBarChanged;
+        public event PlannerEventHandler OnShowZenButton;
+        public event PlannerEventHandler OnZenModeCHanged;
 
         public Grid grid
         {
@@ -74,6 +76,35 @@ namespace Pladdra.MVC.Models
                     _hideTopAppBar = value;
                     if (OnHideTopAppBarChanged != null)
                         OnHideTopAppBarChanged();
+                }
+            }
+        }
+        private bool _showZenButton;
+        public bool showZenButton
+        {
+            get { return _showZenButton; }
+            set
+            {
+                if (_showZenButton != value)
+                {
+                    _showZenButton = value;
+                    if (OnShowZenButton != null)
+                        OnShowZenButton();
+                }
+            }
+        }
+
+        private bool _zenMode;
+        public bool zenMode
+        {
+            get { return _zenMode; }
+            set
+            {
+                if (_zenMode != value)
+                {
+                    _zenMode = value;
+                    if (OnZenModeCHanged != null)
+                        OnZenModeCHanged();
                 }
             }
         }
