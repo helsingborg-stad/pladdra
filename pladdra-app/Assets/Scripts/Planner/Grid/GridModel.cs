@@ -14,6 +14,7 @@ namespace Pladdra.MVC.Models
         public event GridEventHandler OnPositionChanged;
         public event GridEventHandler OnRotationChanged;
         public event GridEventHandler OnScaleChanged;
+        public event GridEventHandler OnTransparentChanged;
 
         private float _scale;
         public float scale
@@ -59,6 +60,21 @@ namespace Pladdra.MVC.Models
                     _isSelectable = value;
                     if (OnIsSelectableChanged != null)
                         OnIsSelectableChanged();
+                }
+            }
+        }
+
+        private bool _transperent;
+        public bool transperent
+        {
+            get { return _transperent; }
+            set
+            {
+                if (_transperent != value)
+                {
+                    _transperent = value;
+                    if (OnTransparentChanged != null)
+                        OnTransparentChanged();
                 }
             }
         }
