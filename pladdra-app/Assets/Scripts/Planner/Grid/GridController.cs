@@ -45,6 +45,7 @@ namespace Pladdra.MVC.Controllers
 
             context.grid.OnVisibleChanged += ToggleGrid;
             context.grid.OnIsSelectableChanged += ToggleGridSelection;
+            context.grid.OnTransparentChanged += ToggleTransparency;
         }
 
         public void ToggleGrid()
@@ -58,6 +59,11 @@ namespace Pladdra.MVC.Controllers
 
             gridView.Hide();
             workspaceObject.SetActive(false);
+        }
+
+        public void ToggleTransparency()
+        {
+            gridView.meshRenderer.enabled = context.grid.transperent ? false : true;
         }
 
         public void ToggleGridSelection()
