@@ -28,7 +28,6 @@ namespace Pladdra
             planner.context.grid.minScale = scale;
             planner.context.grid.scale = scale;
             planner.context.grid.isSelectable = false;
-            planner.context.grid.visible = false;
             planner.gridController.GenerateGrid();
             planner.workspaceController.RenderAllBlocks();
 
@@ -40,6 +39,7 @@ namespace Pladdra
             planner.plannerGUI.zenButton.gameObject.SetActive(false);
             planner.context.hideTopAppBar = false;
             planner.context.showZenButton = false;
+            planner.context.grid.visible = false;
         }
     }
 }
