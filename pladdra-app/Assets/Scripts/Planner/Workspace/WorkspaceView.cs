@@ -34,28 +34,45 @@ namespace Pladdra.MVC.Views
         public event WorkspaceViewHandler OnSelectBlockEvent;
         public delegate void WorkspaceViewHandler();
 
+        public Vector3 pivotPoint;
+        public Camera targetCamera;
+        public bool findClosestPivot;
 
         public override void Initialize()
         {
             leanSelectable = GetComponent<LeanSelectable>();
             boxCollider = GetComponent<BoxCollider>();
+            targetCamera = Camera.main;
+        }
+
+        private PlannerModel context
+        {
+            get
+            {
+                App.GetModel<PlannerModel>(out var instance);
+                return instance;
+            }
         }
 
         void Update()
         {
-            if (createdBlock != null)
+            if (findClosestPivot || pivotPoint == null)
             {
-
+                Vector3 cameraPosition = targetCamera.transform.position;
+                Vector3 closestPoint = boxCollider.ClosestPoint(new Vector3(cameraPosition.x, 0f, cameraPosition.z));
+                pivotPoint = new Vector3(closestPoint.x, 0f, closestPoint.z);
             }
         }
 
-
-        // public void RemoveBlock(string id)
+        // void OnDrawGizmosSelected()
         // {
-        //     if (!blocks.ContainsKey(id))
-        //         return;
-        //     Destroy(blocks[id]);
-        //     blocks.Remove(id);
-        // 
+        //     Gizmos.color = Color.blue;
+        //     Gizmos.DrawSphere(pivotPoint, 0.2f);
+
+        //     Gizmos.color = Color.red;
+        //     Gizmos.DrawSphere(context.grid.pivotPosition + transform.position, 0.2f);
+
+        // }
     }
 }
+
