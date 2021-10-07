@@ -37,7 +37,9 @@ namespace Pladdra
 
         public void OnUnmount()
         {
+            planner.plannerGUI.zenButton.gameObject.SetActive(false);
             planner.context.hideTopAppBar = false;
+            planner.context.showZenButton = false;
         }
     }
 }
