@@ -29,7 +29,8 @@ namespace Pladdra.Core
             if (asset.previewTexturePath == null || !File.Exists(fullPath))
             {
                 RuntimePreviewGenerator.MarkTextureNonReadable = false;
-                Texture2D thumbnail = RuntimePreviewGenerator.GenerateModelPreview(gameObject.transform);
+                RuntimePreviewGenerator.BackgroundColor = Color.white;
+                Texture2D thumbnail = RuntimePreviewGenerator.GenerateModelPreview(gameObject.transform, 160, 160);
                 byte[] pngBytes = thumbnail.EncodeToPNG();
                 FileManager.WriteToFile(fullPath, pngBytes);
                 asset.previewTexturePath = path;
