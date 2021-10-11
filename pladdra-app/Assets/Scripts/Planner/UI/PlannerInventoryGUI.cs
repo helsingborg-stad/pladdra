@@ -105,7 +105,6 @@ namespace Pladdra.MVC.Views
             GameObject newObj = (GameObject)Instantiate(inventoryItemPrefab, categoryGrid.gameObject.transform);
             AssetGridItem item = newObj.GetComponent<AssetGridItem>();
             item.titleComponent.text = category.name;
-            item.metaComponent.text = category.name;
             item.buttonComponent.onClick.AddListener(() => Debug.Log("Clicked category: " + category.name));
 
             categoryItems.Add(newObj);
@@ -116,7 +115,6 @@ namespace Pladdra.MVC.Views
             GameObject newObj = (GameObject)Instantiate(inventoryItemPrefab, inventoryGrid.gameObject.transform);
             AssetGridItem item = newObj.GetComponent<AssetGridItem>();
             item.titleComponent.text = asset.name;
-            item.metaComponent.text = asset.id;
             item.buttonComponent.onClick.AddListener(() => onClickItem(asset));
 
             if (!_EXPERIMENTAL)
