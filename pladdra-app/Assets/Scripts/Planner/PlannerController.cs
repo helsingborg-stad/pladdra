@@ -41,6 +41,7 @@ namespace Pladdra.MVC.Controllers
             plannerGUI.menuButton.onClick.AddListener(OnClickMenu);
             plannerGUI.zenButton.onClick.AddListener(OnClickZen);
 
+            GameObject.Find("Workspace").SetActive(false);
             SetState(new Inactive());
         }
 
