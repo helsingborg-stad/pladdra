@@ -76,8 +76,6 @@ Assets/Packages.meta
 /[Aa]ssets/**/___*.meta
 /[Aa]ssets/Lean
 /[Aa]ssets/Lean.meta
-/[Aa]ssets/SpriteOutline
-/[Aa]ssets/SpriteOutline.meta
 
 Packages/com.kyrylokuzyk.arfoundationremote
 Assets/Plugins/ARFoundationRemoteInstaller
